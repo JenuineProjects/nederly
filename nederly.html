@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FAF3E0" />
+  <title>Nederly</title>
+  <style>
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('OpenDyslexic-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #FAF3E0;
+      font-family: 'OpenDyslexic', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-text-size-adjust: 100%;
+      color: #1A1A1A;
+      line-height: 1.6;
+      letter-spacing: 0.04em;
+    }
+    button { cursor: pointer; font-family: inherit; }
+    textarea { font-family: inherit; }
+    #app { max-width: 600px; margin: 0 auto; min-height: 100dvh; display: flex; flex-direction: column; }
+
+    /* Header */
+    .header {
+      display: flex; align-items: center; padding: 12px 20px;
+      border-bottom: 1px solid #E0D8C8; background: #FAF3E0;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .header h1 { font-size: 20px; font-weight: 600; color: #1A1A1A; }
+    .back-btn {
+      background: none; border: none; color: #2E6DA4;
+      font-size: 22px; padding: 4px 12px 4px 0; cursor: pointer;
+    }
+
+    /* Screens */
+    .screen { flex: 1; padding: 24px 40px; display: flex; flex-direction: column; gap: 16px; }
+
+    /* Nav / Category buttons */
+    .nav-btn {
+      background: #FAF3E0; border: 1px solid #E0D8C8; border-radius: 8px;
+      padding: 16px 24px; min-height: 64px; text-align: left;
+      font-size: 18px; color: #1A1A1A; width: 100%;
+      transition: background 0.1s;
+    }
+    .nav-btn:hover { background: #F0E8D0; }
+
+    /* Progress link */
+    .text-btn {
+      background: none; border: none; color: #2E6DA4;
+      font-size: 18px; text-align: left; padding: 4px 0;
+      min-height: 48px; cursor: pointer;
+    }
+
+    /* Progress dots */
+    .dots { display: flex; gap: 6px; flex-wrap: wrap; }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #E0D8C8; flex-shrink: 0;
+    }
+    .dot.done { background: #3A7D44; }
+    .dot.active { background: #2E6DA4; }
+
+    /* Category progress bar — Per Dyslexia Expert §11.1 */
+    .progress-row {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: 0; margin-bottom: 8px;
+    }
+    .progress-track {
+      flex: 1;
+      height: 6px;
+      background: #E8DFC4;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: #2E6DA4;
+      border-radius: 3px;
+      transition: width 300ms ease-out;
+    }
+    .progress-label {
+      font-size: 16px;
+      color: #6B6B6B;
+      flex-shrink: 0;
+    }
+
+    /* Flashcard */
+    .card {
+      background: #FAF3E0; border: 2px solid #E0D8C8; border-radius: 12px;
+      padding: 24px; min-height: 200px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 16px;
+      cursor: pointer; user-select: none; transition: border-color 0.15s;
+    }
+    .card.revealed { border-color: #2E6DA4; cursor: default; }
+    .card-word { font-size: 26px; line-height: 40px; text-align: center; }
+    .card-ipa { font-size: 16px; color: #6B6B6B; }
+    .card-english { font-size: 18px; color: #1A1A1A; }
+    .card-tap { font-size: 16px; color: #6B6B6B; }
+    .play-row { display: flex; gap: 8px; }
+
+    /* Play button */
+    .play-btn {
+      background: #2E6DA4; color: white; border: none; border-radius: 8px;
+      padding: 8px 16px; font-size: 18px; cursor: pointer; min-height: 48px;
+    }
+    .play-btn.slow { background: #6B4FA0; }
+
+    /* Hint */
+    .hint {
+      border-left: 3px solid #6B4FA0; padding: 4px 0 4px 8px;
+      font-size: 16px; color: #6B4FA0; line-height: 29px;
+    }
+
+    /* Outcome buttons */
+    .outcome-row { display: flex; gap: 16px; }
+    .missed-btn {
+      flex: 1; min-height: 48px; border: 1px solid #D94F3D;
+      border-radius: 8px; background: #FAF3E0; color: #1A1A1A;
+      font-size: 18px; cursor: pointer;
+    }
+    .got-btn {
+      flex: 1; min-height: 48px; border: none;
+      border-radius: 8px; background: #3A7D44; color: #FAF3E0;
+      font-size: 18px; cursor: pointer;
+    }
+
+    /* Session complete */
+    .complete-screen {
+      min-height: 100dvh; background: #FAF3E0;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 60px 40px 40px; gap: 24px;
+    }
+    .pct { font-size: 64px; color: #2E6DA4; line-height: 76px; }
+    .pct-label { font-size: 18px; color: #6B6B6B; }
+    .outcome-row-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 4px 0; width: 100%;
+    }
+    .home-btn {
+      margin-top: 24px; background: #2E6DA4; color: #FAF3E0;
+      border: none; border-radius: 8px; min-height: 64px;
+      width: 100%; font-size: 18px; cursor: pointer;
+    }
+
+    /* Textarea */
+    .paste-area {
+      border: 1px solid #E0D8C8; border-radius: 8px;
+      padding: 16px; font-size: 18px; color: #1A1A1A;
+      background: #FAF3E0; resize: vertical; width: 100%;
+      outline: none; line-height: 29px;
+    }
+    .word-count { font-size: 16px; color: #6B6B6B; }
+
+    /* Radio */
+    .radio-btn {
+      display: flex; align-items: center; gap: 8px;
+      background: none; border: none; padding: 4px 0;
+      min-height: 48px; cursor: pointer; font-size: 18px; color: #1A1A1A;
+    }
+    .radio-circle {
+      width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+      border: 2px solid #E0D8C8; display: inline-block;
+    }
+    .radio-circle.selected { border-color: #2E6DA4; background: #2E6DA4; }
+
+    /* Start button */
+    .start-btn {
+      background: #2E6DA4; color: #FAF3E0; border: none; border-radius: 8px;
+      min-height: 64px; font-size: 18px; cursor: pointer; margin-top: 24px; width: 100%;
+    }
+    .start-btn:disabled { background: #A0A0A0; cursor: not-allowed; }
+
+    /* Minimal pairs */
+    .pair-row { display: flex; gap: 16px; }
+    .pair-card {
+      flex: 1; min-height: 96px; border: 2px solid #E0D8C8; border-radius: 12px;
+      background: #FAF3E0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 16px; gap: 8px;
+      cursor: pointer; transition: border-color 0.15s, background 0.15s;
+    }
+    .pair-card.correct { border-color: #3A7D44; background: #F0FBF1; }
+    .pair-card.incorrect { border-color: #D94F3D; background: #FDF0EF; }
+    .pair-word-a { font-size: 26px; color: #E07B39; text-align: center; }
+    .pair-word-b { font-size: 26px; color: #2E6DA4; text-align: center; }
+    .pair-english { font-size: 16px; color: #1A1A1A; text-align: center; }
+    .focus-label { font-size: 16px; color: #6B4FA0; }
+
+    /* Stats */
+    .stats-row { display: flex; gap: 16px; }
+    .stat-box {
+      flex: 1; border: 1px solid #E0D8C8; border-radius: 8px;
+      padding: 16px; display: flex; flex-direction: column;
+      align-items: center; gap: 4px;
+    }
+    .stat-num { font-size: 36px; color: #2E6DA4; line-height: 44px; }
+    .stat-label { font-size: 16px; color: #6B6B6B; text-align: center; }
+    .section-label {
+      font-size: 16px; color: #6B6B6B;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .session-row {
+      display: flex; align-items: center; padding: 8px 0;
+      border-bottom: 1px solid #E0D8C8;
+    }
+    .session-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .session-date { font-size: 18px; color: #1A1A1A; }
+    .session-type { font-size: 16px; color: #6B6B6B; }
+    .session-count { font-size: 18px; color: #2E6DA4; }
+    .empty-msg { font-size: 18px; color: #6B6B6B; text-align: center; margin-top: 40px; }
+
+    /* Sounds screen */
+    .sound-section-heading {
+      font-size: 14px; font-weight: 600; color: #6B6B6B;
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-top: 8px;
+    }
+    .sound-card {
+      border: 1px solid #E0D8C8; border-radius: 10px;
+      padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;
+      background: #FAF3E0;
+    }
+    .sound-card-top { display: flex; align-items: center; gap: 10px; }
+    .sound-spelling { font-size: 24px; font-weight: 600; line-height: 1.2; }
+    .sound-star { font-size: 16px; color: #E07B39; }
+    .sound-desc {
+      font-size: 16px; color: #1A1A1A; line-height: 26px;
+    }
+    .sound-desc.clamped {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .sound-toggle {
+      background: none; border: none; padding: 4px 0;
+      color: #2E6DA4; font-size: 16px; cursor: pointer;
+      min-height: 36px; text-align: left; font-family: inherit;
+      letter-spacing: 0.04em;
+    }
+    .sound-example-row { display: flex; align-items: center; gap: 10px; margin-top: 2px; }
+    .sound-example-word { font-size: 20px; }
+    .sound-example-english { font-size: 15px; color: #6B6B6B; }
+    .sound-example-pronounce {
+      font-size: 16px; color: #1A1A1A; margin-top: 4px;
+      padding: 6px 10px; background: #F0E8D0; border-radius: 6px;
+      display: inline-block; align-self: flex-start;
+    }
+    .sound-example-pronounce strong { color: #2E6DA4; letter-spacing: 0.04em; }
+    .sound-play-btn {
+      background: none; border: 1px solid #E0D8C8; border-radius: 6px;
+      color: #2E6DA4; font-size: 15px; padding: 4px 10px;
+      min-height: 36px; cursor: pointer; flex-shrink: 0;
+    }
+    .sounds-note {
+      font-size: 15px; color: #6B6B6B; line-height: 24px;
+      border-left: 3px solid #E0D8C8; padding-left: 10px;
+    }
+
+    /* Lesson notes — list */
+    .lesson-card {
+      background: #FAF3E0; border: 1px solid #E0D8C8; border-radius: 10px;
+      padding: 16px; display: flex; flex-direction: column; gap: 6px;
+      text-align: left; width: 100%; cursor: pointer;
+      transition: background 0.1s, border-color 0.1s;
+    }
+    .lesson-card:hover { background: #F0E8D0; border-color: #2E6DA4; }
+    .lesson-card-ref { border-left: 4px solid #6B4FA0; }
+    .lesson-card-title { font-size: 20px; font-weight: 600; color: #1A1A1A; }
+    .lesson-card-date  { font-size: 15px; color: #6B6B6B; }
+    .lesson-card-summary { font-size: 16px; color: #1A1A1A; line-height: 26px; }
+
+    /* Lesson notes — detail */
+    .lesson-header { display: flex; flex-direction: column; gap: 4px; padding-bottom: 8px; }
+    .lesson-detail-date { font-size: 15px; color: #6B6B6B; }
+    .lesson-detail-title { font-size: 22px; font-weight: 600; color: #1A1A1A; line-height: 32px; }
+    .lesson-detail-summary { font-size: 17px; color: #1A1A1A; line-height: 27px; margin-top: 4px; }
+    .lesson-section { display: flex; flex-direction: column; gap: 6px; padding: 8px 0; }
+    .lesson-section-heading {
+      font-size: 14px; font-weight: 600; color: #6B6B6B;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .lesson-section-body { font-size: 17px; color: #1A1A1A; line-height: 28px; }
+    .lesson-section-list {
+      font-size: 17px; color: #1A1A1A; line-height: 28px;
+      list-style: none; display: flex; flex-direction: column; gap: 6px;
+      padding: 0; margin: 0;
+    }
+    .lesson-section-list li {
+      padding-left: 16px; position: relative;
+    }
+    .lesson-section-list li::before {
+      content: "•"; color: #2E6DA4; position: absolute; left: 0; top: 0;
+    }
+  </style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ============================================================
+// DATA — update this section after each lesson
+// To add a new lesson: copy one of the category objects below
+// and fill in the words. Dutch — English format.
+// ============================================================
+
+const CATEGORIES = [
+  {
+    name: 'Greetings & Farewells',
+    words: [
+      { dutch: 'Goedemorgen', english: 'Good morning' },
+      { dutch: 'Goedemiddag', english: 'Good afternoon' },
+      { dutch: 'Goedenavond', english: 'Good evening' },
+      { dutch: 'Hallo', english: 'Hello' },
+      { dutch: 'Tot ziens', english: 'Goodbye' },
+      { dutch: 'Hoe gaat het?',     english: 'How are you?' },
+      { dutch: 'Goed, dank je wel', english: 'Fine, thank you' },
+    ],
+  },
+  {
+    name: 'Courtesy Phrases',
+    words: [
+      { dutch: 'Dank je wel', english: 'Thank you (informal)' },
+      { dutch: 'Dank u wel', english: 'Thank you (formal)' },
+      { dutch: 'Alsjeblieft', english: 'Please / Here you go (informal)' },
+      { dutch: 'Alstublieft', english: 'Please / Here you go (formal)' },
+      { dutch: 'Sorry', english: 'Sorry' },
+    ],
+  },
+  {
+    name: 'Numbers 1–20',
+    words: [
+      { dutch: 'één', english: 'one' },
+      { dutch: 'twee', english: 'two' },
+      { dutch: 'drie', english: 'three' },
+      { dutch: 'vier', english: 'four' },
+      { dutch: 'vijf', english: 'five' },
+      { dutch: 'zes', english: 'six' },
+      { dutch: 'zeven', english: 'seven' },
+      { dutch: 'acht', english: 'eight' },
+      { dutch: 'negen', english: 'nine' },
+      { dutch: 'tien', english: 'ten' },
+      { dutch: 'elf',        english: 'eleven' },
+      { dutch: 'twaalf',     english: 'twelve' },
+      { dutch: 'dertien',    english: 'thirteen' },
+      { dutch: 'veertien',   english: 'fourteen' },
+      { dutch: 'vijftien',   english: 'fifteen' },
+      { dutch: 'zestien',    english: 'sixteen' },
+      { dutch: 'zeventien',  english: 'seventeen' },
+      { dutch: 'achttien',   english: 'eighteen' },
+      { dutch: 'negentien',  english: 'nineteen' },
+      { dutch: 'twintig',    english: 'twenty' },
+    ],
+  },
+  {
+    name: 'Numbers 21+ (Inversion)',
+    words: [
+      { dutch: 'eenentwintig',  english: '21 (one-and-twenty)' },
+      { dutch: 'tweeëntwintig', english: '22 (two-and-twenty)' },
+      { dutch: 'vijfendertig',  english: '35 (five-and-thirty)' },
+    ],
+  },
+  {
+    name: 'Days of the Week',
+    words: [
+      { dutch: 'maandag', english: 'Monday' },
+      { dutch: 'dinsdag', english: 'Tuesday' },
+      { dutch: 'woensdag', english: 'Wednesday' },
+      { dutch: 'donderdag', english: 'Thursday' },
+      { dutch: 'vrijdag', english: 'Friday' },
+      { dutch: 'zaterdag', english: 'Saturday' },
+      { dutch: 'zondag', english: 'Sunday' },
+      { dutch: 'vandaag', english: 'today' },
+      { dutch: 'morgen', english: 'tomorrow' },
+    ],
+  },
+  {
+    name: 'Food & Drink',
+    words: [
+      { dutch: 'water',   english: 'water' },
+      { dutch: 'koffie',  english: 'coffee' },
+      { dutch: 'thee',    english: 'tea' },
+      { dutch: 'melk',    english: 'milk' },
+      { dutch: 'bier',    english: 'beer' },
+      { dutch: 'brood',   english: 'bread' },
+      { dutch: 'kaas',    english: 'cheese' },
+      { dutch: 'appel',   english: 'apple' },
+      { dutch: 'vlees',   english: 'meat' },
+      { dutch: 'groente', english: 'vegetables' },
+    ],
+  },
+  {
+    name: 'Ordering & Shopping',
+    words: [
+      { dutch: 'Ik wil graag', english: 'I would like' },
+      { dutch: 'Mag ik', english: 'May I have' },
+      { dutch: 'Hoeveel kost dit?', english: 'How much does this cost?' },
+      { dutch: 'De rekening, alsjeblieft', english: 'The bill, please' },
+      { dutch: 'Dat is alles', english: "That's all" },
+    ],
+  },
+  {
+    name: 'Transport & Directions',
+    words: [
+      { dutch: 'de trein',         english: 'the train' },
+      { dutch: 'de bus',           english: 'the bus' },
+      { dutch: 'de fiets',         english: 'the bicycle' },
+      { dutch: 'het station',      english: 'the station' },
+      { dutch: 'het vliegveld',    english: 'the airport' },
+      { dutch: 'links',            english: 'left' },
+      { dutch: 'rechts',           english: 'right' },
+      { dutch: 'rechtdoor',        english: 'straight ahead' },
+      { dutch: 'Hoe kom ik bij?',  english: 'How do I get to?' },
+    ],
+  },
+  {
+    name: 'Places',
+    words: [
+      { dutch: 'de supermarkt',  english: 'the supermarket' },
+      { dutch: 'het ziekenhuis', english: 'the hospital' },
+      { dutch: 'de apotheek',    english: 'the pharmacy' },
+      { dutch: 'de bibliotheek', english: 'the library' },
+      { dutch: 'de school',      english: 'the school' },
+      { dutch: 'het centrum',    english: 'the city centre' },
+      { dutch: 'de straat',      english: 'the street' },
+    ],
+  },
+  {
+    name: 'Introducing Yourself',
+    words: [
+      { dutch: 'Ik heet', english: 'My name is' },
+      { dutch: 'Ik kom uit', english: 'I come from' },
+      { dutch: 'Ik spreek een beetje Nederlands', english: 'I speak a little Dutch' },
+      { dutch: 'Hoe heet jij?', english: "What's your name?" },
+      { dutch: 'Aangenaam', english: 'Pleased to meet you' },
+    ],
+  },
+  {
+    name: 'Describing Things',
+    words: [
+      { dutch: 'groot', english: 'big' },
+      { dutch: 'klein', english: 'small' },
+      { dutch: 'lekker', english: 'tasty / nice' },
+      { dutch: 'mooi', english: 'beautiful' },
+      { dutch: 'duur', english: 'expensive' },
+    ],
+  },
+  {
+    name: 'Feelings & States',
+    words: [
+      { dutch: 'Ik ben moe', english: 'I am tired' },
+      { dutch: 'Ik ben ziek', english: 'I am ill' },
+      { dutch: 'Ik ben blij', english: 'I am happy' },
+      { dutch: 'Ik heb honger', english: 'I am hungry' },
+      { dutch: 'Het gaat goed', english: "It's going well" },
+      { dutch: 'Ik heb dorst', english: 'I am thirsty' },
+    ],
+  },
+  {
+    name: 'Question Words',
+    words: [
+      { dutch: 'Wat?', english: 'What?' },
+      { dutch: 'Waar?', english: 'Where?' },
+      { dutch: 'Wanneer?', english: 'When?' },
+      { dutch: 'Wie?', english: 'Who?' },
+      { dutch: 'Hoeveel?', english: 'How many / much?' },
+    ],
+  },
+  // ── LESSON 1 ─────────────────────────────────────────────
+  {
+    name: 'Les 1: Thuis (Home)',
+    words: [
+      { dutch: 'het huis', english: 'the house' },
+      { dutch: 'de kamer', english: 'the room' },
+      { dutch: 'de tafel', english: 'the table' },
+      { dutch: 'de stoel', english: 'the chair' },
+      { dutch: 'het bed', english: 'the bed' },
+      { dutch: 'de deur', english: 'the door' },
+      { dutch: 'het raam', english: 'the window' },
+      { dutch: 'de keuken', english: 'the kitchen' },
+      { dutch: 'de badkamer', english: 'the bathroom' },
+      { dutch: 'de lamp', english: 'the lamp' },
+    ],
+  },
+  {
+    name: 'Les 1: Familie (Family)',
+    words: [
+      { dutch: 'de moeder', english: 'the mother' },
+      { dutch: 'de vader', english: 'the father' },
+      { dutch: 'de broer', english: 'the brother' },
+      { dutch: 'de zus', english: 'the sister' },
+      { dutch: 'de oma', english: 'the grandmother' },
+      { dutch: 'de opa', english: 'the grandfather' },
+      { dutch: 'het kind', english: 'the child' },
+      { dutch: 'de baby', english: 'the baby' },
+      { dutch: 'de vriend', english: 'the friend / boyfriend' },
+      { dutch: 'de vriendin', english: 'the female friend / girlfriend' },
+    ],
+  },
+  {
+    name: 'Les 1: Klanken (Sound Examples)',
+    words: [
+      { dutch: 'de maan', english: 'the moon' },
+      { dutch: 'de fiets', english: 'the bicycle' },
+      { dutch: 'de boom', english: 'the tree' },
+      { dutch: 'de kat', english: 'the cat' },
+      { dutch: 'de beer', english: 'the bear' },
+      { dutch: 'de zon', english: 'the sun' },
+      { dutch: 'de muur', english: 'the wall' },
+      { dutch: 'de vis', english: 'the fish' },
+      { dutch: 'de steen', english: 'the stone' },
+      { dutch: 'de jas', english: 'the coat' },
+      { dutch: 'de auto', english: 'the car' },
+      { dutch: 'oud', english: 'old' },
+      { dutch: 'lach', english: 'laugh / smile' },
+      { dutch: 'lang', english: 'long / tall' },
+      { dutch: 'de bank', english: 'the bank / sofa' },
+      { dutch: 'de school', english: 'the school' },
+      { dutch: 'de sjaal', english: 'the scarf' },
+      { dutch: 'nieuw', english: 'new' },
+    ],
+  },
+  {
+    name: 'Les 1: Zinnen (Phrases)',
+    words: [
+      { dutch: 'Ja', english: 'Yes' },
+      { dutch: 'Nee', english: 'No' },
+      { dutch: 'Soms', english: 'Sometimes' },
+      { dutch: 'Mag ik pinnen?', english: 'Can I pay by card?' },
+      { dutch: 'Misschien',            english: 'Maybe' },
+      { dutch: 'Ik weet het niet',     english: "I don't know" },
+      { dutch: 'Kunt u dat herhalen?', english: 'Can you repeat that?' },
+    ],
+  },
+  {
+    name: 'Kleuren (Colours)',
+    words: [
+      { dutch: 'rood',   english: 'red' },
+      { dutch: 'blauw',  english: 'blue' },
+      { dutch: 'groen',  english: 'green' },
+      { dutch: 'geel',   english: 'yellow' },
+      { dutch: 'wit',    english: 'white' },
+      { dutch: 'zwart',  english: 'black' },
+      { dutch: 'oranje', english: 'orange' },
+      { dutch: 'grijs',  english: 'grey' },
+    ],
+  },
+];
+
+// ── ADD LESSON 2 BELOW WHEN READY (copy the block above) ──
+// {
+//   name: 'Les 2: ...',
+//   words: [
+//     { dutch: '...', english: '...' },
+//   ],
+// },
+
+const MINIMAL_PAIRS = [
+  { word_a: 'man',   word_b: 'maan',  english_a: 'man',        english_b: 'moon',              contrast: 'short a vs long aa',  tricky_sound: 'a vs aa' },
+  { word_a: 'bos',   word_b: 'boos',  english_a: 'forest',     english_b: 'angry',             contrast: 'short o vs long oo',  tricky_sound: 'o vs oo' },
+  { word_a: 'bot',   word_b: 'boot',  english_a: 'bone/blunt', english_b: 'boat',              contrast: 'short o vs long oo',  tricky_sound: 'o vs oo' },
+  { word_a: 'met',   word_b: 'meet',  english_a: 'with',       english_b: 'measure',           contrast: 'short e vs long ee',  tricky_sound: 'e vs ee' },
+  { word_a: 'uit',   word_b: 'oud',   english_a: 'out',        english_b: 'old',               contrast: 'ui vs ou',            tricky_sound: 'ui vs ou' },
+  { word_a: 'zijn',  word_b: 'zien',  english_a: 'to be',      english_b: 'to see',            contrast: 'ij vs ie',            tricky_sound: 'ij vs ie' },
+  { word_a: 'deur', word_b: 'door', english_a: 'door', english_b: 'through', contrast: 'eu /øː/ vs oo /oː/', tricky_sound: 'eu vs oo' },
+  { word_a: 'licht', word_b: 'likt',  english_a: 'light',      english_b: 'licks',             contrast: 'ch vs k',             tricky_sound: 'ch vs k' },
+  { word_a: 'groot', word_b: 'kroon', english_a: 'big',        english_b: 'crown',             contrast: 'Dutch g vs k',        tricky_sound: 'g vs k' },
+  { word_a: 'vis',   word_b: 'vies',  english_a: 'fish',       english_b: 'dirty',             contrast: 'short i vs long ie',  tricky_sound: 'i vs ie' },
+  { word_a: 'zon',   word_b: 'zoon',  english_a: 'sun',        english_b: 'son',               contrast: 'short o vs long oo',  tricky_sound: 'o vs oo' },
+  { word_a: 'boom',  word_b: 'bom',   english_a: 'tree',       english_b: 'bomb',              contrast: 'long oo vs short o',  tricky_sound: 'oo vs o' },
+  { word_a: 'lang',  word_b: 'lank',  english_a: 'long / tall',english_b: 'limp / slack',      contrast: 'ng vs nk',            tricky_sound: 'ng vs nk' },
+  { word_a: 'lach',  word_b: 'lak',   english_a: 'laugh',      english_b: 'lacquer / varnish', contrast: 'ch vs k',             tricky_sound: 'ch vs k' },
+  { word_a: 'uit', word_b: 'ijs', english_a: 'out', english_b: 'ice', contrast: 'ui /œy/ vs ij /ɛi/', tricky_sound: 'ui vs ij' },
+  { word_a: 'goed', word_b: 'hoed', english_a: 'good', english_b: 'hat', contrast: 'Dutch g /ɣ/ vs h', tricky_sound: 'g /ɣ/ vs h' },
+];
+
+// ============================================================
+// LESSONS — your notes from each Dutch class
+// To add a new lesson: copy the object below, append it to LESSONS,
+// fill in date / title / summary / sections. Sections render in order.
+// ============================================================
+const LESSONS = [
+  {
+    id: 1,
+    date: '2026-05-18',
+    title: 'Phonetics + Thuis + Familie',
+    summary: 'A phonetics-heavy first lesson covering every major Dutch sound, plus rooms-of-the-house and family vocabulary. One frozen sentence learned: Mag ik pinnen?',
+    sections: [
+      {
+        heading: 'Sounds drilled',
+        items: [
+          'Short vowels — a, e, i, o, u',
+          'Long vowels — aa, ee, ie, oo, uu',
+          'Diphthongs — ou, au, oe, eu, ui, ij, ei',
+          'Consonants and clusters — g, ch, ng, nk, sch, sj, -tje / -je',
+          'Complex vowels — oei, aai, ooi, eeuw, ieuw',
+        ],
+      },
+      {
+        heading: 'Words — Thuis (Home)',
+        items: [
+          'het huis — the house',
+          'de kamer — the room',
+          'de tafel — the table',
+          'de stoel — the chair',
+          'het bed — the bed',
+          'de deur — the door',
+          'het raam — the window',
+          'de keuken — the kitchen',
+          'de badkamer — the bathroom',
+          'de lamp — the lamp',
+        ],
+      },
+      {
+        heading: 'Words — Familie (Family)',
+        items: [
+          'de moeder — mother',
+          'de vader — father',
+          'de broer — brother',
+          'de zus — sister',
+          'de oma — grandmother',
+          'de opa — grandfather',
+          'het kind — child',
+          'de baby — baby',
+          'de vriend — friend / boyfriend',
+          'de vriendin — female friend / girlfriend',
+        ],
+      },
+      {
+        heading: 'Words — phonetics examples',
+        items: [
+          'Short vowels — bad, bed, pop, punt, kat, vis, zon, jas, pinnen',
+          'Long vowels — koop, maar, been, huur, door, die, maan, fiets, boom, beer, muur, steen',
+          'Diphthongs — auto, oud, zoeken, buigen, zeuren, zeiken',
+          'Consonants — lach, lang, bank, school, sjaal, katje',
+          'Complex vowels — gooien, boeien, aaien, eeuwen, nieuw',
+        ],
+      },
+      {
+        heading: 'Phrases',
+        items: [
+          'Ja — yes',
+          'Nee — no',
+          'Soms — sometimes',
+          'Mag ik pinnen? — May I pay by card?',
+        ],
+      },
+      {
+        heading: 'Notes',
+        body: 'No grammar yet — lesson focused on sound system and initial vocabulary. My own transcriptions were wrong on the hardest sounds: ui was blank, eu came out as "ouw", ij/ei as "i", g as blank. Those are the priority traps to drill (see Sound guide ★).\n\nPinnen is culturally important in NL (most shops are card-only). Northern hard G and Southern soft G are both correct Netherlands Dutch.',
+      },
+    ],
+  },
+  // ── ADD LESSON 2 BELOW WHEN READY (copy the block above) ──
+  // {
+  //   id: 2,
+  //   date: 'YYYY-MM-DD',
+  //   title: '...',
+  //   summary: '...',
+  //   sections: [
+  //     { heading: '...', body: '...' },
+  //   ],
+  // },
+
+  // ── REFERENCE GUIDE ─────────────────────────────────────
+  {
+    id: 100,
+    kind: 'reference',
+    date: '2026-05-20',
+    title: 'Dutch Sound Reference Guide',
+    summary: 'Complete reference for all 28 Netherlands Dutch sounds — English-respelling descriptions with example words. ★ = no English equivalent (you must hear the audio).',
+    sections: [
+      {
+        heading: 'Single vowels',
+        items: [
+          'a — like "a" in "cat" or "trap". Short, open, tongue forward. Examples: kat (cat), man (man)',
+          'e (stressed) — like "e" in "bed". Examples: bed (bed), pet (cap)',
+          'e (unstressed) — soft "uh" like "a" in "sofa". Affects de and een, the two most common Dutch words',
+          'i — like "i" in "bit". Short and clipped. Examples: vis (fish), lip (lip)',
+          'o — like "o" in "hot". Lips lightly rounded — American English speakers need more lip rounding than feels natural. Examples: bot (bone), pot (pot)',
+          'u — between "u" in "put" and "u" in "burden". Some lip rounding required. No exact English equivalent. Examples: bus (bus), zus (sister)',
+        ],
+      },
+      {
+        heading: 'Long vowels (double letters)',
+        items: [
+          'aa — like "a" in "father" but held longer. Mouth wide open, do not glide. Examples: maan (moon), kaas (cheese)',
+          'ee — like "ay" in "say". Hold flat — do NOT glide into a "y" at the end. Examples: been (leg), zee (sea)',
+          'ie — like "ee" in "see". Long and clear. Examples: ziek (sick), brief (letter)',
+          'oo — like "o" in "so". Hold flat — do NOT glide into a "w" at the end. Examples: boot (boat), boom (tree)',
+          'uu ★ — say "ee" in "see", keep tongue there, then round and push lips forward. Hold steady. No English equivalent. Examples: uur (hour), muur (wall)',
+        ],
+      },
+      {
+        heading: 'Diphthongs and vowel combos',
+        items: [
+          'ij / ei — starts at "eh" (like "e" in "bed"), glides up to "ee". Closer to "ay" in "say" than to English "eye". Both spellings sound identical — spelling must be memorised. Examples: zijn (to be), reis (journey)',
+          'ou / au — close to "ow" in "cow". Keep firm lip rounding all the way through, no trailing "w". Examples: oud (old), auto (car)',
+          'oe — like "oo" in "moon". Pure, tight lip rounding, not a glide. Examples: boek (book), hoe (how)',
+          'ui ★ — glide from wide-open "a" (as in "cat") to a tight rounded "uu" ★. Not "ow", not "oy". The hardest Dutch vowel — takes months. No English equivalent. Examples: huis (house), tuin (garden)',
+        ],
+      },
+      {
+        heading: 'Consonant sounds',
+        items: [
+          'g ★ — same throat position as ch, but with voice turned on. Northern NL: hard/guttural; Southern NL: softer. Both correct. Examples: goed (good), gaan (to go)',
+          'ch ★ — raise back of tongue toward soft palate; force air through. Like Scottish "loch". Never English "k" or "sh". Examples: lach (laugh), licht (light)',
+          'j — like "y" in "yes". Examples: ja (yes), jaar (year)',
+          '-tje — soft "tch". Lighter and further forward than English "ch" in "church". Only in diminutive endings. Examples: kopje (cup), katje (kitten)',
+          'ng — like "ng" in "sing". No hard "g" at the end (like "singer", not "finger"). Examples: lang (long/tall), ring (ring)',
+          'nk — like "nk" in "think". Examples: bank (bank/sofa), dank (thanks)',
+          'sch — at the START of a word: "s" + Dutch ch throat sound blended. At the END of a word: simplifies to plain "s". Never English "sh". Examples: school (school — start), fantastisch (fantastic — end is "s")',
+          'sj — like "sh" in "shop". Examples: sjaal (scarf), meisje (girl)',
+        ],
+      },
+      {
+        heading: 'Complex vowel combinations',
+        items: [
+          'eu ★ — like British "burn" or "her" without the r, then round and push lips forward as if blowing out a candle. Tongue stays still, only lips move. No English equivalent. Examples: neus (nose), deur (door)',
+          'aai — long "aa" (wide open mouth, like "ah") gliding into "ee". Like a drawn-out "aye". Examples: saai (boring), draai (turn)',
+          'ooi — "oo" in "moon" gliding into "ee" in "see". Examples: mooi (beautiful), nooit (never)',
+          'oei — glide from "oo" to "ee". Closest English sound is "oi" in "oil". One smooth glide, not two syllables. Examples: groei (growth), boei (buoy)',
+          'eeuw — the eu ★ sound gliding into a soft rounded "oo". No hard English "w" at the end. Examples: eeuw (century), leeuw (lion)',
+          'ieuw — "ee" in "see" gliding into the eu ★ sound. No hard English "w" at the end. Examples: nieuw (new), meeuw (seagull)',
+        ],
+      },
+      {
+        heading: 'Top 5 to focus on first',
+        items: [
+          'ui ★ — most common vowel trap (huis, uit, tuin). No English equivalent, takes months.',
+          'g / ch ★ — the most recognisably Dutch sounds. Learn ch first, then add voice for g.',
+          'ee / oo / ij / ei — used constantly. The flat hold (no glide) is the key habit to build.',
+          'eu ★ — everyday words: deur (door), neus (nose), leuk (nice).',
+          'unstressed e — affects de and een, the two most common words in Dutch.',
+        ],
+      },
+      {
+        heading: 'Common mistakes by English speakers',
+        items: [
+          'ee / oo — adding an English glide at the end (saying "ay-ee" or "oh-w"). Keep the sound frozen.',
+          'ij / ei — opening the mouth too wide at the start, making it sound like English "eye". Start from "eh".',
+          'u (short) — dropping all lip rounding and saying a flat "uh". It needs some rounding.',
+          'ui — saying it like English "ow" or "house". The Dutch version is a very different glide.',
+          'g — saying a hard English "g" (stop sound). Dutch g is always friction, never a stop.',
+          'sch — saying "sh" (that is the German version). Dutch sch at the start is "s + throat scrape".',
+          'ng — adding a hard "g" after it (like "finger"). Dutch ng ends softly like "singer".',
+          '-tje — using a strong English "ch". Dutch tje is lighter and further forward.',
+        ],
+      },
+      {
+        heading: 'How to use this guide',
+        body: 'For all ★ sounds, use the Sound guide screen — reading the description alone is not enough. The Sound guide has audio playback for each sound plus an English-respelling cue (e.g. "say: MURE") right next to each example word.',
+      },
+    ],
+  },
+];
+
+// ============================================================
+// SOUNDS DATA
+// ============================================================
+const SOUNDS = [
+  // ── Single Vowels ────────────────────────────────────────
+  // speakAs = a DIFFERENT Dutch word containing the same sound (TTS can't pronounce isolated letters reliably)
+  // exPronounce = English respelling of the displayed example word (always visible on the card)
+  { section: 'Single Vowels', sound: 'a',       speakAs: 'man',    star: false, desc: 'Like "a" in "cat" or "trap" — short, open, tongue forward',                                example: 'kat',    exEnglish: 'cat',          exPronounce: 'KAHT' },
+  { section: 'Single Vowels', sound: 'e',       speakAs: 'pet',    star: false, desc: 'Like "e" in "bed" (stressed). Unstressed: soft "uh" like "a" in "sofa" — this affects de and een, the two most common Dutch words', example: 'bed', exEnglish: 'bed', exPronounce: 'BED' },
+  { section: 'Single Vowels', sound: 'i',       speakAs: 'dit',    star: false, desc: 'Like "i" in "bit" — short and clipped',                                                  example: 'vis',    exEnglish: 'fish',         exPronounce: 'VISS' },
+  { section: 'Single Vowels', sound: 'o',       speakAs: 'bos',    star: false, desc: 'Like "o" in "hot" — lips lightly rounded. American English speakers: add more lip rounding than feels natural', example: 'pot', exEnglish: 'pot', exPronounce: 'POT (rounded lips)' },
+  { section: 'Single Vowels', sound: 'u',       speakAs: 'zus',    star: false, desc: 'Between "u" in "put" and "u" in "burden" — needs some lip rounding. No exact English equivalent', example: 'bus', exEnglish: 'bus', exPronounce: 'BUSS (slight lip-round)' },
+  // ── Long Vowels ──────────────────────────────────────────
+  { section: 'Long Vowels',   sound: 'aa',      speakAs: 'kaas',   star: false, desc: 'Like "a" in "father" but held longer',                                                   example: 'maan',   exEnglish: 'moon',         exPronounce: 'MAHN (held long)' },
+  { section: 'Long Vowels',   sound: 'ee',      speakAs: 'zee',    star: false, desc: 'Like "ay" in "say" — hold it flat, do NOT glide into a "y" at the end',                  example: 'been',   exEnglish: 'leg',          exPronounce: 'BAYN (flat, no glide)' },
+  { section: 'Long Vowels',   sound: 'ie',      speakAs: 'niet',   star: false, desc: 'Like "ee" in "see" — long and clear',                                                    example: 'fiets',  exEnglish: 'bicycle',      exPronounce: 'FEETS' },
+  { section: 'Long Vowels',   sound: 'oo',      speakAs: 'rood',   star: false, desc: 'Like "o" in "so" — hold it flat, do NOT glide',                                          example: 'boom',   exEnglish: 'tree',         exPronounce: 'BOAM (flat, no glide)' },
+  { section: 'Long Vowels',   sound: 'uu',      speakAs: 'duur',   star: true,  desc: 'Say "ee" in "see" but round your lips tightly. No English equivalent',                   example: 'muur',   exEnglish: 'wall',         exPronounce: 'tight-lipped "MURE" (no English equivalent)' },
+  // ── Diphthongs ───────────────────────────────────────────
+  { section: 'Diphthongs',    sound: 'ij / ei', speakAs: 'trein',  star: false, desc: 'Starts at "eh" (like "e" in "bed"), glides up to "ee". Closer to "ay" in "say" than to English "eye". Both spellings sound identical — spelling must be memorised', example: 'zijn', exEnglish: 'to be', exPronounce: 'ZINE (rhymes with "mine")' },
+  { section: 'Diphthongs',    sound: 'ou / au', speakAs: 'blauw',  star: false, desc: 'Close to "ow" in "cow" — keep firm lip rounding all the way through, no trailing "w". Approximate only', example: 'oud', exEnglish: 'old', exPronounce: 'OWT (rounded lips throughout)' },
+  { section: 'Diphthongs',    sound: 'oe',      speakAs: 'hoe',    star: false, desc: 'Like "oo" in "moon" — pure, tight lip rounding, not a glide',                            example: 'boek',   exEnglish: 'book',         exPronounce: 'BOOK' },
+  { section: 'Diphthongs',    sound: 'ui',      speakAs: 'tuin',   star: true,  desc: 'Glide from a wide-open "a" (as in "cat") to a tight rounded "uu" ★. Not "ow", not "oy". The hardest Dutch vowel — takes months. No English equivalent', example: 'huis', exEnglish: 'house', exPronounce: 'HOWSS gliding to HEESS (no English equivalent)' },
+  // ── Consonant Sounds ─────────────────────────────────────
+  // Consonant speakAs = a different Dutch word containing the sound (already different from example for most)
+  { section: 'Consonant Sounds', sound: 'g',    speakAs: 'goed',   star: true,  desc: 'Same throat position as ch, but with your voice turned on — add a buzz. Northern Netherlands: very hard and guttural. Southern Netherlands: softer. Never use the English hard "g" as in "go"', example: 'gaan', exEnglish: 'to go', exPronounce: 'GHAHN (throaty G, not English "g")' },
+  { section: 'Consonant Sounds', sound: 'ch',   speakAs: 'acht',   star: true,  desc: 'Raise the back of your tongue toward the back of your soft palate and force air through — like the start of clearing your throat, held as a continuous sound. Like Scottish "loch". Never say English "k" or "sh"', example: 'lach', exEnglish: 'laugh', exPronounce: 'LAHKH (throaty)' },
+  { section: 'Consonant Sounds', sound: 'j',    speakAs: 'ja',     star: false, desc: 'Like "y" in "yes" — exact match',                                                        example: 'jaar',   exEnglish: 'year',         exPronounce: 'YAHR' },
+  { section: 'Consonant Sounds', sound: '-tje', speakAs: 'kopje',  star: false, desc: 'A soft "tch" — lighter and further forward in the mouth than English "ch" in "church". Only in diminutive endings (-tje, -je)', example: 'katje', exEnglish: 'kitten', exPronounce: 'KAH-tyuh' },
+  { section: 'Consonant Sounds', sound: 'ng',   speakAs: 'ring',   star: false, desc: 'Like "ng" in "sing" — exact match. No hard g at the end (like "singer", not "finger")', example: 'lang',   exEnglish: 'long / tall',  exPronounce: 'LAHNG (soft ng, like "singer")' },
+  { section: 'Consonant Sounds', sound: 'nk',   speakAs: 'dank',   star: false, desc: 'Like "nk" in "think" — exact match',                                                     example: 'bank',   exEnglish: 'bank / sofa',  exPronounce: 'BAHNK' },
+  { section: 'Consonant Sounds', sound: 'sch',  speakAs: 'schoen', star: true,  desc: 'At the START of a word: "s" + Dutch ch throat sound blended. At the END of a word: simplifies to just "s". Never say "sh" — that is the German version', example: 'school', exEnglish: 'school', exPronounce: 'S-KHOAL (S then throaty kh)' },
+  { section: 'Consonant Sounds', sound: 'sj',   speakAs: 'meisje', star: false, desc: 'Like "sh" in "shop" — exact match',                                                      example: 'sjaal',  exEnglish: 'scarf',        exPronounce: 'SHAHL' },
+  // ── Complex Vowels ───────────────────────────────────────
+  { section: 'Complex Vowels',   sound: 'eu',   speakAs: 'leuk',   star: true,  desc: 'Like British "burn" or "her" without the r — then round and push your lips forward as if blowing out a candle. Tongue stays still, only lips move. No English equivalent', example: 'deur', exEnglish: 'door', exPronounce: 'DUR (rounded pushed-forward lips, no R)' },
+  { section: 'Complex Vowels',   sound: 'aai',  speakAs: 'draai',  star: false, desc: 'Long "aa" (wide open mouth, like "ah") gliding into "ee" — like a drawn-out "aye"',     example: 'saai',   exEnglish: 'boring',       exPronounce: 'SAH-ee' },
+  { section: 'Complex Vowels',   sound: 'ooi',  speakAs: 'nooit',  star: false, desc: '"oo" in "moon" gliding into "ee" in "see"',                                              example: 'mooi',   exEnglish: 'beautiful',    exPronounce: 'MOH-ee' },
+  { section: 'Complex Vowels',   sound: 'oei',  speakAs: 'boei',   star: false, desc: 'Closest to "oi" in "oil" — one smooth glide from "oo" to "ee", not two separate syllables', example: 'groei', exEnglish: 'growth', exPronounce: 'GHROO-ee' },
+  { section: 'Complex Vowels',   sound: 'eeuw', speakAs: 'meeuw',  star: false, desc: 'The eu ★ sound gliding into a soft rounded "oo". No hard English "w" at the end',       example: 'leeuw',  exEnglish: 'lion',         exPronounce: 'LAY-oo (soft w)' },
+  { section: 'Complex Vowels',   sound: 'ieuw', speakAs: 'opnieuw',star: false, desc: '"ee" in "see" gliding into the eu ★ sound. No hard English "w" at the end',             example: 'nieuw',  exEnglish: 'new',          exPronounce: 'NEE-oo (soft w)' },
+];
+
+// ============================================================
+// COLOUR CODING
+// Highlights Dutch sound patterns in the flashcard word.
+// Orange = diphthongs, Blue = long vowels, Red = consonant clusters
+// ============================================================
+const COLOR_PATTERNS = [
+  // 3-char first
+  { p: 'sch', c: '#D94F3D' }, { p: 'tje', c: '#D94F3D' },
+  // 2-char diphthongs (orange)
+  { p: 'ui', c: '#E07B39' }, { p: 'ij', c: '#E07B39' }, { p: 'ei', c: '#E07B39' },
+  { p: 'ou', c: '#E07B39' }, { p: 'au', c: '#E07B39' }, { p: 'eu', c: '#E07B39' },
+  // 2-char long vowels (blue)
+  { p: 'aa', c: '#2E6DA4' }, { p: 'ee', c: '#2E6DA4' }, { p: 'oo', c: '#2E6DA4' },
+  { p: 'uu', c: '#2E6DA4' }, { p: 'ie', c: '#2E6DA4' }, { p: 'oe', c: '#2E6DA4' },
+  // 2-char consonant clusters (red)
+  { p: 'sj', c: '#D94F3D' }, { p: 'ng', c: '#D94F3D' }, { p: 'nk', c: '#D94F3D' },
+  { p: 'ch', c: '#D94F3D' },
+];
+
+function colorHtml(text) {
+  const lower = text.toLowerCase();
+  let html = '';
+  let i = 0;
+  while (i < text.length) {
+    let matched = false;
+    for (const { p, c } of COLOR_PATTERNS) {
+      if (lower.startsWith(p, i)) {
+        html += `<span style="color:${c}">${text.slice(i, i + p.length)}</span>`;
+        i += p.length;
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) { html += text[i]; i++; }
+  }
+  return html;
+}
+
+// ============================================================
+// PRONUNCIATION HINTS
+// ============================================================
+const HINTS = {
+  ui: 'ui — start with "ah", round lips tightly toward "oo"',
+  eu: 'eu — say "e" in "bed", then round lips without moving tongue',
+  ij: 'ij / ei — like "ay" in "say" — hold flat, no glide',
+  ei: 'ij / ei — like "ay" in "say" — hold flat, no glide',
+  oe: 'oe — like "oo" in "food" — pure sound, no glide',
+  ch: 'ch / g — raspy throat sound, like clearing your throat',
+  uu: 'uu ★ — say "ee" then round your lips tightly',
+  aa: 'aa — like "a" in "father" held longer',
+  oo: 'oo — like "o" in "so" — hold flat, do not glide',
+  ee: 'ee — like "ay" in "say" — hold flat, do not glide',
+};
+
+function getHint(dutch) {
+  const lower = dutch.toLowerCase();
+  for (const [sound, hint] of Object.entries(HINTS)) {
+    if (lower.includes(sound)) return hint;
+  }
+  return null;
+}
+
+// ============================================================
+// SPEECH
+// ============================================================
+function speak(text, slow) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'nl-NL';
+  utt.rate = slow ? 0.75 : 1.0;
+  window.speechSynthesis.speak(utt);
+}
+
+// ============================================================
+// STORAGE
+// ============================================================
+const K = {
+  words: 'nederly_words', sessions: 'nederly_sessions',
+  attempts: 'nederly_attempts', categories: 'nederly_categories',
+  pairs: 'nederly_minimal_pairs', init: 'nederly_initialized',
+};
+
+function load(key) {
+  try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch { return []; }
+}
+function save(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
+function nextId(items) { return items.length === 0 ? 1 : Math.max(...items.map(i => i.id)) + 1; }
+
+function initStorage() {
+  // Clear and re-seed if the data version changed
+  const stored = localStorage.getItem(K.init);
+  const VERSION = '4'; // bump this when you add new lesson data above
+  if (stored === VERSION) return;
+
+  save(K.categories, CATEGORIES.map((c, i) => ({ id: i + 1, name: c.name })));
+  const words = [];
+  let wid = 1;
+  CATEGORIES.forEach((cat, ci) => {
+    cat.words.forEach(w => {
+      words.push({ id: wid++, dutch: w.dutch, english: w.english, categoryId: ci + 1, sessionId: null, createdAt: Date.now() });
+    });
+  });
+  save(K.words, words);
+  save(K.pairs, MINIMAL_PAIRS.map((p, i) => ({ id: i + 1, ...p })));
+  save(K.sessions, []);
+  save(K.attempts, []);
+  localStorage.setItem(K.init, VERSION);
+}
+
+function getCategories() { return load(K.categories); }
+function getWordsByCategory(catId) { return load(K.words).filter(w => w.categoryId === catId); }
+function getWordsByIds(ids) {
+  const all = load(K.words);
+  return ids.map(id => all.find(w => w.id === id)).filter(Boolean);
+}
+function getAllMinimalPairs() { return load(K.pairs); }
+
+function createSession(wordCount, exerciseType) {
+  const sessions = load(K.sessions);
+  const id = nextId(sessions);
+  sessions.push({ id, createdAt: Date.now(), wordCount, exerciseType });
+  save(K.sessions, sessions);
+  return id;
+}
+
+function recordAttempt(sessionId, wordId, exerciseType, outcome) {
+  const attempts = load(K.attempts);
+  attempts.push({ id: nextId(attempts), sessionId, wordId, exerciseType, outcome, createdAt: Date.now() });
+  save(K.attempts, attempts);
+}
+
+function getSessionOutcomes(sessionId) {
+  const attempts = load(K.attempts).filter(a => a.sessionId === sessionId);
+  return {
+    correct: attempts.filter(a => a.outcome === 'correct').length,
+    incorrect: attempts.filter(a => a.outcome === 'incorrect').length,
+    skipped: attempts.filter(a => a.outcome === 'skipped').length,
+  };
+}
+
+function getSessionStats() {
+  const attempts = load(K.attempts);
+  return { sessionCount: load(K.sessions).length, wordCount: new Set(attempts.map(a => a.wordId)).size };
+}
+
+function getRecentSessions(limit) {
+  return load(K.sessions).sort((a, b) => b.createdAt - a.createdAt).slice(0, limit || 10);
+}
+
+function insertPastedWords(lines, sessionId) {
+  const words = load(K.words);
+  const ids = [];
+  let id = nextId(words);
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+    const parts = trimmed.split(/[-–—]/);
+    const dutch = parts[0].trim();
+    const english = parts.length > 1 ? parts.slice(1).join('-').trim() : '';
+    words.push({ id, dutch, english, categoryId: null, sessionId, createdAt: Date.now() });
+    ids.push(id++);
+  }
+  save(K.words, words);
+  return ids;
+}
+
+// ============================================================
+// STATE
+// ============================================================
+let S = {
+  stack: [{ screen: 'Home' }],
+  // session
+  sessionWords: [],
+  sessionIndex: 0,
+  sessionRevealed: false,
+  sessionId: null,
+  sessionExerciseType: 'flashcard',
+  // add vocab
+  pasteText: '',
+  exerciseType: 'flashcard',
+  // minimal pairs
+  pairs: [],
+  pairIndex: 0,
+  pairTarget: 'a',
+  pairStateA: 'default',
+  pairStateB: 'default',
+  pairDone: false,
+  // session category name (for mastery card)
+  sessionCategoryName: null,
+  // sound card expansion state
+  soundExpanded: {},
+  // lesson notes
+  selectedLessonId: null,
+};
+
+function currentScreen() { return S.stack[S.stack.length - 1].screen; }
+function canGoBack() { return S.stack.length > 1; }
+
+function navigate(screen) {
+  S.stack.push({ screen });
+  if (screen === 'MinimalPairs') {
+    S.pairs = getAllMinimalPairs();
+    S.pairIndex = 0;
+    S.pairTarget = Math.random() < 0.5 ? 'a' : 'b';
+    S.pairStateA = 'default';
+    S.pairStateB = 'default';
+    S.pairDone = false;
+  }
+  render();
+}
+
+function replace(screen) {
+  S.stack[S.stack.length - 1] = { screen };
+  render();
+}
+
+function goBack() {
+  if (S.stack.length > 1) S.stack.pop();
+  render();
+}
+
+// ============================================================
+// DOTS HELPER
+// ============================================================
+function dotsHtml(total, current) {
+  return '<div class="dots">' +
+    Array.from({ length: total }, (_, i) => {
+      const cls = i < current ? 'done' : i === current ? 'active' : '';
+      return `<span class="dot ${cls}"></span>`;
+    }).join('') +
+    '</div>';
+}
+
+// ============================================================
+// SCREENS
+// ============================================================
+function homeHtml() {
+  return `
+    <div class="screen">
+      <p style="font-size:18px">What do you want to practise?</p>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <button class="nav-btn" data-action="navigate" data-screen="AddVocab">Paste your vocab</button>
+        <button class="nav-btn" data-action="navigate" data-screen="Categories">Browse categories</button>
+        <button class="nav-btn" data-action="navigate" data-screen="MinimalPairs">Minimal pair drill</button>
+        <button class="nav-btn" data-action="navigate" data-screen="Sounds">Sound guide</button>
+        <button class="nav-btn" data-action="navigate" data-screen="LessonsList">Lesson notes</button>
+      </div>
+      <button class="text-btn" data-action="navigate" data-screen="Progress">View progress</button>
+    </div>`;
+}
+
+function addVocabHtml() {
+  const lines = S.pasteText.split('\n').filter(l => l.trim().length > 0).slice(0, 20);
+  const count = lines.length;
+  const countHtml = count > 0 ? `<p class="word-count">${count} word${count !== 1 ? 's' : ''} ready</p>` : '';
+  return `
+    <div class="screen">
+      <p style="font-size:18px">Paste one word or phrase per line:</p>
+      <textarea id="paste-input" class="paste-area" rows="7"
+        placeholder="goedemorgen\ndank je wel\ntot ziens">${S.pasteText}</textarea>
+      ${countHtml}
+      <p style="font-size:18px">Exercise type:</p>
+      <div style="display:flex;flex-direction:column;gap:0">
+        <button class="radio-btn" data-action="set-exercise" data-type="flashcard">
+          <span class="radio-circle ${S.exerciseType === 'flashcard' ? 'selected' : ''}"></span>Flashcard
+        </button>
+        <button class="radio-btn" data-action="set-exercise" data-type="listen_and_repeat">
+          <span class="radio-circle ${S.exerciseType === 'listen_and_repeat' ? 'selected' : ''}"></span>Listen &amp; repeat
+        </button>
+      </div>
+      <button class="start-btn" data-action="start-session" ${count === 0 ? 'disabled' : ''}>
+        Start Practice
+      </button>
+    </div>`;
+}
+
+function categoriesHtml() {
+  const cats = getCategories();
+  return `
+    <div class="screen">
+      ${cats.map(cat => `
+        <button class="nav-btn" data-action="select-category" data-id="${cat.id}">
+          ${cat.name}
+        </button>`).join('')}
+    </div>`;
+}
+
+function sessionHtml() {
+  const words = S.sessionWords;
+  if (!words.length) return '<div class="screen"><p>No words.</p></div>';
+  const word = words[S.sessionIndex];
+  const revealed = S.sessionRevealed;
+  const hint = revealed ? getHint(word.dutch) : null;
+  const hintHtml = hint ? `<div class="hint">${hint}</div>` : '';
+  const revealedContent = revealed ? `
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+      <span class="card-english">${word.english || '—'}</span>
+    </div>` : `<span class="card-tap">Tap to reveal</span>`;
+
+  const outcomeHtml = revealed ? `
+    <div class="outcome-row">
+      <button class="missed-btn" data-action="advance" data-outcome="incorrect">✗ Missed it</button>
+      <button class="got-btn" data-action="advance" data-outcome="correct">✓ Got it</button>
+    </div>` : '';
+
+  const totalWords = words.length;
+  const currentPos = Math.min(S.sessionIndex + (revealed ? 1 : 0), totalWords);
+  const pctFill = (currentPos / totalWords) * 100;
+  return `
+    <div class="screen">
+      ${dotsHtml(words.length, S.sessionIndex)}
+      <div class="progress-row">
+        <div class="progress-track">
+          <div class="progress-fill" style="width:${pctFill}%"></div>
+        </div>
+        <span class="progress-label">${currentPos} of ${totalWords}</span>
+      </div>
+      <div class="card ${revealed ? 'revealed' : ''}" data-action="${revealed ? '' : 'reveal'}">
+        <div class="card-word">${colorHtml(word.dutch)}</div>
+        <div class="play-row">
+          <button class="play-btn" data-action="speak" data-text="${word.dutch}">▶ Play</button>
+          ${revealed ? `<button class="play-btn slow" data-action="speak" data-text="${word.dutch}" data-slow="true">▶ Slow</button>` : ''}
+        </div>
+        ${revealedContent}
+      </div>
+      ${hintHtml}
+      ${outcomeHtml}
+    </div>`;
+}
+
+function sessionCompleteHtml() {
+  const out = getSessionOutcomes(S.sessionId);
+  const total = out.correct + out.incorrect + out.skipped;
+  const categoryLine = S.sessionCategoryName
+    ? `Category: ${S.sessionCategoryName}`
+    : 'Pasted vocab';
+  const skippedRow = out.skipped > 0 ? `
+    <div class="outcome-row-item">
+      <span style="color:#6B6B6B;font-size:18px;width:24px;text-align:center">–</span>
+      <span style="flex:1;font-size:18px">Skipped</span>
+      <strong style="color:#6B6B6B;font-size:18px">${out.skipped}</strong>
+    </div>` : '';
+  return `
+    <div class="complete-screen">
+      <h2 style="font-size:20px;font-weight:600">Nice session.</h2>
+      <p style="font-size:18px;color:#1A1A1A;margin-top:16px">
+        You practiced ${total} word${total !== 1 ? 's' : ''} today.
+      </p>
+      <p style="font-size:18px;color:#1A1A1A">${categoryLine}</p>
+      <div style="width:100%;display:flex;flex-direction:column;gap:8px;margin-top:24px">
+        <div class="outcome-row-item">
+          <span style="color:#3A7D44;font-size:18px;width:24px;text-align:center">✓</span>
+          <span style="flex:1;font-size:18px">Got it</span>
+          <strong style="color:#3A7D44;font-size:18px">${out.correct}</strong>
+        </div>
+        <div class="outcome-row-item">
+          <span style="color:#D94F3D;font-size:18px;width:24px;text-align:center">✗</span>
+          <span style="flex:1;font-size:18px">Missed</span>
+          <strong style="color:#D94F3D;font-size:18px">${out.incorrect}</strong>
+        </div>
+        ${skippedRow}
+      </div>
+      <button class="home-btn" data-action="go-home">Back home</button>
+    </div>`;
+}
+
+function minimalPairsHtml() {
+  const pairs = S.pairs;
+  if (!pairs.length) return `<div class="screen"><p class="empty-msg">No minimal pairs yet.</p></div>`;
+  if (S.pairDone) return `
+    <div class="screen" style="align-items:center">
+      <p style="font-size:22px">All done!</p>
+      <p style="font-size:18px;color:#6B6B6B">Completed all ${pairs.length} pairs.</p>
+    </div>`;
+
+  const pair = pairs[S.pairIndex];
+  const promptWord = S.pairTarget === 'a' ? pair.word_a : pair.word_b;
+  const answered = S.pairStateA !== 'default' || S.pairStateB !== 'default';
+
+  return `
+    <div class="screen">
+      ${dotsHtml(pairs.length, S.pairIndex)}
+      <div style="display:flex;align-items:center;gap:16px">
+        <p style="flex:1;font-size:18px">Tap the word you hear:</p>
+        <button class="play-btn" data-action="speak" data-text="${promptWord}">▶ Play</button>
+      </div>
+      <p class="focus-label">Focus: ${pair.tricky_sound}</p>
+      <div class="pair-row">
+        <div class="pair-card ${S.pairStateA}" data-action="${answered ? '' : 'pick-pair'}" data-choice="a">
+          <span class="pair-word-a">${pair.word_a}</span>
+          <span class="pair-english">${pair.english_a}</span>
+        </div>
+        <div class="pair-card ${S.pairStateB}" data-action="${answered ? '' : 'pick-pair'}" data-choice="b">
+          <span class="pair-word-b">${pair.word_b}</span>
+          <span class="pair-english">${pair.english_b}</span>
+        </div>
+      </div>
+    </div>`;
+}
+
+function soundsHtml() {
+  // Group by section
+  const sections = [];
+  const seen = {};
+  for (const s of SOUNDS) {
+    if (!seen[s.section]) { seen[s.section] = true; sections.push(s.section); }
+  }
+
+  const sectionsHtml = sections.map(sec => {
+    const items = SOUNDS.filter(s => s.section === sec);
+    const cardsHtml = items.map(s => {
+      const starHtml = s.star ? `<span class="sound-star">★</span>` : '';
+      const key = `${s.section}:${s.sound}`;
+      const expanded = !!S.soundExpanded[key];
+      const descClass = expanded ? 'sound-desc' : 'sound-desc clamped';
+      const toggleLabel = expanded ? 'Show less' : 'Show more';
+      return `
+        <div class="sound-card">
+          <div class="sound-card-top">
+            <span class="sound-spelling">${colorHtml(s.sound)}</span>
+            ${starHtml}
+          </div>
+          <p class="${descClass}" data-sound-key="${key}">${s.desc}</p>
+          <button class="sound-toggle" data-action="toggle-sound" data-key="${key}">${toggleLabel}</button>
+          <div class="sound-example-row">
+            <button class="sound-play-btn" data-action="speak" data-text="${s.speakAs}" title="Hear the sound">▶ Sound</button>
+            <button class="sound-play-btn" data-action="speak" data-text="${s.example}" title="Hear in a word">▶ ${colorHtml(s.example)}</button>
+            <span class="sound-example-english">${s.exEnglish}</span>
+          </div>
+          <p class="sound-example-pronounce">say: <strong>${s.exPronounce}</strong></p>
+        </div>`;
+    }).join('');
+    return `<p class="sound-section-heading">${sec}</p>${cardsHtml}`;
+  }).join('');
+
+  return `
+    <div class="screen">
+      <p class="sounds-note">★ = no English equivalent — listen carefully and try to copy the sound.</p>
+      ${sectionsHtml}
+    </div>`;
+}
+
+function lessonsListHtml() {
+  if (!LESSONS.length) {
+    return `<div class="screen"><p class="empty-msg">No lesson notes yet. Add one in the LESSONS array.</p></div>`;
+  }
+  const cardsHtml = LESSONS.map(l => {
+    const isRef = l.kind === 'reference';
+    const titleLine = isRef ? l.title : `Lesson ${l.id} — ${l.title}`;
+    const dateLine  = isRef ? `Reference · updated ${l.date}` : l.date;
+    return `
+    <button class="lesson-card${isRef ? ' lesson-card-ref' : ''}" data-action="select-lesson" data-id="${l.id}">
+      <span class="lesson-card-title">${titleLine}</span>
+      <span class="lesson-card-date">${dateLine}</span>
+      <span class="lesson-card-summary">${l.summary}</span>
+    </button>`;
+  }).join('');
+  return `<div class="screen">${cardsHtml}</div>`;
+}
+
+function lessonDetailHtml() {
+  const lesson = LESSONS.find(l => l.id === S.selectedLessonId);
+  if (!lesson) {
+    return `<div class="screen"><p class="empty-msg">Lesson not found.</p></div>`;
+  }
+  const sectionsHtml = lesson.sections.map(sec => {
+    let inner;
+    if (sec.items && sec.items.length) {
+      inner = `<ul class="lesson-section-list">${sec.items.map(i => `<li>${i}</li>`).join('')}</ul>`;
+    } else {
+      inner = `<p class="lesson-section-body">${(sec.body || '').replace(/\n/g, '<br>')}</p>`;
+    }
+    return `
+    <div class="lesson-section">
+      <h3 class="lesson-section-heading">${sec.heading}</h3>
+      ${inner}
+    </div>`;
+  }).join('');
+  const isRef = lesson.kind === 'reference';
+  const titleLine = isRef ? lesson.title : `Lesson ${lesson.id} — ${lesson.title}`;
+  const dateLine  = isRef ? `Reference · updated ${lesson.date}` : lesson.date;
+  return `
+    <div class="screen">
+      <div class="lesson-header">
+        <span class="lesson-detail-date">${dateLine}</span>
+        <h2 class="lesson-detail-title">${titleLine}</h2>
+        <p class="lesson-detail-summary">${lesson.summary}</p>
+      </div>
+      ${sectionsHtml}
+    </div>`;
+}
+
+function progressHtml() {
+  const stats = getSessionStats();
+  const sessions = getRecentSessions(10);
+  const sessionRows = sessions.length === 0
+    ? `<p class="empty-msg">No sessions yet. Start practising!</p>`
+    : `<p class="section-label">Recent sessions</p>` +
+      sessions.map(s => {
+        const d = new Date(s.createdAt);
+        const date = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        const time = d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+        const type = s.exerciseType === 'flashcard' ? 'Flashcard' : 'Listen & repeat';
+        return `
+          <div class="session-row">
+            <div class="session-info">
+              <span class="session-date">${date} ${time}</span>
+              <span class="session-type">${type}</span>
+            </div>
+            <span class="session-count">${s.wordCount} words</span>
+          </div>`;
+      }).join('');
+
+  return `
+    <div class="screen">
+      <div class="stats-row">
+        <div class="stat-box">
+          <span class="stat-num">${stats.sessionCount}</span>
+          <span class="stat-label">sessions</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">${stats.wordCount}</span>
+          <span class="stat-label">words practiced</span>
+        </div>
+      </div>
+      ${sessionRows}
+    </div>`;
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+const TITLES = {
+  Home: 'Nederly', AddVocab: "Add today's words",
+  Categories: 'Choose a category', Session: 'Practice',
+  MinimalPairs: 'Minimal pairs', Progress: 'Progress',
+  Sounds: 'Sound guide',
+  LessonsList: 'Lesson notes', LessonDetail: 'Lesson',
+};
+
+function render() {
+  const screen = currentScreen();
+  const showHeader = screen !== 'SessionComplete';
+  const back = canGoBack() && screen !== 'SessionComplete'
+    ? `<button class="back-btn" data-action="back">←</button>` : '';
+
+  const header = showHeader
+    ? `<header class="header">${back}<h1>${TITLES[screen] || ''}</h1></header>`
+    : '';
+
+  let body = '';
+  if (screen === 'Home')            body = homeHtml();
+  else if (screen === 'AddVocab')   body = addVocabHtml();
+  else if (screen === 'Categories') body = categoriesHtml();
+  else if (screen === 'Session')    body = sessionHtml();
+  else if (screen === 'SessionComplete') body = sessionCompleteHtml();
+  else if (screen === 'MinimalPairs')    body = minimalPairsHtml();
+  else if (screen === 'Progress')        body = progressHtml();
+  else if (screen === 'Sounds')          body = soundsHtml();
+  else if (screen === 'LessonsList')     body = lessonsListHtml();
+  else if (screen === 'LessonDetail')    body = lessonDetailHtml();
+
+  document.getElementById('app').innerHTML = header + `<main style="flex:1">${body}</main>`;
+
+  // Restore textarea value without losing cursor
+  const ta = document.getElementById('paste-input');
+  if (ta) ta.value = S.pasteText;
+
+  // Hide "Show more" on sound cards that don't actually overflow
+  if (currentScreen() === 'Sounds') {
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.sound-desc.clamped').forEach(el => {
+        if (el.scrollHeight <= el.clientHeight + 1) {
+          const key = el.dataset.soundKey;
+          const toggle = document.querySelector(`.sound-toggle[data-key="${key}"]`);
+          if (toggle) toggle.style.display = 'none';
+        }
+      });
+    });
+  }
+}
+
+// ============================================================
+// EVENTS
+// ============================================================
+document.addEventListener('click', function(e) {
+  // Stop play buttons from triggering the card reveal
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  const action = btn.dataset.action;
+  if (!action) return;
+
+  if (action === 'speak') {
+    e.stopPropagation();
+    speak(btn.dataset.text, btn.dataset.slow === 'true');
+    return;
+  }
+
+  if (action === 'back') { goBack(); return; }
+  if (action === 'go-home') { S.stack = [{ screen: 'Home' }]; render(); return; }
+  if (action === 'navigate') { navigate(btn.dataset.screen); return; }
+
+  if (action === 'set-exercise') {
+    S.exerciseType = btn.dataset.type;
+    render();
+    return;
+  }
+
+  if (action === 'start-session') {
+    const lines = S.pasteText.split('\n').filter(l => l.trim().length > 0).slice(0, 20);
+    if (!lines.length) return;
+    const sessionId = createSession(lines.length, S.exerciseType);
+    const wordIds = insertPastedWords(lines, sessionId);
+    S.sessionWords = getWordsByIds(wordIds);
+    S.sessionIndex = 0;
+    S.sessionRevealed = false;
+    S.sessionId = sessionId;
+    S.sessionExerciseType = S.exerciseType;
+    S.sessionCategoryName = null;
+    S.pasteText = '';
+    replace('Session');
+    return;
+  }
+
+  if (action === 'select-category') {
+    const catId = parseInt(btn.dataset.id);
+    const words = getWordsByCategory(catId);
+    if (!words.length) return;
+    const cat = getCategories().find(c => c.id === catId);
+    S.sessionCategoryName = cat ? cat.name : null;
+    const sessionId = createSession(words.length, 'flashcard');
+    S.sessionWords = words;
+    S.sessionIndex = 0;
+    S.sessionRevealed = false;
+    S.sessionId = sessionId;
+    S.sessionExerciseType = 'flashcard';
+    navigate('Session');
+    return;
+  }
+
+  if (action === 'select-lesson') {
+    S.selectedLessonId = parseInt(btn.dataset.id);
+    navigate('LessonDetail');
+    return;
+  }
+
+  if (action === 'toggle-sound') {
+    const key = btn.dataset.key;
+    S.soundExpanded[key] = !S.soundExpanded[key];
+    render();
+    return;
+  }
+
+  if (action === 'reveal') {
+    S.sessionRevealed = true;
+    render();
+    return;
+  }
+
+  if (action === 'advance') {
+    const outcome = btn.dataset.outcome;
+    recordAttempt(S.sessionId, S.sessionWords[S.sessionIndex].id, S.sessionExerciseType, outcome);
+    const next = S.sessionIndex + 1;
+    if (next >= S.sessionWords.length) {
+      replace('SessionComplete');
+    } else {
+      S.sessionIndex = next;
+      S.sessionRevealed = false;
+      render();
+    }
+    return;
+  }
+
+  if (action === 'pick-pair') {
+    const choice = btn.dataset.choice;
+    const correct = choice === S.pairTarget;
+    S.pairStateA = choice === 'a' ? (correct ? 'correct' : 'incorrect') : (correct ? 'default' : 'correct');
+    S.pairStateB = choice === 'b' ? (correct ? 'correct' : 'incorrect') : (correct ? 'default' : 'correct');
+    render();
+    setTimeout(() => {
+      const next = S.pairIndex + 1;
+      if (next >= S.pairs.length) { S.pairDone = true; render(); return; }
+      S.pairIndex = next;
+      S.pairTarget = Math.random() < 0.5 ? 'a' : 'b';
+      S.pairStateA = 'default';
+      S.pairStateB = 'default';
+      render();
+    }, 900);
+    return;
+  }
+});
+
+document.addEventListener('input', function(e) {
+  if (e.target && e.target.id === 'paste-input') {
+    S.pasteText = e.target.value;
+    // Update word count without full re-render (avoids cursor jump)
+    const lines = S.pasteText.split('\n').filter(l => l.trim().length > 0).slice(0, 20);
+    const countEl = document.querySelector('.word-count');
+    if (countEl) {
+      countEl.textContent = lines.length > 0 ? `${lines.length} word${lines.length !== 1 ? 's' : ''} ready` : '';
+    }
+    const startBtn = document.querySelector('.start-btn');
+    if (startBtn) startBtn.disabled = lines.length === 0;
+  }
+});
+
+// ============================================================
+// INIT
+// ============================================================
+initStorage();
+render();
+</script>
+</body>
+</html>
