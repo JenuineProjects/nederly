@@ -1,763 +1,526 @@
-# Design Spec — Nederly VERSION 4
-
-> Buildable specification for the v3 → v4 update of `nederly.html`.
-> The Builder implements this verbatim — no design decisions remain open.
-> All decisions cite an upstream document (Researcher, Dutch Expert, Dyslexia Expert, Phonetics).
+# Nederly — Designer Agent Report
+*Focus: professional visual polish, phonetic display, flashcard UX*
+*Version bump: 5 → 6 | Generated: 2026-05-22*
 
 ---
 
-## 0. Scope of this version (v4)
+## 1. Architecture Decision
 
-Six concrete change groups, in implementation order:
-
-1. **Content** — expand Food & Drink, Transport, Places; add Numbers 21+ category. (Per Dutch Expert §2.5, §2.7, §2.8, §8.)
-2. **Minimal pairs** — replace `huis/hijs` with `uit/ijs`; remove `neus/noos`. (Per Phonetics §3.2, §3.3.)
-3. **Engagement — category progress bar** on the Session screen. (Per Dyslexia Expert §11.1.)
-4. **Engagement — mastery card** replaces the percentage-heavy SessionComplete screen. (Per Dyslexia Expert §11.2.)
-5. **Sound guide card density** — `-webkit-line-clamp: 2` on description + "Show more" toggle. (Per Dyslexia Expert §9 / §10 "still required" table.)
-6. **VERSION bump** — `'3'` → `'4'` in `initStorage` to trigger re-seed. (Per architecture rule in brief §1.)
-
-Items deferred to a future version are listed in §10.
+Nederly remains a fully offline single-page application. No network requests, no backend, no API keys. All vocabulary, phonetic data, and logic are hardcoded in `index.html`. Storage is `localStorage`. Speech is the browser's built-in Web Speech API (`lang: nl-NL`). The file opens by double-click or GitHub Pages — no build step, no server.
 
 ---
 
-## 1. Architecture decision (unchanged from v3)
+## 2. Tech Stack
 
-Per Designer Brief §1 — PREDETERMINED:
+| Layer | Technology |
+|-------|-----------|
+| Markup | Single `index.html` — HTML5 |
+| Style | `<style>` block inside `index.html` — plain CSS, no preprocessor |
+| Logic | `<script>` block inside `index.html` — vanilla ES6+ JS, no framework |
+| Font | `OpenDyslexic` loaded via `@font-face` from local `woff2` file |
+| Speech | `window.speechSynthesis` — Web Speech API, `lang: nl-NL` |
+| Storage | `localStorage` — keys prefixed `nederly_` |
+| Hosting | GitHub Pages (static file delivery) |
 
-- Fully offline. No API, no backend, no LLM at runtime.
-- **TTS:** Web Speech API — `window.speechSynthesis`, `lang: 'nl-NL'`, `rate: 1.0` normal / `0.75` slow.
-- **IPA:** static text in `SOUNDS`/inline cues (no IPA in CATEGORIES — keep as-is).
-- **Vocab generation:** none. Hardcoded `CATEGORIES` + `MINIMAL_PAIRS` arrays + user "Paste your vocab" path.
-- **Storage:** `localStorage`. `VERSION` constant in `initStorage()` triggers re-seed when bumped.
-- **No build step, no npm, no framework, no third-party libraries.**
-
-Confirmed unchanged for v4.
-
----
-
-## 2. Tech stack (unchanged from v3)
-
-| Item | Value |
-|------|-------|
-| File | Single `nederly.html` |
-| Language | Vanilla HTML5 + CSS3 + JS (ES2020) |
-| Storage | `localStorage` |
-| Audio | Web Speech API (`window.speechSynthesis`, `lang: 'nl-NL'`) |
-| Font | OpenDyslexic (WOFF2, local) + `system-ui` fallback |
-| Target | Mobile browsers (Chrome Android, Safari iOS), 320px viewport minimum |
+No changes to the tech stack in this version.
 
 ---
 
-## 3. Data model
-
-### 3.1 In-file constants (hardcoded, re-seeded on version bump)
-
-| Constant | Shape | Purpose |
-|----------|-------|---------|
-| `CATEGORIES` | `[{ name: string, words: [{ dutch, english }] }]` | Seed of practice categories. v4 edits — see §8. |
-| `MINIMAL_PAIRS` | `[{ word_a, word_b, english_a, english_b, contrast, tricky_sound }]` | Seed of pair-discrimination drills. v4 edits — see §8. |
-| `SOUNDS` | `[{ section, sound, speakAs, star, desc, example, exEnglish }]` | Sound-guide cards. **No schema change in v4.** |
-| `COLOR_PATTERNS` | `[{ p, c }]` | Letter-pattern colour highlights. Unchanged. |
-| `HINTS` | `{ sound: hintText }` | Per-sound pronunciation hints on Session. Unchanged. |
-
-### 3.2 localStorage keys (unchanged)
-
-| Key | Shape | Notes |
-|-----|-------|-------|
-| `nederly_words` | `[{ id, dutch, english, categoryId, sessionId, createdAt }]` | Re-seeded on version bump |
-| `nederly_categories` | `[{ id, name }]` | Re-seeded on version bump |
-| `nederly_minimal_pairs` | `[{ id, ...MINIMAL_PAIRS[i] }]` | Re-seeded on version bump |
-| `nederly_sessions` | `[{ id, createdAt, wordCount, exerciseType }]` | Cleared on version bump |
-| `nederly_attempts` | `[{ id, sessionId, wordId, exerciseType, outcome, createdAt }]` | Cleared on version bump |
-| `nederly_initialized` | string — current VERSION | Triggers re-seed when ≠ `'4'` |
-
-### 3.3 Derived values used by new components
-
-| Value | Derivation | Used by |
-|-------|------------|---------|
-| `categoryWordCount` | `S.sessionWords.length` (already in state) | Category progress bar (§5.1) |
-| `currentPosition` | `S.sessionIndex + 1` when revealed/answered, else `S.sessionIndex` | Category progress bar label |
-| `wordsThisSession` | `out.correct + out.incorrect + out.skipped` | Mastery card body (§5.2) |
-| `sessionCategoryName` | New state field `S.sessionCategoryName: string \| null` — set in `select-category` handler, cleared in paste flow | Mastery card body line 2 |
-
-**No persistent schema change.** All new values are runtime-derived.
-
----
-
-## 4. Screen list with flow
-
-Eight screens. **Changes vs v3 are bolded.** All other screens unchanged.
-
-### 4.1 Home (unchanged)
-- Purpose: launch into one of four practice modes.
-- Entry: app open / Back from any screen.
-- Exit: AddVocab, Categories, MinimalPairs, Sounds, Progress.
-
-### 4.2 AddVocab (unchanged)
-- Purpose: paste 1–20 lines of vocab → start a session.
-- Entry: Home.
-- Exit: Session.
-
-### 4.3 Categories (unchanged structure — content expanded; see §8)
-- Purpose: pick a curated category to drill.
-- Entry: Home.
-- Exit: Session.
-
-### 4.4 **Session (modified — adds progress bar)**
-- Purpose: flashcard practice loop over `S.sessionWords`.
-- Entry: AddVocab, Categories.
-- Exit: SessionComplete (on last advance).
-- **Change vs v3:** Add a thin progress bar between dots-row and card, showing position in the category. Dots row is **kept** (it shows micro-position; the bar shows macro % completed). See §5.1.
-
-```
-+----------------------------------+
-| ← Practice                       |  <- header
-+----------------------------------+
-| ● ● ◐ ○ ○ ○ ○ ○ ○ ○             |  <- dots (kept)
-| [██████░░░░░░░░░░░░░]  3 of 10  |  <- NEW progress bar + label
-|                                  |
-| +----------------------------+   |
-| |        Dutch word          |   |
-| |     [▶ Play]  [▶ Slow]     |   |
-| |   English (when revealed)  |   |
-| +----------------------------+   |
-|                                  |
-| | hint line (when revealed)      |
-|                                  |
-| [ ✗ Missed it ]  [ ✓ Got it ]    |
-+----------------------------------+
-```
-
-### 4.5 **SessionComplete → MasteryCard (renamed + redesigned)**
-- Purpose: brief reflection card. Replaces the percentage-heavy v3 screen.
-- Entry: Session (last advance).
-- Exit: Home (single CTA).
-- **Change vs v3:** Removes the giant `64px` percentage. Adds reflection lines. See §5.2.
-
-```
-+----------------------------------+
-|                                  |
-|      Nice session.               |  <- heading 20px bold
-|                                  |
-|   You practiced 8 words today.   |  <- 18px
-|                                  |
-|   Category: Food & Drink         |  <- 18px (or "Pasted vocab")
-|                                  |
-|   ✓ 6 got it                     |  <- kept from v3, smaller
-|   ✗ 2 missed                     |
-|                                  |
-|   [    Back home    ]            |  <- 64px CTA
-+----------------------------------+
-```
-
-> No percentage. No "come back tomorrow". No streak. (Per Dyslexia Expert §11.2 "what is *not* shown".)
-
-### 4.6 MinimalPairs (unchanged structure — pair list edited; see §8)
-- Purpose: discriminate `word_a` vs `word_b` by listening.
-- Entry: Home.
-- Exit: Back to Home.
-
-### 4.7 **Sounds (modified — card density fix)**
-- Purpose: browse Dutch sounds.
-- Entry: Home.
-- Exit: Back to Home.
-- **Change vs v3:** `.sound-desc` gets `-webkit-line-clamp: 2`. A "Show more" / "Show less" toggle is added per card. See §5.3.
-
-```
-+----------------------------------+
-| ★ = no English equivalent...     |
-|                                  |
-| SINGLE VOWELS                    |
-| +----------------------------+   |
-| | a                          |   |
-| | Like "a" in "cat" — short, |   |  <- clamped to 2 lines
-| | tongue forward             |   |
-| | Show more                  |   |  <- NEW toggle (only if truncated)
-| | [▶ Sound] [▶ kat]   cat    |   |
-| +----------------------------+   |
-```
-
-### 4.8 Progress (unchanged)
-- Purpose: stats + recent sessions list.
-- Entry: Home.
-- Exit: Back to Home.
-
----
-
-## 5. Component contracts (new + modified)
-
-### 5.1 ProgressBar (new)
-
-Used on the Session screen, between dots row and card.
-
-| Prop | Type | Required | Notes |
-|------|------|----------|-------|
-| `total` | number | yes | `S.sessionWords.length` |
-| `current` | number | yes | `S.sessionIndex` (0-based; bar fill = `current / total` until last advance, then full) |
-
-**Visual states:** single state — no hover, no tap.
-
-**Tokens consumed** (per Dyslexia Expert §11.1):
-- Track background: `#E8DFC4`
-- Fill: `#2E6DA4` (Accent Blue)
-- Height: `6px`
-- Border radius: `3px`
-- Width transition: `300ms ease-out`
-- Label: `16px`, colour `#6B6B6B`, left-aligned, sentence case, format `"{current+1} of {total}"` while in-progress, `"{total} of {total}"` on the complete state.
-- Layout: bar takes remaining width; label is to the right with `8px` gap. Container `margin-top: 0; margin-bottom: 8px`.
-
-### 5.2 MasteryCard (new — replaces v3 SessionComplete content)
-
-| Prop | Type | Required | Notes |
-|------|------|----------|-------|
-| `wordsPracticed` | number | yes | `out.correct + out.incorrect + out.skipped` |
-| `categoryName` | string \| null | yes | `S.sessionCategoryName`. If null → render "Pasted vocab" |
-| `correct` | number | yes | from `getSessionOutcomes()` |
-| `incorrect` | number | yes | from `getSessionOutcomes()` |
-| `skipped` | number | yes | from `getSessionOutcomes()` |
-
-**Visual states:** single state.
-
-**Tokens consumed** (per Dyslexia Expert §11.2):
-- Heading "Nice session.": `20px` bold, colour `#1A1A1A`, sentence case, centred.
-- Body line 1 "You practiced {N} words today.": `18px`, `#1A1A1A`.
-- Body line 2 "Category: {name}" or "Pasted vocab": `18px`, `#1A1A1A`.
-- Outcome rows (kept from v3, restyled smaller): `18px`, ticks/crosses keep `#3A7D44` / `#D94F3D`.
-- CTA "Back home": uses existing `.home-btn` (already 64px, `#2E6DA4`, white text).
-- **No `.pct` element. No percentage. No "%".**
-- Section gap: `lg` (24px) between heading block and outcomes; `md` (16px) within blocks.
-
-**Hex codes summary** — all already present in v3 tokens; no new colours needed beyond reusing existing.
-
-### 5.3 SoundCard (modified — line-clamp + toggle)
-
-| Prop | Type | Required | Notes |
-|------|------|----------|-------|
-| `sound` | string | yes | unchanged |
-| `desc` | string | yes | wrapped in `.sound-desc` |
-| `star` | boolean | yes | unchanged |
-| `expanded` | boolean | yes | NEW. Default `false`. Per-card state. |
-| ...other fields | — | — | unchanged |
-
-**Behaviour:**
-- When `expanded === false`: `.sound-desc` is line-clamped to 2 lines via CSS.
-- A "Show more" button appears **only when** the text would overflow at 2 lines. Implementation: render the button unconditionally as a span styled like a link; on render, after insertion, hide it if `element.scrollHeight <= element.clientHeight` (a small `requestAnimationFrame` pass).
-- Tap "Show more" → toggle `S.soundExpanded[soundKey] = true` → re-render → label changes to "Show less" → tap again collapses.
-
-**State storage:** `S.soundExpanded: { [section + ':' + sound]: boolean }`. Initialised to `{}`. Does **not** persist across sessions (intentionally; v4 keeps it simple).
-
-**Tokens:**
-- Toggle text: `16px`, colour `#2E6DA4`, no underline (per Dyslexia Expert §11.4 conventions for inline action), tap target `min-height: 36px`, left-aligned, sentence case.
-- Description line height: `26px` (already in v3) — preserved.
-
-### 5.4 ProgressDots (unchanged)
-
-Kept from v3 — micro-position indicator. Visual is preserved; the new progress bar lives beside it.
-
----
-
-## 6. Exercise type definitions (unchanged)
-
-`flashcard`, `listen_and_repeat` (treated identically to flashcard for now — the radio selection is recorded but currently both render the same Session UI; that is **not** changing in v4), and `minimal_pair_discrimination`. See `nederly.html` v3 §sessionHtml + §minimalPairsHtml. No exercise-type contract changes for v4.
-
----
-
-## 7. Design tokens
-
-All v3 tokens are preserved. Additions are **bolded**.
-
-### 7.1 Colours
-
-| Token | Hex | Use | Source |
-|-------|-----|-----|--------|
-| `bg` | `#FAF3E0` | Page background | Dyslexia §2 |
-| `text` | `#1A1A1A` | Primary text | Dyslexia §2 |
-| `helper` | `#6B6B6B` | IPA, helper, labels | Dyslexia §2 / §10 |
-| `accent.blue` | `#2E6DA4` | Long vowels, links, primary CTA, **progress fill** | Dyslexia §2, §11.1 |
-| `accent.orange` | `#E07B39` | Diphthongs | Dyslexia §2 |
-| `accent.red` | `#D94F3D` | Clusters, errors | Dyslexia §2 |
-| `accent.green` | `#3A7D44` | Success | Dyslexia §2 |
-| `accent.purple` | `#6B4FA0` | Hints, slow-play | Dyslexia §2 |
-| `border` | `#E0D8C8` | Card borders, dividers | v3 in-place |
-| **`progressTrack`** | **`#E8DFC4`** | **Progress bar track** | **Dyslexia §11.1** |
-
-### 7.2 Typography
-
-| Token | Value | Source |
-|-------|-------|--------|
-| Body size | 18px | Dyslexia §1 |
-| Vocab word | 26px | Dyslexia §1 |
-| IPA / helper | 16px | Dyslexia §1 |
-| Title | 20px | Dyslexia §1 |
-| Line height | 1.6 | Dyslexia §1 |
-| Letter spacing | 0.04em | Dyslexia §1 |
-| Font family | `'OpenDyslexic', system-ui, sans-serif` | Dyslexia §1 |
-| Casing | Sentence case only | Dyslexia §1 |
-
-### 7.3 Spacing
-
-| Token | Value |
-|-------|-------|
-| xs | 4px |
-| sm | 8px |
-| md | 16px |
-| lg | 24px |
-| xl | 40px |
-
-### 7.4 Touch targets
-
-| Element | Min |
-|---------|-----|
-| Tappable | 48×48 |
-| Primary action | 64 height |
-| Play button | 48 height |
-
----
-
-## 8. Content changes — exact before / after
-
-### 8.1 CATEGORIES — `Food & Drink`
-
-**Before** (lines ~296–305 of v3):
-```js
-{
-  name: 'Food & Drink',
-  words: [
-    { dutch: 'water', english: 'water' },
-    { dutch: 'koffie', english: 'coffee' },
-    { dutch: 'brood', english: 'bread' },
-    { dutch: 'kaas', english: 'cheese' },
-    { dutch: 'appel', english: 'apple' },
-  ],
-},
-```
-
-**After** (per Dutch Expert §2.5, §8 item 1):
-```js
-{
-  name: 'Food & Drink',
-  words: [
-    { dutch: 'water',   english: 'water' },
-    { dutch: 'koffie',  english: 'coffee' },
-    { dutch: 'thee',    english: 'tea' },
-    { dutch: 'melk',    english: 'milk' },
-    { dutch: 'bier',    english: 'beer' },
-    { dutch: 'brood',   english: 'bread' },
-    { dutch: 'kaas',    english: 'cheese' },
-    { dutch: 'appel',   english: 'apple' },
-    { dutch: 'vlees',   english: 'meat' },
-    { dutch: 'groente', english: 'vegetables' },
-  ],
-},
-```
-
-### 8.2 CATEGORIES — `Transport & Directions`
-
-**Before:**
-```js
-{
-  name: 'Transport & Directions',
-  words: [
-    { dutch: 'de trein', english: 'the train' },
-    { dutch: 'de bus', english: 'the bus' },
-    { dutch: 'het station', english: 'the station' },
-    { dutch: 'links', english: 'left' },
-    { dutch: 'rechts', english: 'right' },
-  ],
-},
-```
-
-**After** (per Dutch Expert §2.7, §8 item 2):
-```js
-{
-  name: 'Transport & Directions',
-  words: [
-    { dutch: 'de trein',         english: 'the train' },
-    { dutch: 'de bus',           english: 'the bus' },
-    { dutch: 'de fiets',         english: 'the bicycle' },
-    { dutch: 'het station',      english: 'the station' },
-    { dutch: 'het vliegveld',    english: 'the airport' },
-    { dutch: 'links',            english: 'left' },
-    { dutch: 'rechts',           english: 'right' },
-    { dutch: 'rechtdoor',        english: 'straight ahead' },
-    { dutch: 'Hoe kom ik bij?',  english: 'How do I get to?' },
-  ],
-},
-```
-
-> Note: the question phrase `'Hoe kom ik bij?'` ends with `?` — TTS handles it fine. The original ellipsis form (*Hoe kom ik bij...?*) is shortened because the `…` rendering through Web Speech is noisy.
-
-### 8.3 CATEGORIES — `Places`
-
-**Before:**
-```js
-{
-  name: 'Places',
-  words: [
-    { dutch: 'de supermarkt', english: 'the supermarket' },
-    { dutch: 'het ziekenhuis', english: 'the hospital' },
-    { dutch: 'de school', english: 'the school' },
-    { dutch: 'het centrum', english: 'the city centre' },
-    { dutch: 'de straat', english: 'the street' },
-  ],
-},
-```
-
-**After** (per Dutch Expert §2.8, §8 item 3):
-```js
-{
-  name: 'Places',
-  words: [
-    { dutch: 'de supermarkt',  english: 'the supermarket' },
-    { dutch: 'het ziekenhuis', english: 'the hospital' },
-    { dutch: 'de apotheek',    english: 'the pharmacy' },
-    { dutch: 'de bibliotheek', english: 'the library' },
-    { dutch: 'de school',      english: 'the school' },
-    { dutch: 'het centrum',    english: 'the city centre' },
-    { dutch: 'de straat',      english: 'the street' },
-  ],
-},
-```
-
-### 8.4 CATEGORIES — Numbers (new category, not append)
-
-**Designer decision: NEW category called `Numbers 21+ (Inversion)`.** Justification: the inversion rule is a discrete pedagogical concept (Dutch Expert §3.13, Trap 4 in §4 of Dutch Expert), and bundling it into `Numbers 1–20` (already 20 items) would push that category to 25 items — exceeding the "5–8 items per session" guidance (Dutch Expert §6). A separate small category lets the learner drill the inversion rule in isolation, which is precisely how the Dutch Expert frames it in §8 item 5 ("This teaches the inversion rule from §3.13 with the smallest viable set").
-
-**Insert immediately after the existing `Numbers 1–20` block:**
+## 3. Data Model Changes
+
+### 3a. New fields on each word object in `CATEGORIES`
+
+Every word object gains the following new fields. Fields marked `[new]` do not exist in v5.
+
+| Field | Type | Required for nouns? | Required for verbs/phrases? | Source |
+|-------|------|--------------------|-----------------------------|--------|
+| `article` | `string\|null` | Yes — `"de"` or `"het"` | `null` | Dutch Expert §6 |
+| `respelling` | `string` | Yes | Yes | Dutch Expert §6 IPA + Respelling Table |
+| `audioRequired` | `boolean` | Yes | Yes | Dutch Expert §6 — `true` for all ★ entries |
+| `articulatoryHint` | `string` | Yes | Yes | Phonetics §4 (on-screen hints) |
+| `ipa` | `string` | Yes | Yes | Dutch Expert §6 — stored, not shown by default |
+| `trapRank` | `number\|null` | Yes | Yes | Phonetics §2 — 1–10; `null` if not a trap sound |
+| `soundCategory` | `string` | Yes | Yes | Phonetics §2 — e.g. `"ui-diphthong"`, `"eu-vowel"`, `"g-initial"`, `"default"` |
+| `syllableCount` | `number` | Yes | Yes | Phonetics §6 — integer |
+| `phraseChunks` | `string[]\|null` | `null` | For multi-word phrases: array of respelling chunks | Phonetics §6 |
+
+**Note on `audioFile`:** Phonetics §6 includes `audioFile` in the spec. Since v6 uses Web Speech API only (offline, no audio assets), this field is **omitted** from the v6 data model. The Builder does not add it. It is reserved for a future version when recorded audio files are available.
+
+### 3b. Minimal example — single noun
 
 ```js
 {
-  name: 'Numbers 21+ (Inversion)',
-  words: [
-    { dutch: 'eenentwintig',  english: '21 (one-and-twenty)' },
-    { dutch: 'tweeëntwintig', english: '22 (two-and-twenty)' },
-    { dutch: 'vijfendertig',  english: '35 (five-and-thirty)' },
-  ],
-},
+  dutch: 'de keuken',
+  english: 'the kitchen',
+  article: 'de',
+  respelling: 'KUR-kun',
+  audioRequired: true,
+  articulatoryHint: "Shape your lips into an 'oo' circle, then say 'ay' without moving your lips — keep both at once.",
+  ipa: '/də ˈkøːkən/',
+  trapRank: 3,
+  soundCategory: 'eu-vowel',
+  syllableCount: 2,
+  phraseChunks: null,
+}
 ```
 
-> Per brief: "a small set of inversion examples". Three items is the minimum that demonstrates the pattern across two decades and across the `ë`-diaeresis form (per Phonetics §11.1). The English gloss includes the literal "X-and-Y" form so the learner sees the inversion explicitly.
+### 3c. Minimal example — phrase
 
-### 8.5 MINIMAL_PAIRS — replace `huis/hijs` with `uit/ijs`
-
-**Before** (line ~482 of v3):
 ```js
-{ word_a: 'huis', word_b: 'hijs', english_a: 'house', english_b: 'he hoists', contrast: 'ui /œy/ vs ij /ɛi/', tricky_sound: 'ui vs ij' },
+{
+  dutch: 'Mag ik de rekening, alstublieft?',
+  english: 'May I have the bill, please?',
+  article: null,
+  respelling: 'makh ik duh RAY-kun-ing al-stuu-BLEEFT',
+  audioRequired: false,
+  articulatoryHint: "The article 'de' is a very short 'duh' — do not say 'day'.",
+  ipa: '/mɑx ɪk də ˈreːkənɪŋ ˌɑlstyˈbliːft/',
+  trapRank: 9,
+  soundCategory: 'schwa',
+  syllableCount: 9,
+  phraseChunks: ['makh', 'ik', 'duh', 'RAY-kun-ing', 'al-stuu-BLEEFT'],
+}
 ```
 
-**After** (per Phonetics §3.1, §3.2):
+### 3d. How data is seeded
+
+All new fields are hardcoded directly in the `CATEGORIES` array in `index.html`. The complete values come from Dutch Expert §6 (IPA + Respelling Table). The Builder must add the fields to every word object across all 20 categories before the VERSION bump. Words that are not in Dutch Expert §6 use `respelling: ""`, `audioRequired: false`, `articulatoryHint: ""`, `ipa: ""`, `trapRank: null`, `soundCategory: "default"`, `syllableCount: 1`, `phraseChunks: null`.
+
+### 3e. Storage seeding changes
+
+`initStorage()` currently seeds `K.words` with objects that have only `id`, `dutch`, `english`, `categoryId`, `sessionId`, `createdAt`. The Builder must add the new fields to the seeded word objects so that `getWordsByCategory()` and `getWordsByIds()` return objects that include `respelling`, `audioRequired`, `articulatoryHint`, `ipa`, `trapRank`, `soundCategory`, `syllableCount`, `phraseChunks`, and `article`.
+
+### 3f. VERSION bump
+
 ```js
-{ word_a: 'uit', word_b: 'ijs', english_a: 'out', english_b: 'ice', contrast: 'ui /œy/ vs ij /ɛi/', tricky_sound: 'ui vs ij' },
+const VERSION = '6'; // was '5'
 ```
-
-### 8.6 MINIMAL_PAIRS — remove `neus/noos`
-
-**Before** (line ~476 of v3):
-```js
-{ word_a: 'neus',  word_b: 'noos',  english_a: 'nose',       english_b: '(non-word)',        contrast: 'eu vs oo',            tricky_sound: 'eu vs oo' },
-```
-
-**After:** **delete this line entirely.** Per Phonetics §3.3: `deur/door` (still in the array) already covers the eu/oo contrast with two real words; `noos` is a non-word and must not be presented to the learner.
-
-### 8.7 CATEGORIES + MINIMAL_PAIRS — no other content edits in v4
-
-Specifically **NOT in scope this version** (carried forward to v5):
-- Adding `Hoe heet u?` to Introducing Yourself (Dutch Expert §8 item 4). Defer.
-- Diminutives reference card (Dutch Expert §8 item 7). Defer.
-- Adding `Mag ik in het Nederlands oefenen?` to Les 1: Zinnen (Dutch Expert §8 item 8). Defer.
-
-These are listed in §10 with rationale.
 
 ---
 
-## 9. Code changes — exact before / after
+## 4. Screen Changes
 
-### 9.1 VERSION bump
+### 4a. Session screen (flashcard mode) — PRIMARY CHANGE
 
-**File:** `nederly.html`, function `initStorage()`.
+This is the main deliverable. Current `sessionHtml()` shows: Dutch word → Play button → tap-to-reveal → English. The hint (`getHint()`) is shown **after** reveal only.
 
-**Before:**
-```js
-const VERSION = '3'; // bump this when you add new lesson data above
+**New card layout:** the respelling chip and audio controls are **always visible** (pre-reveal). The English meaning and article chip appear **after** tap-to-reveal. The articulatory hint is hidden behind a tap on the ★ badge.
+
+#### ASCII wireframe — card face BEFORE reveal
+
+```
++-----------------------------------------------+
+|  [progress dots]                              |
+|  [progress bar ████░░░░░░░░  3 of 10]         |
+|                                               |
+|  +-------------------------------------------+
+|  |                                           |
+|  |   de keuken                               |  <- .card-word 32px centred, colour-coded
+|  |                                           |
+|  |   [ KUR-kun ★ ]                           |  <- .card-phonetic chip, purple, centred
+|  |                                           |
+|  |   [ ▶ Play ]  [ ▶ Slow ]                  |  <- .play-row always visible
+|  |                                           |
+|  |   - - - - - tap to reveal - - - - - - -   |  <- .card-tap 16px muted
+|  |                                           |
+|  +-------------------------------------------+
++-----------------------------------------------+
 ```
 
-**After:**
-```js
-const VERSION = '4'; // bump this when you add new lesson data above
+#### ASCII wireframe — card face AFTER reveal
+
+```
++-----------------------------------------------+
+|  [progress dots]                              |
+|  [progress bar ████████░░░░  4 of 10]         |
+|                                               |
+|  +-------------------------------------------+  <- .card.revealed (blue border)
+|  |                                           |
+|  |   de keuken                               |  <- .card-word 32px centred, colour-coded
+|  |                                           |
+|  |   [ KUR-kun ★ ]                           |  <- .card-phonetic chip, always visible
+|  |                                           |
+|  |   [ ▶ Play ]  [ ▶ Slow ]                  |  <- both buttons always visible
+|  |                                           |
+|  |   ─────────────────────────────────────   |  <- visual divider <hr>
+|  |                                           |
+|  |   [de]  the kitchen                       |  <- article chip + .card-english 18px
+|  |                                           |
+|  +-------------------------------------------+
+|                                               |
+|  [ ✗ Practice again ]  [ ✓ Got it ]           |  <- .outcome-row
++-----------------------------------------------+
 ```
 
-This triggers a one-time re-seed of `nederly_words`, `nederly_categories`, `nederly_minimal_pairs`, `nederly_sessions`, `nederly_attempts` on next load.
+If word has `audioRequired: true`, the chip reads `KUR-kun ★` where ★ is tappable:
+- Tap ★ badge → reveals `.articulatory-hint` paragraph below chip (one line, 16px, `#5C5C5C`)
+- Tap ★ again → hides hint
+- Hint is shown **above** the reveal line — it is a pre-reveal tool (Dyslexia Expert §8; Phonetics §6)
 
-### 9.2 CSS — add progress bar styles
+#### What the Slow button does
 
-**Insert into `<style>` block, immediately after the existing `.dots` / `.dot.active` rules (~line 70):**
+Current code only shows Slow after reveal:
+```js
+${revealed ? `<button class="play-btn slow" ...>▶ Slow</button>` : ''}
+```
+**Change:** Slow button is always rendered, not conditionally on `revealed`. (Dyslexia Expert §4.)
+
+#### Auto-play on first card
+
+On the first card of a session (`S.sessionIndex === 0` and `!S.sessionRevealed`), call `speak(word.dutch, false)` once after render. Subsequent cards: no auto-play. (Dyslexia Expert §4.)
+
+#### Missed card re-insertion
+
+Current code advances linearly. When outcome is `"incorrect"`, re-insert the current word at position `current + 2` (or at end if fewer than 2 cards remain) before incrementing index. (Dyslexia Expert §6.)
+
+#### Article chip (post-reveal)
+
+After reveal, show a colour-coded article chip:
+- `de` → chip background `#E8F0F9`, text `#2E6DA4` (blue)
+- `het` → chip background `#EBF5EC`, text `#2F7A3B` (green)
+- `null` (verb/phrase) → no chip, show English only
+
+```
+[de]  the kitchen       <- chip + English inline
+```
+
+Chip CSS (`.article-chip`):
+```css
+.article-chip {
+  display: inline-block;
+  font-size: 15px;
+  line-height: 22px;
+  padding: 1px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.article-chip.de  { background: #E8F0F9; color: #2E6DA4; }
+.article-chip.het { background: #EBF5EC; color: #2F7A3B; }
+```
+
+---
+
+### 4b. Header
+
+**Current:** `background: #FAF3E0` (same as page) — does not visually separate from content.
+
+**Change:**
+```css
+.header {
+  background: #FFFFFF;
+  border-bottom: 1px solid #D4CBBA;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  padding: 14px 20px;
+}
+.header h1 {
+  font-size: 22px;  /* was 20px */
+  font-weight: 700; /* was 600 */
+}
+```
+Source: Dyslexia Expert §9.
+
+---
+
+### 4c. Home screen
+
+**No structural changes.** Visual polish only:
+
+- `nav-btn` background: `#FFFFFF` (was `#FAF3E0`)
+- `nav-btn` border: `1px solid #D4CBBA` (was `1px solid #E0D8C8`)
+- `nav-btn` border-radius: `12px` (was `8px`)
+- `nav-btn` add shadow: `0 1px 4px rgba(0,0,0,0.06)`
+- `nav-btn:hover` background: `#F0EBF9` (was `#F0E8D0`)
+- Back button text: `←` (already in current code — keep)
+
+Source: Dyslexia Expert §9.
+
+---
+
+### 4d. Minimal Pairs screen
+
+- `.pair-word-a` colour: `#1A1A1A` (was `#E07B39`) — remove orange, both words same colour
+- `.pair-word-b` colour: `#1A1A1A` (was `#2E6DA4`) — remove blue
+- `.pair-card` background: `#FFFFFF` (was `#FAF3E0`)
+- `.pair-card` border-radius: `16px` (was `12px`)
+- `.pair-card.correct` border-color: `#2F7A3B` (was `#3A7D44`)
+- `.pair-card.incorrect` border-color: `#B35C00` (was `#D94F3D`) — amber not red (Dyslexia Expert §6)
+- `.pair-card.incorrect` background: `#FDF3E6` (was `#FDF0EF`) — amber tint not red tint
+
+Source: Dyslexia Expert §9; Phonetics §5.
+
+---
+
+### 4e. Progress dots and progress bar
+
+- `.dot.done` background: `#2F7A3B` (was `#3A7D44`) — consistent with `--accent-green`
+- `.dots` gap: `8px` (was `6px`) — 8px rhythm (Dyslexia Expert §9)
+- `.progress-label` color: `#5C5C5C` (was `#6B6B6B`) — better contrast
+
+---
+
+### 4f. Session complete screen
+
+- Green checkmark colour: `#2F7A3B` (was `#3A7D44`)
+- Red cross colour: `#C0392B` (was `#D94F3D`)
+- `.home-btn` border-radius: `12px` (was `8px`)
+- `.home-btn` color: `#FFFFFF` (was `#FAF3E0`)
+
+---
+
+### 4g. Sound cards
+
+- `.sound-card` background: `#FFFFFF` (was `#FAF3E0`)
+- `.sound-card` gap: `8px` (was `6px`)
+- `.sound-star` color: `#B35C00` (was `#E07B39`) — consistent with `--accent-amber`
+
+---
+
+## 5. Component Contracts
+
+### 5a. Flashcard component (`sessionHtml()`)
+
+**Input (word object):** now includes `respelling`, `audioRequired`, `articulatoryHint`, `article`, `ipa`.
+
+**Visual states:**
+
+| State | Card border | Card bg | Phonetic chip | Audio buttons | English | Article chip | Outcome buttons |
+|-------|------------|---------|--------------|--------------|---------|-------------|----------------|
+| Pre-reveal | `#D4CBBA` 1px | `#FFFFFF` | Visible, purple | Play + Slow both visible | Hidden | Hidden | Hidden |
+| Pre-reveal, ★ tapped | `#D4CBBA` 1px | `#FFFFFF` | Visible, purple | Play + Slow both visible | Hidden | Hidden | Hidden; articulatory hint shown below chip |
+| Revealed | `#2E6DA4` 2px | `#FFFFFF` | Visible, purple | Play + Slow both visible | Visible | Visible (if noun) | Visible |
+| Got it pressed | Navigate to next card | | | | | | |
+| Missed pressed | Re-insert at +2, navigate to next | | | | | | |
+
+### 5b. Phonetic chip (`.card-phonetic`)
+
+**Props used:** `word.respelling`, `word.audioRequired`
+
+**Render rules:**
+- If `respelling` is empty string (`""`): render nothing (no chip)
+- If `audioRequired === true`: append `<span class="phonetic-star" data-action="toggle-hint" data-word-id="${word.id}">★</span>` after the respelling text inside the chip
+- The chip is always present above the reveal line (pre-reveal and post-reveal)
+
+### 5c. Articulatory hint (`.articulatory-hint`)
+
+**Props used:** `word.articulatoryHint`, `S.hintExpanded[word.id]`
+
+**Render rules:**
+- Hidden by default — class `.articulatory-hint` without `.visible`
+- Shown when user taps ★ badge — class `.articulatory-hint.visible`
+- Positioned between chip and Play/Slow row
+- If `articulatoryHint` is an empty string, do not render the element at all (no empty box)
+
+**New state field required in initial `S` object:**
+```js
+hintExpanded: {},  // { [wordId]: boolean }
+```
+
+### 5d. Article chip (`.article-chip`)
+
+**Props used:** `word.article`
+
+**Render rules:**
+- Only rendered post-reveal
+- `null` → no chip; only `.card-english` text rendered
+- `"de"` → `<span class="article-chip de">de</span>`
+- `"het"` → `<span class="article-chip het">het</span>`
+- Chip renders inline before the English text in the same `<div>`
+
+---
+
+## 6. Design Tokens (Complete)
+
+Copy this `:root` block verbatim into the `<style>` section at the very top of the existing CSS rules, before any selector rules.
 
 ```css
-/* Category progress bar — Per Dyslexia Expert §11.1 */
-.progress-row {
-  display: flex; align-items: center; gap: 8px;
-  margin-top: 0; margin-bottom: 8px;
+:root {
+  /* Backgrounds */
+  --bg:             #F7F2E8;
+  --surface:        #FFFFFF;
+  --surface-raised: #F0EBE0;
+
+  /* Text */
+  --text-primary:   #1A1A1A;
+  --text-secondary: #5C5C5C;
+
+  /* Borders */
+  --border:         #D4CBBA;
+  --border-light:   #E0D8C8;
+
+  /* Accent — Blue (primary CTA, active states) */
+  --accent-blue:       #2E6DA4;
+  --accent-blue-light: #E8F0F9;
+
+  /* Accent — Green (success) */
+  --accent-green:       #2F7A3B;
+  --accent-green-light: #EBF5EC;
+
+  /* Accent — Red (error — use sparingly) */
+  --accent-red:       #C0392B;
+  --accent-red-light: #FDECEA;
+
+  /* Accent — Amber (audio-required flag, missed state) */
+  --accent-amber:       #B35C00;
+  --accent-amber-light: #FDF3E6;
+
+  /* Accent — Purple (phonetic chip) */
+  --accent-purple:       #5C3F8F;
+  --accent-purple-light: #F0EBF9;
+
+  /* Spacing — 8px rhythm */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
 }
-.progress-track {
-  flex: 1;
-  height: 6px;
-  background: #E8DFC4;
-  border-radius: 3px;
-  overflow: hidden;
+```
+
+### Typography (literal values — not tokens)
+
+| Role | Selector | px size | Line-height | Letter-spacing |
+|------|---------|---------|-------------|----------------|
+| Card Dutch word | `.card-word` | 32px | 48px | 0.02em |
+| App title | `.header h1` | 22px | — | — |
+| Section heading | `h2`, `.lesson-detail-title` | 22px | 32px | 0.01em |
+| Body / UI labels | `body`, `.card-english` | 18px | 29px | 0.04em |
+| Secondary / meta | `.card-tap`, `.session-type`, `.progress-label` | 16px | 26px | 0.03em |
+| Phonetic chip text | `.card-phonetic` | 15px | 24px | 0.03em |
+| Section labels (caps) | `.section-label`, `.sound-section-heading` | 13px | 20px | 0.08em |
+
+### Card styling
+
+| Property | Value |
+|----------|-------|
+| background | `#FFFFFF` |
+| border | `1px solid #D4CBBA` |
+| border-radius | `16px` |
+| box-shadow | `0 2px 8px rgba(0,0,0,0.08)` |
+| padding | `28px 24px` |
+| min-height | `220px` |
+| revealed border | `2px solid #2E6DA4` |
+| revealed shadow | `0 2px 12px rgba(46,109,164,0.15)` |
+
+### Phonetic chip styling (exact CSS)
+
+```css
+.card-phonetic {
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: 0.03em;
+  color: #5C3F8F;
+  background: #F0EBF9;
+  border-radius: 6px;
+  padding: 2px 10px;
+  display: inline-block;
+  font-style: normal;
+  text-align: center;
+  max-width: 100%;
 }
-.progress-fill {
-  height: 100%;
-  background: #2E6DA4;
-  border-radius: 3px;
-  transition: width 300ms ease-out;
+.phonetic-star {
+  color: #B35C00;
+  font-size: 14px;
+  margin-left: 4px;
+  vertical-align: middle;
+  cursor: pointer;
 }
-.progress-label {
+```
+
+### Articulatory hint styling (exact CSS)
+
+```css
+.articulatory-hint {
   font-size: 16px;
-  color: #6B6B6B;
-  flex-shrink: 0;
+  line-height: 26px;
+  color: #5C5C5C;
+  text-align: center;
+  padding: 4px 8px;
+  display: none;
+}
+.articulatory-hint.visible {
+  display: block;
 }
 ```
-
-### 9.3 CSS — sound-card line clamp + "Show more" toggle
-
-**Modify `.sound-desc` and add a `.sound-toggle` rule:**
-
-**Before:**
-```css
-.sound-desc { font-size: 16px; color: #1A1A1A; line-height: 26px; }
-```
-
-**After:**
-```css
-.sound-desc {
-  font-size: 16px; color: #1A1A1A; line-height: 26px;
-}
-.sound-desc.clamped {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.sound-toggle {
-  background: none; border: none; padding: 4px 0;
-  color: #2E6DA4; font-size: 16px; cursor: pointer;
-  min-height: 36px; text-align: left; font-family: inherit;
-  letter-spacing: 0.04em;
-}
-```
-
-> Per Dyslexia Expert §9 still-required item.
-
-### 9.4 JS — add `sessionHtml()` progress bar
-
-**Modify `sessionHtml()` to insert the progress bar between dots and card.**
-
-**Before** (line ~826):
-```js
-return `
-    <div class="screen">
-      ${dotsHtml(words.length, S.sessionIndex)}
-      <div class="card ${revealed ? 'revealed' : ''}" ...
-```
-
-**After:**
-```js
-const totalWords = words.length;
-const currentPos = Math.min(S.sessionIndex + (revealed ? 1 : 0), totalWords);
-const pctFill = (currentPos / totalWords) * 100;
-return `
-    <div class="screen">
-      ${dotsHtml(words.length, S.sessionIndex)}
-      <div class="progress-row">
-        <div class="progress-track">
-          <div class="progress-fill" style="width:${pctFill}%"></div>
-        </div>
-        <span class="progress-label">${currentPos} of ${totalWords}</span>
-      </div>
-      <div class="card ${revealed ? 'revealed' : ''}" ...
-```
-
-> Fill advances **on reveal** (so the learner sees motion as they engage), not only after pressing Got it / Missed.
-
-### 9.5 JS — track category name on session start
-
-**Add new state field** in `S` (state object, ~line 697):
-
-```js
-sessionCategoryName: null,
-```
-
-**Modify `select-category` handler** (~line 1061) — after `const words = getWordsByCategory(catId);`:
-
-```js
-const cat = getCategories().find(c => c.id === catId);
-S.sessionCategoryName = cat ? cat.name : null;
-```
-
-**Modify `start-session` handler** (paste flow) — set to null explicitly:
-
-```js
-S.sessionCategoryName = null;
-```
-
-### 9.6 JS — replace `sessionCompleteHtml()` with mastery card
-
-**Before** (lines ~842–874): the full `sessionCompleteHtml()` function with `.pct`, `pct-label`, and percentage calculation.
-
-**After:**
-```js
-function sessionCompleteHtml() {
-  const out = getSessionOutcomes(S.sessionId);
-  const total = out.correct + out.incorrect + out.skipped;
-  const categoryLine = S.sessionCategoryName
-    ? `Category: ${S.sessionCategoryName}`
-    : 'Pasted vocab';
-  const skippedRow = out.skipped > 0 ? `
-    <div class="outcome-row-item">
-      <span style="color:#6B6B6B;font-size:18px;width:24px;text-align:center">–</span>
-      <span style="flex:1;font-size:18px">Skipped</span>
-      <strong style="color:#6B6B6B;font-size:18px">${out.skipped}</strong>
-    </div>` : '';
-  return `
-    <div class="complete-screen">
-      <h2 style="font-size:20px;font-weight:600">Nice session.</h2>
-      <p style="font-size:18px;color:#1A1A1A;margin-top:16px">
-        You practiced ${total} word${total !== 1 ? 's' : ''} today.
-      </p>
-      <p style="font-size:18px;color:#1A1A1A">${categoryLine}</p>
-      <div style="width:100%;display:flex;flex-direction:column;gap:8px;margin-top:24px">
-        <div class="outcome-row-item">
-          <span style="color:#3A7D44;font-size:18px;width:24px;text-align:center">✓</span>
-          <span style="flex:1;font-size:18px">Got it</span>
-          <strong style="color:#3A7D44;font-size:18px">${out.correct}</strong>
-        </div>
-        <div class="outcome-row-item">
-          <span style="color:#D94F3D;font-size:18px;width:24px;text-align:center">✗</span>
-          <span style="flex:1;font-size:18px">Missed</span>
-          <strong style="color:#D94F3D;font-size:18px">${out.incorrect}</strong>
-        </div>
-        ${skippedRow}
-      </div>
-      <button class="home-btn" data-action="go-home">Back home</button>
-    </div>`;
-}
-```
-
-> The `.pct` and `.pct-label` CSS rules become dead — **leave them in v4** (other code may reference them in future; harmless). No CSS removal.
-
-CTA label change: "Back to home" → **"Back home"** per Dyslexia Expert §11.2 ("Back home" is the spec'd label).
-
-### 9.7 JS — Sounds screen line-clamp toggle
-
-**Add state field** in `S`:
-```js
-soundExpanded: {},
-```
-
-**Modify `soundsHtml()`** card render. Replace:
-```js
-<p class="sound-desc">${s.desc}</p>
-```
-
-With:
-```js
-const key = `${s.section}:${s.sound}`;
-const expanded = !!S.soundExpanded[key];
-const descClass = expanded ? 'sound-desc' : 'sound-desc clamped';
-const toggleLabel = expanded ? 'Show less' : 'Show more';
-// Note: the toggle button is rendered unconditionally;
-// post-render JS hides it on cards that don't actually overflow.
-return `
-  <div class="sound-card">
-    <div class="sound-card-top">
-      <span class="sound-spelling">${colorHtml(s.sound)}</span>
-      ${starHtml}
-    </div>
-    <p class="${descClass}" data-sound-key="${key}">${s.desc}</p>
-    <button class="sound-toggle" data-action="toggle-sound" data-key="${key}">${toggleLabel}</button>
-    <div class="sound-example-row">
-      ...
-```
-
-**Add click handler** (in the `document.addEventListener('click', ...)` block, before the final `}`):
-```js
-if (action === 'toggle-sound') {
-  const key = btn.dataset.key;
-  S.soundExpanded[key] = !S.soundExpanded[key];
-  render();
-  return;
-}
-```
-
-**Add post-render hide pass.** In `render()`, after `document.getElementById('app').innerHTML = ...`:
-```js
-// Hide "Show more" on sound cards that don't actually overflow
-if (currentScreen() === 'Sounds') {
-  requestAnimationFrame(() => {
-    document.querySelectorAll('.sound-desc.clamped').forEach(el => {
-      if (el.scrollHeight <= el.clientHeight + 1) {
-        const key = el.dataset.soundKey;
-        const toggle = document.querySelector(`.sound-toggle[data-key="${key}"]`);
-        if (toggle) toggle.style.display = 'none';
-      }
-    });
-  });
-}
-```
-
-### 9.8 JS — content edits in CATEGORIES and MINIMAL_PAIRS
-
-Per §8.1 through §8.6. The Builder makes these edits literally in the constants at the top of the `<script>` block.
-
-### 9.9 No other code touched
-
-- `homeHtml`, `addVocabHtml`, `categoriesHtml`, `minimalPairsHtml`, `progressHtml`, `colorHtml`, `getHint`, `speak`, `initStorage` body (only VERSION literal), storage helpers, event handlers other than the additions above: **unchanged**.
-- Header, back navigation, dots helper: **unchanged**.
-- Existing token CSS rules: **unchanged** (only additions in §9.2, §9.3).
 
 ---
 
-## 10. Out of scope — explicit (not in v4)
+## 7. Changes Summary Table
 
-Listed with the upstream doc that proposed each, plus the reason for deferral.
-
-| Item | Upstream | Why deferred |
-|------|----------|--------------|
-| Grammar reference screen (subordinate-clause verb-final, diminutives, number inversion grammar) | Dutch Expert §3.5, §3.7, §3.13 | Per brief: "keep the app practice-focused, grammar lives in the Dutch Expert doc only" for v4. Add in a future version once the practice loop is stable. The Numbers 21+ category in §8.4 covers the *practice* angle of inversion; the rule itself stays in the Dutch Expert doc. |
-| Non-decaying mastery badges (the 20px green circle on a mastered word) | Dyslexia Expert §11.3 | More ambitious — requires a per-word mastery score across sessions. Defer to v5. |
-| Rotating daily prompt picker on Home | Dyslexia Expert §11.4 | More ambitious — needs daily rotation logic + persistent shuffle seed. Defer to v5. |
-| Opt-in short-term goal nudge ("Want to focus on one sound today?") | Dyslexia Expert §11.5 | More ambitious — needs session-counter logic + sound-weighting in session generator. Defer to v6+. |
-| Adding `Hoe heet u?` to Introducing Yourself | Dutch Expert §8 item 4 | Low priority per Dutch Expert; defer. |
-| Diminutives reference card (`bier/biertje`, etc.) | Dutch Expert §8 item 7 | Reference content; needs a new screen type or section. Defer. |
-| Adding `Mag ik in het Nederlands oefenen?` to Les 1: Zinnen | Dutch Expert §8 item 8 | One-line content add; deliberately bundled with future content pass. |
-| Clock-time vocabulary (`Hoe laat is het?`, `kwart over`, `half`, `kwart voor`) | Dutch Expert §8 deferred | A0/A1 boundary content; defer. |
-| Subordinate-clause example sentences | Dutch Expert §8 deferred | Defer until V2 word order is stable for this learner (week 7+). |
-| Per-phoneme pronunciation scoring (Azure-style) | Designer Brief §1, Dyslexia Expert §6 | Explicitly not in v1. v2 path. |
-| Spaced-repetition session generator (mix of recent + older items) | Dyslexia Expert §8 "Spaced practice over massed" | Needs a per-word last-seen timestamp + scheduler. Defer to v5+. |
-| OpenDyslexic Bold `@font-face` | Dyslexia Expert §9 new observation | Requires shipping `OpenDyslexic-Bold.woff2` alongside the HTML. Not blocking; defer. |
-| 320px viewport overflow check (drop letter-spacing to 0.03em if vocab word wraps) | Dyslexia Expert §9 new observation | Verification step, not a code change unless overflow occurs. Builder tests on 320px viewport — if no wrap, no change. |
-| **Streaks, lives/hearts, XP/levels, leaderboards, push-notifications-about-streaks, time-of-day escalating reminders, percentage scores at session end** | Dyslexia Expert §11.6, §7 | **POLICY — never build.** Embedded here as a permanent boundary, not a deferral. |
+| # | Area | Change | Source |
+|---|------|--------|--------|
+| 1 | Data | Add `article`, `respelling`, `audioRequired`, `articulatoryHint`, `ipa`, `trapRank`, `soundCategory`, `syllableCount`, `phraseChunks` to every word object in `CATEGORIES` | Phonetics §6; Dutch Expert §6 |
+| 2 | Data | Seed all new fields in `initStorage()` when building word objects pushed to `K.words` | Phonetics §6 |
+| 3 | Data | Bump `VERSION` constant from `'5'` to `'6'` | — |
+| 4 | CSS | Add `:root` custom properties block at top of `<style>` | §6 tokens |
+| 5 | CSS | `body` background: `#FAF3E0` → `#F7F2E8` | Dyslexia Expert §2 |
+| 6 | CSS | `theme-color` meta tag: `#FAF3E0` → `#F7F2E8` | Dyslexia Expert §2 |
+| 7 | CSS | `.header` background: `#FAF3E0` → `#FFFFFF`; add `box-shadow: 0 1px 3px rgba(0,0,0,0.06)`; border `#E0D8C8` → `#D4CBBA` | Dyslexia Expert §9 |
+| 8 | CSS | `.header h1` font-size: `20px` → `22px`; font-weight: `600` → `700` | Dyslexia Expert §10 |
+| 9 | CSS | `.card` background: `#FAF3E0` → `#FFFFFF`; border: `2px solid #E0D8C8` → `1px solid #D4CBBA`; border-radius: `12px` → `16px`; add `box-shadow: 0 2px 8px rgba(0,0,0,0.08)`; min-height: `200px` → `220px`; padding: `24px` → `28px 24px` | Dyslexia Expert §9 |
+| 10 | CSS | `.card.revealed` add `box-shadow: 0 2px 12px rgba(46,109,164,0.15)` | Dyslexia Expert §9 |
+| 11 | CSS | `.card-word` font-size: `26px` → `32px`; line-height: `40px` → `48px`; add `letter-spacing: 0.02em` | Dyslexia Expert §1 |
+| 12 | CSS | Remove `.card-ipa` rule entirely | Dyslexia Expert §8 |
+| 13 | CSS | Add `.card-phonetic` rule (purple chip — see §6 exact CSS) | Dyslexia Expert §8 |
+| 14 | CSS | Add `.phonetic-star` rule (amber, 14px, pointer cursor) | Dyslexia Expert §8 |
+| 15 | CSS | Add `.articulatory-hint` and `.articulatory-hint.visible` rules | Phonetics §6 |
+| 16 | CSS | Add `.article-chip`, `.article-chip.de`, `.article-chip.het` rules | Phonetics §5; Dutch Expert §3 |
+| 17 | CSS | `.play-btn` min-height: `48px` → `56px`; padding: `8px 16px` → `10px 20px`; border-radius: `8px` → `12px`; add `box-shadow: 0 2px 6px rgba(46,109,164,0.25)` | Dyslexia Expert §3, §9 |
+| 18 | CSS | `.play-btn.slow` background: `#6B4FA0` → `#5C3F8F` | Dyslexia Expert §2 |
+| 19 | CSS | `.missed-btn` border: `1px solid #D94F3D` → `2px solid #B35C00`; background: `#FAF3E0` → `#FDF3E6`; min-height: `48px` → `56px`; border-radius: `8px` → `12px` | Dyslexia Expert §6, §9 |
+| 20 | CSS | `.got-btn` background: `#3A7D44` → `#2F7A3B`; color: `#FAF3E0` → `#FFFFFF`; min-height: `48px` → `56px`; border-radius: `8px` → `12px` | Dyslexia Expert §2, §9 |
+| 21 | CSS | `.nav-btn` background: `#FAF3E0` → `#FFFFFF`; border `#E0D8C8` → `#D4CBBA`; border-radius: `8px` → `12px`; add `box-shadow: 0 1px 4px rgba(0,0,0,0.06)` | Dyslexia Expert §9 |
+| 22 | CSS | `.nav-btn:hover` background: `#F0E8D0` → `#F0EBF9` | Dyslexia Expert §9 |
+| 23 | CSS | `.start-btn` border-radius: `8px` → `12px`; add `box-shadow: 0 2px 6px rgba(46,109,164,0.25)` | Dyslexia Expert §9 |
+| 24 | CSS | `.start-btn:disabled` background: `#A0A0A0` → `#D4CBBA`; add `color: #9A9A9A` | Dyslexia Expert §9 |
+| 25 | CSS | `.home-btn` border-radius: `8px` → `12px`; color: `#FAF3E0` → `#FFFFFF` | Dyslexia Expert §9 |
+| 26 | CSS | `.dots` gap: `6px` → `8px` | Dyslexia Expert §9 |
+| 27 | CSS | `.dot.done` background: `#3A7D44` → `#2F7A3B` | Dyslexia Expert §9 |
+| 28 | CSS | `.progress-label` color: `#6B6B6B` → `#5C5C5C` | Dyslexia Expert §2 |
+| 29 | CSS | `.pair-word-a` color: `#E07B39` → `#1A1A1A` | Dyslexia Expert §9 |
+| 30 | CSS | `.pair-word-b` color: `#2E6DA4` → `#1A1A1A` | Dyslexia Expert §9 |
+| 31 | CSS | `.pair-card` background: `#FAF3E0` → `#FFFFFF`; border-radius: `12px` → `16px` | Dyslexia Expert §9 |
+| 32 | CSS | `.pair-card.correct` border-color: `#3A7D44` → `#2F7A3B`; background: `#F0FBF1` → `#EBF5EC` | Dyslexia Expert §2 |
+| 33 | CSS | `.pair-card.incorrect` border-color: `#D94F3D` → `#B35C00`; background: `#FDF0EF` → `#FDF3E6` | Dyslexia Expert §6 |
+| 34 | CSS | `.sound-card` background: `#FAF3E0` → `#FFFFFF`; gap: `6px` → `8px` | Dyslexia Expert §9 |
+| 35 | CSS | `.sound-star` color: `#E07B39` → `#B35C00` | Dyslexia Expert §9 |
+| 36 | CSS | `.stat-box` border-radius: `8px` → `12px`; add `background: #FFFFFF` | Dyslexia Expert §9 |
+| 37 | CSS | `.lesson-card` background: `#FAF3E0` → `#FFFFFF`; border-radius: `10px` → `12px`; add `box-shadow: 0 1px 4px rgba(0,0,0,0.06)` | Dyslexia Expert §9 |
+| 38 | CSS | `.lesson-card:hover` background: `#F0E8D0` → `#F0EBF9` (surface-raised tint) | Dyslexia Expert §9 |
+| 39 | JS data | Update `COLOR_PATTERNS` hex `#E07B39` (diphthong orange) → `#B35C00` in JS array | Dyslexia Expert §9 |
+| 40 | JS data | Update `COLOR_PATTERNS` hex `#D94F3D` (consonant cluster red) → `#C0392B` in JS array | Dyslexia Expert §2 |
+| 41 | JS render | `sessionHtml()`: add `.card-phonetic` chip HTML block below `.card-word`, always rendered (pre- and post-reveal) | Dyslexia Expert §8; Phonetics §6 |
+| 42 | JS render | `sessionHtml()`: render `.articulatory-hint` element (hidden by default); class `.visible` added/removed by toggle-hint action | Phonetics §6; Dyslexia Expert §8 |
+| 43 | JS render | `sessionHtml()`: Slow button always rendered (remove `revealed ?` conditional around it) | Dyslexia Expert §4 |
+| 44 | JS render | `sessionHtml()`: post-reveal block — render `.article-chip.de` or `.article-chip.het` chip before `.card-english` if `word.article` is non-null | Phonetics §5; Dutch Expert §3 |
+| 45 | JS render | `sessionHtml()`: add `<hr style="width:100%;border:none;border-top:1px solid #D4CBBA;margin:0">` between audio row and revealed content | Dyslexia Expert §8 |
+| 46 | JS state | Add `hintExpanded: {}` to initial `S` state object | — |
+| 47 | JS events | Add handler for `data-action="toggle-hint"`: read `data-word-id`, flip `S.hintExpanded[id]`, call `render()` | Phonetics §6 |
+| 48 | JS events | Auto-play: after render when `S.sessionIndex === 0 && !S.sessionRevealed`, call `speak(word.dutch, false)` | Dyslexia Expert §4 |
+| 49 | JS events | Missed re-insertion: on `advance` with outcome `"incorrect"`, splice the current word object into `S.sessionWords` at `Math.min(S.sessionIndex + 2, S.sessionWords.length)` before advancing `S.sessionIndex` | Dyslexia Expert §6 |
+| 50 | JS cleanup | Remove `getHint()` function and `HINTS` constant — replaced by per-word `articulatoryHint` data field | — |
 
 ---
 
-## 11. Verification checklist for the Builder
+## 8. Out of Scope
 
-After implementing §8 + §9, the Builder confirms:
-
-1. Opening `nederly.html` with stale `nederly_initialized = '3'` in localStorage triggers a one-time re-seed (no visible error).
-2. **Food & Drink** category shows 10 items including thee, melk, bier, vlees, groente.
-3. **Transport & Directions** shows 9 items including de fiets, het vliegveld, rechtdoor, Hoe kom ik bij?.
-4. **Places** shows 7 items including de apotheek, de bibliotheek.
-5. A new category **Numbers 21+ (Inversion)** appears with 3 items.
-6. Minimal-pair drill includes `uit / ijs` and **does not** include `huis / hijs` or `neus / noos`.
-7. Starting any category session shows a thin blue progress bar between the dots row and the card; label reads "1 of N" → advances on reveal/advance → reaches "N of N" on the last card.
-8. Completing a session lands on a screen titled "Nice session." with no percentage, showing "You practiced N words today.", the category name (or "Pasted vocab"), and the ✓/✗ counts.
-9. Sound guide cards show ≤2 lines of description. A "Show more" link appears on cards whose description would overflow; it expands to full text and toggles to "Show less".
-10. Cards whose description fits in 2 lines do **not** show a "Show more" link.
-11. No console errors. No layout breakage at 320px width.
-12. `localStorage.getItem('nederly_initialized')` reads `'4'` after first load.
+| Feature | Status |
+|---------|--------|
+| Audio file recording / playback (`audioFile` field) | Deferred to v7+ — no audio assets; Web Speech API used for all TTS |
+| IPA display in the UI | Stored in data model but hidden; Settings toggle is a future enhancement |
+| Pronunciation scoring / waveform analysis | Future — requires microphone API and audio analysis library |
+| Chunk highlighting during slow playback | Deferred — requires audio timestamps; `phraseChunks` stored for future use |
+| Listen-and-repeat exercise screen updates | Not in this run; only flashcard session screen is changed |
+| Streaks, lives, timers, leaderboards | Permanently banned (Dyslexia Expert §7) |
+| New lesson content categories | Data scope fixed for v6; future lessons are new `CATEGORIES` entries |
+| Dark mode / high-contrast mode | Future accessibility enhancement |
+| Settings screen | Future — needed once IPA toggle is added |
+| AI-generated content | Not applicable — app is offline-only |
+| Onboarding modal / tooltip | Not added in v6; first-screen UX is adequate at current scale |
 
 ---
 
-*End of design_spec.md. Hand off to: Builder.*
+*End of Designer Agent Report*
+*Cite as: Nederly Designer Agent, 2026-05-22*
+*Inputs: Researcher §6–§7 | Dutch Expert §6 | Dyslexia Expert §1–§10 | Phonetics §4–§6 | index.html v5*

@@ -65,6 +65,11 @@ Researcher ─→ [Gate 0] ─→ ┌─ Dutch Expert ─→ Phonetics ─┐
 | 2026-05-22 | **`nederly.html` renamed to `index.html`** | GitHub Pages serves `index.html` by default at the root URL — avoids needing the filename in the URL |
 | 2026-05-22 | **GitHub Actions Pages workflow added** (`.github/workflows/deploy.yml`) | Classic branch-based Pages wasn't triggering rebuilds; Actions workflow deploys on every push to master |
 | 2026-05-22 | **App live on GitHub Pages** at `https://jenuineprojects.github.io/nederly/` | VERSION 4 now publicly accessible for mobile testing |
+| 2026-05-22 | **Lesson 2 added** — "Zitten in een café". New `Les 2: Café` category (31 items: drinks, food, café items, verbs, phrases). Lesson notes entry added to `LESSONS`. VERSION bumped 4 → 5. | Lesson 2 taken 2026-05-22 |
+| 2026-05-22 | **Full pipeline ran end-to-end** (Researcher → Dutch Expert + Dyslexia Expert → Phonetics → Designer → Builder). All 5 gates PASS. VERSION 5 → 6. Report: `docs/agents/reports/2026-05-22-01-report.md` | User requested professional look, user-friendly layout, phonetic spelling during practice |
+| 2026-05-22 | **Phonetic display on every flashcard** — respelling pill (e.g. "say: HOW-s") always visible on question side; IPA and article chip (blue `de` / green `het`) appear after tap; ★ badge on tricky sounds taps to reveal one-line articulatory hint | User request — get used to sounds while practicing |
+| 2026-05-22 | **Professional visual polish** — white cards with 16px radius + shadow, white header with shadow, amber missed-state (replacing red), minimal pair colours unified to `#1A1A1A`, spacing upgraded to 8px rhythm, button styles consistent throughout | User request — professional and user-friendly look |
+| 2026-05-22 | **Data model expanded** — every word object now carries 7 phonetic fields: `ipa`, `respelling`, `articulatoryHint`, `article`, `trapRank`, `soundCategory`, `audioRequired`. 181 words updated. | Required for phonetic display feature |
 
 ---
 
@@ -101,18 +106,20 @@ Nederly/
 │       ├── manager_memory.md  ← cross-run ledger (decisions, VERSIONs used, follow-ups)
 │       ├── reports/           ← one MD report per pipeline run
 │       │   ├── README.md
-│       │   └── 2026-05-20-01-report.md  ← first formal report (VERSION 3 → 4)
-│       ├── researcher.md      ← (produced by Researcher, ~280 lines, 64 cited sources)
-│       ├── dutch_expert.md    ← (produced by Dutch Expert, ~470 lines)
-│       ├── dyslexia_expert.md ← (produced by Dyslexia Expert, ~530 lines)
-│       ├── phonetics.md       ← (produced by Phonetics Specialist, ~440 lines)
-│       └── design_spec.md     ← (produced by Designer, ~620 lines, v4 spec)
+│       │   ├── 2026-05-20-01-report.md  ← first formal report (VERSION 3 → 4)
+│       │   └── 2026-05-22-01-report.md  ← second formal report (VERSION 5 → 6)
+│       ├── researcher.md      ← (produced by Researcher, ~500 lines, 28 cited sources — updated 2026-05-22)
+│       ├── dutch_expert.md    ← (produced by Dutch Expert — includes full IPA+respelling table for all ~130 words)
+│       ├── dyslexia_expert.md ← (produced by Dyslexia Expert — includes phonetic chip styling + professional polish checklist)
+│       ├── phonetics.md       ← (produced by Phonetics Specialist — includes 12-field card data spec)
+│       └── design_spec.md     ← (produced by Designer — 50-row change table, v6 spec)
 ├── backend/                   ← legacy runtime-agent code — NOT used in v1 (offline-only)
 │   └── agents/                ← old Python agent modules (kept as reference / possible v2 input)
 ├── index.html                 ← ⭐ THE APP — open directly in browser or via GitHub Pages
-├── OpenDyslexic-Regular.woff2 ← REQUIRED locally: download from opendyslexic.org, place here
+├── OpenDyslexic-Regular.woff2 ← REQUIRED: download from opendyslexic.org, place here (not in git)
 ├── Lesson Notes/
 │   ├── Lesson 1.md            ← raw notes from lesson 1
+│   ├── Lesson 2.md            ← raw notes from lesson 2 (2026-05-22)
 │   └── Dutch Sound Reference Guide.md  ← corrected sound guide (updated 2026-05-20)
 └── app/                       ← legacy Expo/Vite build (excluded from git, kept on disk for reference)
     ├── web/                   ← Vite + React web build
@@ -124,28 +131,27 @@ Nederly/
 
 ---
 
-## Status (as of 2026-05-22 — VERSION 4 live on GitHub Pages)
+## Status (as of 2026-05-22 — VERSION 6)
 
 - ✅ Initial plan: `C:\Users\carey\.claude\plans\streamed-strolling-taco.md`
 - ✅ All 7 agent briefs written: `docs/agents/briefs/`
-- ✅ Full pipeline ran end-to-end with Researcher in front: Researcher → Dutch Expert + Phonetics + Dyslexia Expert → Designer → Builder. All 4 gates PASS. First formal report at `docs/agents/reports/2026-05-20-01-report.md`.
+- ✅ Two full pipeline runs completed. Reports at `docs/agents/reports/`.
 - ✅ Manager memory + reports infrastructure in active use (`manager_memory.md`, `reports/`)
-- ✅ **App live on GitHub Pages:** `https://jenuineprojects.github.io/nederly/` (VERSION 4)
-- ✅ **`index.html`** — VERSION = 4
-  - Screens: Home, Categories, Session, SessionComplete (mastery card), Minimal Pairs, Progress, Add Vocab, Sound Guide, **Lesson notes**, **Lesson detail**
-  - 18 categories (12 general + 4 Les 1 + Kleuren + Numbers 21+ Inversion). Numbers extended through 20 + inversion examples (eenentwintig etc.)
-  - Food/Transport/Places expanded (thee, melk, bier, vlees, groente / de fiets, het vliegveld, rechtdoor, Hoe kom ik bij? / de apotheek, de bibliotheek)
-  - All Lesson 1 nouns show with their article (de/het)
-  - 16 minimal pairs (replaced huis/hijs → uit/ijs; removed neus/noos as duplicate)
-  - 28-sound guide with: line-clamp+toggle on long descriptions, fixed TTS speakAs (different Dutch word per sound), always-visible "say: ..." English-respelling pills
-  - **Lesson notes section** with 2 cards: Lesson 1 — Phonetics + Thuis + Familie (2026-05-18, structured bullet lists) and Dutch Sound Reference Guide (purple-bordered reference card with all 28 sounds + top-5 + common mistakes)
-  - Engagement: category progress bar, mastery card replacing the percentage screen, sound-card respelling pills
-  - Accessibility: `@font-face` for OpenDyslexic, `line-height: 1.6`, `letter-spacing: 0.04em`, helper text `#6B6B6B`, slow rate `0.75×`
-- ✅ All four agent output docs are research-cited and current (researcher.md is new)
-- ✅ Git repo initialised; GitHub Actions deploys Pages on every push to master
-- ⏳ **OpenDyslexic font file not yet downloaded** — drop `OpenDyslexic-Regular.woff2` next to `index.html` from https://opendyslexic.org. Bold face also pending. (Font is NOT committed to git — add to `.gitignore` or download separately on each device.)
-- ⬜ After each lesson: add a new entry to `LESSONS` (sections with items) AND add words to `CATEGORIES`; bump VERSION number for CATEGORIES changes (next: `'5'`)
-- ⬜ Deferred for next pipeline run (v5 candidates): Grammar reference screen (diminutives, subordinate-clause word order, full number inversion 21–99), non-decaying mastery badges, rotating daily prompt picker, opt-in short-term goal nudge, 320px viewport overflow verification
+- ✅ **App live on GitHub Pages:** `https://jenuineprojects.github.io/nederly/` (needs push to update to VERSION 6)
+- ✅ **`index.html`** — VERSION = 6
+  - Screens: Home, Categories, Session, SessionComplete (mastery card), Minimal Pairs, Progress, Add Vocab, Sound Guide, Lesson notes, Lesson detail
+  - 19 categories (12 general + 4 Les 1 + 1 Les 2 + Kleuren + Numbers 21+ Inversion)
+  - 181 words — each carries `ipa`, `respelling`, `articulatoryHint`, `article`, `trapRank`, `soundCategory`, `audioRequired`
+  - **Flashcard phonetics:** respelling pill always visible on question side; IPA + article chip appear after reveal; ★ badge on tricky sounds taps to show articulatory hint
+  - **Professional visual polish:** white cards (16px radius, shadow), white header with shadow, amber missed-state, 8px spacing rhythm, consistent buttons
+  - 16 minimal pairs, 28-sound guide, lesson notes (Lesson 1 + Lesson 2 + Dutch Sound Reference Guide)
+  - Engagement: category progress bar, mastery card
+  - Accessibility: `@font-face` for OpenDyslexic, `line-height: 1.6`, `letter-spacing: 0.04em`, `#6B6B6B` secondary text, slow TTS at `0.75×`
+- ✅ All agent output docs updated and research-cited (`researcher.md`, `dutch_expert.md`, `dyslexia_expert.md`, `phonetics.md`, `design_spec.md`)
+- ✅ Git repo on GitHub; Actions workflow deploys Pages on every push to master
+- ⏳ **OpenDyslexic font not yet on GitHub Pages** — `OpenDyslexic-Regular.woff2` must be placed next to `index.html` and committed (or downloaded on each device). The `.otf` version is in `app/assets/fonts/opendyslexic-0.92/` but the app expects `.woff2`.
+- ⬜ After each lesson: add entry to `LESSONS`, add words to `CATEGORIES` (with all 7 phonetic fields), bump VERSION (next: `'7'`)
+- ⬜ Deferred for a future pipeline run: Grammar reference screen (diminutives, word order, number inversion 21–99), non-decaying mastery badges, rotating daily prompt picker, opt-in short-term goal nudge, 320px viewport overflow verification
 
 ---
 
@@ -158,7 +164,8 @@ Nederly/
 5. After each Dutch lesson:
    - Share your notes
    - I'll curate them into the `LESSONS` array (bulleted sections — Sounds drilled, Words, Phrases, Notes)
-   - And add any new vocabulary to `CATEGORIES` (bumping VERSION so the new words seed into localStorage)
+   - And add any new vocabulary to `CATEGORIES` — **each word needs all 7 phonetic fields**: `ipa`, `respelling`, `articulatoryHint`, `article`, `trapRank`, `soundCategory`, `audioRequired`
+   - Bump VERSION so new words seed into localStorage (next: `'7'`)
 6. Update the `Status` and `Decisions` sections as you go
 
 ---

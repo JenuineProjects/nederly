@@ -1,612 +1,647 @@
-# Dutch Expert — Knowledge Document
-
-> Reference for the Nederly app pipeline. Covers A0 Dutch content, grammar, traps, and app recommendations.
-> Netherlands Dutch only. No IPA (see Phonetics Specialist). No UI suggestions.
-> Grounded in `researcher.md` — cited inline as [Researcher §X].
-
----
-
-## 1. A0 Learning Priorities — First 4–6 Weeks
-
-This sequence is tailored to **this** learner: they have completed **exactly one** Dutch lesson, which was phonetics-heavy + ~30 nouns + one frozen sentence (*Mag ik pinnen*), and **no grammar yet** [Researcher §5]. The first two weeks below therefore stay close to absolute basics rather than jumping to the typical "week 3+" curriculum.
-
-The benchmark first-5-lesson set across Babbel, Duolingo, and NT2 [Researcher §3] is: greetings + *zijn* → origin + *hoe gaat het* → family + *hebben* + possessives → numbers/days/time → house + food + modals. That informs weeks 3–6 below.
-
-| Week | Focus | Why now |
-|------|-------|---------|
-| 1 | Consolidate phonetics; lock articles onto existing 30 nouns (de huis → het huis); add greetings + ja/nee/misschien | The learner already has the vocab but no articles. Articles must be learned **with** each noun [Researcher §1B item 13] |
-| 2 | *zijn* (to be) + subject pronouns (ik/jij/u); *Ik ben…*, *Ik heet…*, *Ik kom uit…*; basic statement word order | Smallest grammar that turns vocab into sentences. Matches typical Lesson 1 [Researcher §3] |
-| 3 | *Hoe gaat het?* exchange; *hebben* (to have); possessives *mijn/jouw*; *Ik heb honger / dorst* | High-frequency small talk + introduces the hebben-vs-zijn split English speakers get wrong |
-| 4 | Numbers 1–20, then 21–100 with **inversion** (eenentwintig); days; telling time | Number inversion is its own trap [Researcher §1B item 15]. Needed for prices, addresses, phone numbers |
-| 5 | Modal verbs *willen, kunnen, mogen, moeten*; modal + infinitive end-stacking; expand *mag ik X* frame | Builds directly on user's existing *Mag ik pinnen*. Introduces V2 + verb-final stacking [Researcher §1B item 16] |
-| 6 | V2 word order after fronted adverbs; negation *niet*/*geen*; yes/no questions by inversion | The single most frequent English-speaker error pattern in main clauses [Researcher §1B item 11] |
-
-> Subordinate-clause verb-final (after *dat/omdat/als*) is deferred to week 7+ — it compounds with V2 and is too much load before V2 itself is stable [Researcher §1B item 12].
+# Nederly — Dutch Expert Agent Report
+*Focus: A0 content sequence, IPA + respelling table, grammar minimums, learner traps*
+*Netherlands Dutch only | A0 beginner | Dyslexic adult English speaker*
+*Generated: 2026-05-22*
 
 ---
 
-## 2. Content Categories
+## 1. A0 Learning Priorities — Weeks 1–6 Sequence
 
-### 2.1 Greetings & Farewells
+Opinionated order based on NT2 curricula (Volksuniversiteit Amsterdam, Dutch First, Radboud) and the user's actual lesson pace. Each week builds on the last; do not skip forward.
 
-Everyday openers/closers and the standard small-talk exchange.
+| Week | Focus | Why first |
+|------|-------|-----------|
+| **1** | Dutch sound system — vowels, diphthongs, consonant clusters | Everything else depends on this. Mispronunciation habits formed now stick for months. Researcher §1 lists ui, g/ch, eu/uu as the hardest — introduce them early so the ear can start adjusting. |
+| **1** | Core greetings and yes/no words | Immediately usable; high-reward for low effort. Builds confidence. |
+| **2** | Numbers 1–20 | Essential for café, shopping, and transport from day one. |
+| **2** | Home vocabulary (huis, kamer, tafel…) | Concrete nouns — easy to visualise and remember. Lesson 1 covers these. |
+| **3** | Family vocabulary | Personally relevant; introduces de/het distinction in a low-stakes set. |
+| **3** | Courtesy phrases and survival phrases | *Mag ik pinnen? Dank je wel. Alsjeblieft.* — used immediately in real life. |
+| **4** | Café vocabulary and ordering phrases | Lesson 2 directly. High real-world frequency in Netherlands context. |
+| **4** | Question words (wat, waar, wanneer, wie, hoeveel) | Unlocks real conversations. Very short words — quick wins. |
+| **5** | Transport and directions | Needed for independence in the Netherlands. |
+| **5** | Colours and adjectives | Low grammatical complexity; high communicative usefulness. |
+| **6** | Feelings and states | Introduces zijn + hebben in natural context. |
+| **6** | Introducing yourself | Pulls all previous vocabulary together into a real communicative task. |
 
+---
+
+## 2. Content Categories — 8–12 A0 Vocab/Phrase Sets
+
+### 2a. Greetings and Farewells
 | Dutch | English |
 |-------|---------|
 | Goedemorgen | Good morning |
-| Hallo / Hoi | Hello / Hi |
-| Tot ziens | Goodbye / See you |
+| Goedemiddag | Good afternoon |
+| Hallo | Hello |
+| Tot ziens | Goodbye |
 | Hoe gaat het? | How are you? |
-| Goed, dank je wel | Fine, thank you |
 
----
-
-### 2.2 Courtesy Phrases
-
-Politeness basics; needed from day one.
-
+### 2b. Numbers 1–10 (core survival set)
 | Dutch | English |
 |-------|---------|
-| Dank je wel / Dank u wel | Thank you (informal / formal) |
-| Alsjeblieft / Alstublieft | Please / Here you go (informal / formal) |
-| Sorry / Pardon | Sorry / Excuse me |
-| Geen probleem | No problem |
-| Graag gedaan | You're welcome |
-
----
-
-### 2.3 Numbers 1–20 (and inversion 21+)
-
-Foundation for prices, addresses, bus numbers.
-
-| Dutch | English |
-|-------|---------|
-| één, twee, drie | one, two, three |
+| één | one |
+| twee | two |
+| drie | three |
+| vier | four |
+| vijf | five |
+| zes | six |
+| zeven | seven |
+| acht | eight |
+| negen | nine |
 | tien | ten |
-| elf, twaalf | eleven, twelve |
-| twintig | twenty |
-| **eenentwintig** | **twenty-one** (lit. "one-and-twenty") |
 
-> 21+ uses **number inversion**: *eenentwintig, tweeëntwintig, drieëntwintig…* This reverses English order and hits hard during phone numbers and prices [Researcher §1B item 15].
-
----
-
-### 2.4 Days & Time
-
-Scheduling, appointments, daily routine.
-
+### 2c. Home (Les 1: Thuis)
 | Dutch | English |
 |-------|---------|
-| maandag, dinsdag, woensdag | Mon, Tue, Wed |
-| vandaag | today |
-| morgen | tomorrow |
-| gisteren | yesterday |
-| Hoe laat is het? | What time is it? |
+| het huis | the house |
+| de kamer | the room |
+| de tafel | the table |
+| de deur | the door |
+| de keuken | the kitchen |
 
----
-
-### 2.5 Food & Drink
-
-Café, restaurant, and supermarket survival. Five items is too thin — expanded below.
-
+### 2d. Family (Les 1: Familie)
 | Dutch | English |
 |-------|---------|
-| water, koffie, **thee**, **melk**, **bier** | water, coffee, tea, milk, beer |
-| brood, kaas, appel | bread, cheese, apple |
-| **vlees**, **groente** | meat, vegetables |
+| de moeder | the mother |
+| de vader | the father |
+| de broer | the brother |
+| de zus | the sister |
+| het kind | the child |
+
+### 2e. Café Drinks (Les 2: Drankjes)
+| Dutch | English |
+|-------|---------|
+| de koffie | coffee |
+| de thee | tea |
+| het water | water |
+| de frisdrank | soft drink |
+| de latte | latte |
+
+### 2f. Café Food (Les 2: Eten)
+| Dutch | English |
+|-------|---------|
+| het gebak | pastry / cake |
+| de appeltaart | apple pie |
+| het broodje | sandwich |
+| de croissant | croissant |
+| de snack | snack |
+
+### 2g. Café Situation (Les 2: In het café)
+| Dutch | English |
+|-------|---------|
+| de menukaart | menu |
+| de ober | waiter |
 | de rekening | the bill |
-| Mag ik een koffie? | May I have a coffee? |
+| de bestelling | the order |
+| de serveerster | waitress |
 
-> Additions thee/melk/bier/vlees/groente complete the bare minimum for any Dutch café or supermarket visit [Researcher §3 Lesson 5].
-
----
-
-### 2.6 Ordering & Shopping
-
-Counter language. *Mag ik X* is the user's existing frame — extend it heavily [Researcher §2.5].
-
+### 2h. Courtesy and Survival Phrases
 | Dutch | English |
 |-------|---------|
-| Ik wil graag… | I would like… |
-| Mag ik…? | May I have…? |
-| Hoeveel kost dit? | How much does this cost? |
-| Mag ik pinnen? | May I pay by card? |
-| De rekening, alsjeblieft | The bill, please |
+| Alsjeblieft | Please / Here you go (informal) |
+| Dank je wel | Thank you (informal) |
+| Mag ik pinnen? | Can I pay by card? |
+| Ik wil graag een koffie. | I would like a coffee. |
+| Mag ik de rekening, alstublieft? | May I have the bill, please? |
 
----
-
-### 2.7 Transport & Directions
-
-Getting around. Now includes bike (essential in NL) and "how do I get to" frame.
-
-| Dutch | English |
-|-------|---------|
-| de trein, de bus, **de fiets** | the train, the bus, the bike |
-| het station, **het vliegveld** | the station, the airport |
-| links, rechts, **rechtdoor** | left, right, straight ahead |
-| **Hoe kom ik bij…?** | **How do I get to…?** |
-| de halte | the (bus/tram) stop |
-
----
-
-### 2.8 Places
-
-Daily-life locations. Pharmacy and library added for real-NL coverage.
-
-| Dutch | English |
-|-------|---------|
-| de supermarkt | the supermarket |
-| het ziekenhuis | the hospital |
-| **de apotheek** | **the pharmacy** |
-| **de bibliotheek** | **the library** |
-| het centrum | the city centre |
-
----
-
-### 2.9 Introducing Yourself
-
-Lesson-1 staples.
-
-| Dutch | English |
-|-------|---------|
-| Ik heet… | My name is… |
-| Ik kom uit… | I come from… |
-| Ik spreek een beetje Nederlands | I speak a little Dutch |
-| Hoe heet jij? / Hoe heet u? | What's your name? (informal / formal) |
-| Aangenaam | Pleased to meet you |
-
----
-
-### 2.10 Family
-
-Already known by user from Lesson 1 — present with articles.
-
-| Dutch | English |
-|-------|---------|
-| de moeder, de vader | the mother, the father |
-| de broer, de zus | the brother, the sister |
-| de opa, de oma | the grandfather, the grandmother |
-| het kind, de baby | the child, the baby |
-| de vriend, de vriendin | the (boy)friend, the (girl)friend |
-
----
-
-### 2.11 Home & Rooms
-
-Already known by user from Lesson 1 — present with articles.
-
-| Dutch | English |
-|-------|---------|
-| het huis, de kamer | the house, the room |
-| de keuken, de badkamer | the kitchen, the bathroom |
-| de tafel, de stoel, het bed | the table, the chair, the bed |
-| de deur, het raam | the door, the window |
-| de lamp | the lamp |
-
----
-
-### 2.12 Feelings & States
-
-Note the *hebben* vs *zijn* split — hunger/thirst use *hebben*.
-
-| Dutch | English |
-|-------|---------|
-| Ik ben moe | I am tired |
-| Ik ben ziek | I am ill |
-| Ik ben blij | I am happy |
-| **Ik heb honger** | **I am hungry** (lit. "I have hunger") |
-| **Ik heb dorst** | **I am thirsty** (lit. "I have thirst") |
-
-> A common learner error is *Ik ben honger* — wrong in Netherlands Dutch. Same applies to *Ik heb pijn* (I am in pain) and *Ik heb het koud* (I am cold).
-
----
-
-### 2.13 Question Words
-
-Five core question words; unlocks basic conversation.
-
+### 2i. Question Words
 | Dutch | English |
 |-------|---------|
 | Wat? | What? |
 | Waar? | Where? |
 | Wanneer? | When? |
 | Wie? | Who? |
-| Hoeveel? | How much / many? |
+| Hoeveel? | How many/much? |
 
----
-
-### 2.14 Colours
-
-Standard A0; *oranje* has cultural salience in NL.
-
+### 2j. Transport and Directions
 | Dutch | English |
 |-------|---------|
-| rood, blauw, groen | red, blue, green |
-| geel, wit, zwart | yellow, white, black |
-| **oranje** | **orange** (national colour) |
-| grijs | grey |
+| de trein | the train |
+| de fiets | the bicycle |
+| links | left |
+| rechts | right |
+| rechtdoor | straight ahead |
+
+### 2k. Feelings and States
+| Dutch | English |
+|-------|---------|
+| Ik ben moe | I am tired |
+| Ik ben blij | I am happy |
+| Ik heb honger | I am hungry |
+| Ik heb dorst | I am thirsty |
+| Het gaat goed | It's going well |
+
+### 2l. Colours (Kleuren)
+| Dutch | English |
+|-------|---------|
+| rood | red |
+| blauw | blue |
+| groen | green |
+| geel | yellow |
+| zwart | black |
 
 ---
 
-## 3. Grammar Minimums
+## 3. Grammar Minimums for A0
 
-The smallest grammar set an A0 learner needs to form simple sentences.
+### Articles: de / het
+- Dutch has two definite articles: **de** (common gender) and **het** (neuter)
+- No reliable rule — must be memorised word by word
+- Rough guide: approximately 75% of nouns take *de*; *het* words must be flagged individually
+- Critical *het* words at A0: het huis, het bed, het raam, het kind, het water, het gebak, het broodje, het café, het station, het centrum, het ziekenhuis, het vliegveld
+- Indefinite article: **een** (pronounced as schwa "uh") — same for all genders
+- **Dyslexia note:** Colour-code de/het on every flashcard. Never leave the article off.
 
----
+### Word Order
+- Main clause: **Subject — Verb — Rest** (same as English for simple sentences)
+  - *Ik drink koffie.* — I drink coffee.
+- Verb-second rule: when a time word or adverb opens the sentence, the verb stays second and the subject moves:
+  - *Morgen ga ik naar de winkel.* — Tomorrow go I to the shop.
+- Questions: verb moves to first position:
+  - *Drink jij koffie?* — Do you drink coffee?
+- At A0, teach only main-clause SVO. Subordinate clause verb-final is A1+.
 
-### 3.1 Word Order — Statements (V2)
+### Personal Pronouns
+| Dutch | English |
+|-------|---------|
+| ik | I |
+| jij / je | you (informal) |
+| hij | he |
+| zij / ze | she |
+| het | it |
+| wij / we | we |
+| jullie | you (plural) |
+| zij / ze | they |
+| u | you (formal) |
 
-Dutch main-clause word order: the **finite verb is always in position 2** [Researcher §1B item 11].
-
-> **Ik drink koffie.** — I drink coffee.
-
-If anything other than the subject starts the sentence, the subject moves *after* the verb:
-
-> **Morgen ga ik naar school.** — Tomorrow I'm going to school.
-> *(morgen = 1, ga = 2, ik = 3)*
-
-Common English-speaker error: *Morgen ik ga…* — wrong, breaks V2.
-
----
-
-### 3.2 Word Order — Yes/No Questions
-
-Invert subject and verb:
-
-> **Drink jij koffie?** — Do you drink coffee?
-> **Spreekt u Nederlands?** — Do you speak Dutch?
-
----
-
-### 3.3 Word Order — Question-Word Questions
-
-Question word first, then verb, then subject:
-
-> **Wat drink jij?** — What do you drink?
-> **Waar woon jij?** — Where do you live?
-
----
-
-### 3.4 Word Order — Modal + Main Verb (split)
-
-A modal verb (willen, kunnen, mogen, moeten, zullen) sits in V2; the **main verb goes to the end** as an infinitive [Researcher §1B item 16].
-
-> **Ik wil pizza eten.** — I want to eat pizza.
-> **Mag ik hier pinnen?** — May I pay by card here?
-> **Wij kunnen Nederlands spreken.** — We can speak Dutch.
-
-This "verb sandwich" (modal up front, infinitive at the back, everything else in the middle) is the first time the learner meets Dutch's end-stacking habit. The same pattern returns later with the perfect tense (*ik heb pizza gegeten*).
-
----
-
-### 3.5 Word Order — Subordinate Clauses (verb to the end)
-
-After connectors *dat, omdat, als, wanneer, terwijl, hoewel*, the **finite verb goes to the very end** of the clause [Researcher §1B item 12].
-
-> **Ik weet dat hij Nederlands spreekt.** — I know that he speaks Dutch.
-> *(not …dat hij spreekt Nederlands.)*
-> **Ik ga naar huis omdat ik moe ben.** — I'm going home because I am tired.
-> *(not …omdat ik ben moe.)*
-
-This compounds with V2 (rule 3.1) and is the most-cited grammar pain point for English speakers [Researcher §1B item 12]. Defer to ~week 7 in the sequence above.
-
----
-
-### 3.6 Articles — de and het
-
-| Article | Use | Example |
-|---------|-----|---------|
-| **de** | ~75% of nouns | de man, de vrouw, de trein |
-| **het** | ~25% of nouns + **all diminutives** | het huis, het kind, het kopje |
-| **een** | Indefinite (both genders) | een man, een huis |
-
-> **Tip:** Learn every noun **with** its article. "het huis", not just "huis" [Researcher §1B item 13]. No rule is reliable enough to skip memorising.
-
----
-
-### 3.7 Diminutives — `-je / -tje / -pje / -kje / -etje`
-
-A core Dutch feature, used **far more often than English** diminutives and often non-literally [Researcher §1B item 14].
-
-| Suffix | Trigger (rough) | Example |
-|--------|-----------------|---------|
-| **-je** | After most consonants | huis → huisje, boek → boekje |
-| **-tje** | After vowels, -l, -n, -r, -w | tafel → tafeltje, oma → omaatje |
-| **-pje** | After long vowel + -m | boom → boompje, raam → raampje |
-| **-kje** | After unstressed -ing | koning → koninkje |
-| **-etje** | After short vowel + -l/-m/-n/-ng/-r | bal → balletje, zon → zonnetje |
-
-**All diminutives are `het` nouns**, regardless of the original gender.
-
-> **kopje koffie** does **not** mean "small cup of coffee" — it just means "a coffee" (standard café order).
-> **biertje, broodje, dagje, momentje** — all idiomatic; the diminutive softens or makes-friendly rather than shrinking.
-
-Beginners do **not** need to produce the rule. They need to recognise the *-je/-tje* endings and know all such words take *het*.
-
----
-
-### 3.8 Pronouns
-
-| Subject | English | Object |
-|---------|---------|--------|
-| ik | I | mij / me |
-| jij / je | you (sg, informal) | jou / je |
-| u | you (formal) | u |
-| hij | he | hem |
-| zij / ze | she | haar |
-| het | it | het |
-| wij / we | we | ons |
-| jullie | you (pl) | jullie |
-| zij / ze | they | hen / ze |
-
-> `je` and `ze` are unstressed forms used in casual speech; `jij` and `zij` are stressed forms used for emphasis or clarity.
-
----
-
-### 3.9 *zijn* (to be)
-
-| Pronoun | Form |
-|---------|------|
+### Zijn (to be) — Present Tense
+| Person | Form |
+|--------|------|
 | ik | ben |
 | jij / je | bent |
-| u | bent |
-| hij / zij / het | is |
-| wij / jullie / zij | zijn |
+| hij/zij/het | is |
+| wij/jullie/zij | zijn |
 
-> **Ik ben student.** — I am a student.
-> **Hij is moe.** — He is tired.
-
----
-
-### 3.10 *hebben* (to have)
-
-| Pronoun | Form |
-|---------|------|
+### Hebben (to have) — Present Tense
+| Person | Form |
+|--------|------|
 | ik | heb |
 | jij / je | hebt |
-| u | heeft (also: hebt) |
-| hij / zij / het | heeft |
-| wij / jullie / zij | hebben |
+| hij/zij/het | heeft |
+| wij/jullie/zij | hebben |
 
-> **Ik heb een vraag.** — I have a question.
-> **Ik heb honger.** — I am hungry. (NOT *Ik ben honger*)
-
----
-
-### 3.11 *gaan* (to go)
-
-| Pronoun | Form |
-|---------|------|
-| ik | ga |
-| jij / je | gaat |
-| u | gaat |
-| hij / zij / het | gaat |
-| wij / jullie / zij | gaan |
-
-> **Ik ga naar huis.** — I'm going home.
-> **Wij gaan naar de supermarkt.** — We're going to the supermarket.
-
----
-
-### 3.12 *jij*-inversion: the `-t` drops
-
-When **jij/je** follows the verb (questions, V2 after a fronted adverb), the verb loses its `-t`:
-
-> **Jij werkt.** → **Werk jij?** — You work / Do you work?
-> **Jij gaat naar huis.** → **Morgen ga jij naar huis.**
-
-This affects `jij/je` only — never `u`, never `hij/zij`.
-
----
-
-### 3.13 Number inversion (21–99)
-
-Compound numbers are spoken **units-first, then tens**, joined by **-en-** [Researcher §1B item 15].
-
-| Number | Dutch | Literal |
-|--------|-------|---------|
-| 21 | eenentwintig | one-and-twenty |
-| 22 | tweeëntwintig | two-and-twenty |
-| 34 | vierendertig | four-and-thirty |
-| 99 | negenennegentig | nine-and-ninety |
-
-> Diaeresis (¨) is written when two vowels would otherwise merge: **tweeëntwintig**, **drieëntachtig**.
-> This hits hardest when listening to phone numbers, addresses, and prices.
-
----
-
-### 3.14 Negation — *niet* vs *geen*
-
-**`niet`** negates verbs, adjectives, and adverbs:
-
-> Ik spreek niet. — I don't speak.
-> Het is niet groot. — It is not big.
-
-**`geen`** negates nouns (replaces *een*, or where English would say "no + noun"):
-
-> Ik heb geen auto. — I don't have a car.
-> Er is geen tijd. — There is no time.
-
-**Quick rule:** Use *geen* where English uses "no + noun". Use *niet* everywhere else.
+### Negation
+- **niet** negates verbs and adjectives: *Ik drink niet.* / *Het is niet lekker.*
+- **geen** negates nouns (replaces the article): *Ik heb geen koffie.* (not: *Ik heb niet een koffie.*)
+- Position: *niet* goes to the end of the clause for verbs; *geen* replaces the article directly before the noun.
 
 ---
 
 ## 4. Top 10 Traps for English Speakers
 
-Aligned with the Researcher's ranked grammar/vocab list [Researcher §1B–§1C].
+Based on Researcher §1 and standard NT2 pedagogy.
+
+| # | Trap | Dutch example | English mistake | Correct approach |
+|---|------|---------------|-----------------|------------------|
+| 1 | **ui vowel** — no English equivalent; glide from open "a" to rounded "uu" | *huis* | "hows" (like house) | Must be heard — ★ audio required |
+| 2 | **g / ch** — velar fricative, like clearing the throat | *goed, lach* | "goot" (hard English g) | Must be heard — ★ audio required |
+| 3 | **Long ee / oo held flat** — no English-style glide at the end | *been, boom* | "bay-en", "boh-wm" | Pure flat vowel — hold steady, no drift |
+| 4 | **ij / ei** — one sound, two spellings | *zijn, vijf* | "eye" (too wide open) | Closer to English "ay" but not identical |
+| 5 | **eu vowel** — rounded lips with "ee" tongue position | *deur, neus* | "door", "nace" | Must be heard — ★ audio required |
+| 6 | **de vs het** — two articles with no single rule | *het huis, de deur* | Using "de" for everything | Must memorise each noun's article individually |
+| 7 | **geen vs niet** — two different negation words | *Ik heb geen koffie* | "Ik heb niet koffie" | *geen* before nouns; *niet* before verbs/adjectives |
+| 8 | **Verb second in inverted sentences** | *Morgen ga ik...* | "Morgen ik ga..." | Subject moves after verb when adverb opens the clause |
+| 9 | **Unstressed e / schwa** — *de* and *een* are said as "duh" / "un" | *de tafel* | "day tah-fel" | "duh TAH-ful" — very short unstressed vowel |
+| 10 | **sch cluster** — "s" + throat scrape at word start; just "s" at word end | *school, beschrijven* | "sh-cool" (German/English habit) | /sχ/ at word start — not "sh" |
+
+★ = text description insufficient — audio required (Researcher §7, Dutch Sound Reference Guide)
 
 ---
 
-> **1. V2 word order** — The finite verb must be in position 2 of a main clause. English speakers default to S-V-O and produce ungrammatical Dutch as soon as a time/place phrase fronts the sentence. *Morgen **ga** ik…* not *Morgen ik ga…* [Researcher §1B item 11].
+## 5. Register Notes — Formal (u) vs Informal (je/jij)
 
-> **2. Verb-final in subordinate clauses** — After *dat / omdat / als / wanneer*, the finite verb moves to the **end** of the clause. *Ik weet dat hij Nederlands **spreekt*** (not *…dat hij spreekt Nederlands*). Compounding effect with rule 1 is the biggest documented grammar pain point [Researcher §1B item 12].
+### When to use formal *u*
+- With strangers, shop staff, waiters (first contact) — especially anyone over approximately 40
+- In professional or official settings
+- When the other person uses *u* with you first
+- Written correspondence to unknown recipients
+- Restaurant survival phrases addressed to a waiter: *Wat raadt u aan? / Heeft u ook appeltaart?*
 
-> **3. Modal + main verb splitting** — A modal verb sits in V2; the main infinitive goes to the **end**. *Ik **wil** pizza **eten*** (not *Ik wil eten pizza*). Same end-stacking returns in the perfect tense [Researcher §1B item 16].
+### When to use informal *je/jij*
+- With peers, friends, classmates
+- With children
+- In casual settings once rapport is established
+- Most younger Dutch people (under approximately 35) default to *je* in almost all contexts
+- The Lesson 2 dialogue models both registers: the waiter uses *je* in casual mode (*Ben je al klaar?*) and *u* in formal mode — both occur naturally in real Dutch cafés
 
-> **4. Number inversion (eenentwintig)** — 21 = *one-and-twenty*. Reverses English order. Disastrous when listening to phone numbers, prices, addresses [Researcher §1B item 15].
-
-> **5. Diminutives `-je / -tje / -pje / -kje / -etje`** — Five forms governed by sound, all diminutives take *het*, often used non-literally. *Een kopje koffie* = "a coffee", not "a small cup of coffee" [Researcher §1B item 14].
-
-> **6. `de` vs `het` — no reliable pattern** — English speakers expect a rule; there isn't a useful one. Memorise the article with every noun. Default-guessing *de* is correct ~75% of the time and wrong ~25% — wrong often enough to matter [Researcher §1B item 13].
-
-> **7. `leuk` vs `mooi` vs `lekker`** — All translate as "nice" in some English context. *leuk* = fun/enjoyable (*Dat is leuk!*). *mooi* = visually beautiful (*een mooie dag*). *lekker* = tasty / physically pleasant (*de soep is lekker*, *ik voel me lekker*). English speakers over-use *leuk* and forget *lekker*.
-
-> **8. False friends: `wet`, `slim`, `brutaal`, `actueel`, `eventueel`** — Surface similarity = overconfidence [Researcher §1C item 17]. *wet* = law (not damp). *slim* = clever (not thin). *brutaal* = cheeky / bold (not brutal — that's *wreed*). *actueel* = current (not actual — that's *werkelijk*). *eventueel* = possibly (not eventually — that's *uiteindelijk*).
-
-> **9. `ook` position** — "Also/too" follows the verb in Dutch, not the sentence-final position. *Ik wil **ook** koffie* (I want coffee too). Putting it at the end is one of the most-heard English-accent errors.
-
-> **10. `jij`-inversion drops the `-t`** — When *jij/je* follows the verb, the verb loses its `-t`. *Jij werkt* → *Werk jij?* (not *Werkt jij?*). Affects *jij/je* only — never *u*, never *hij/zij*.
-
-> **Honourable mention: `worden` vs `zijn`** — *worden* = to become; *zijn* = to be. *Hij wordt ziek* (he's getting sick) ≠ *Hij is ziek* (he's already sick).
-> **Honourable mention: `er` as dummy subject** — Dutch needs *er* where English has "there". *Er is een probleem*, not *Is een probleem*.
-
----
-
-## 5. Register Notes
-
-### Formal: `u`
-
-Use `u` with:
-
-- Strangers older than you
-- Doctors, officials, formal customer service
-- In writing: formal emails, complaint letters, applications
-- When in doubt and wanting to be safe [Researcher §1E item 21]
-
-> **Mag ik u helpen?** — May I help you?
-
-### Informal: `je` / `jij`
-
-Use `je/jij` with:
-
-- Friends, peers, classmates
-- People who introduce themselves by first name
-- Children
-- Most everyday service interactions in Amsterdam (where informal is the default)
-
-> **Hoe heet jij?** — What's your name?
-
-### Practical rules for a beginner
-
-- If they address you with `je`, mirror them.
-- If they use `u`, use `u` back.
-- For formal email, default to `u`.
-- In Amsterdam specifically, `je` is widespread even in semi-formal situations — using `je` with shop staff will not cause offence.
-- *jij* has been expanding at the expense of *u* over recent decades [Researcher §1E item 21].
-
-### The "switch to English" social barrier
-
-This is **not** a language rule but the most-cited extralinguistic barrier in NL [Researcher §1D item 20]: as soon as a Dutch person hears you stumble, they switch to English. It removes the spontaneous practice the learner needs most.
-
-What a beginner can do:
-
-- Open with **"Mag ik in het Nederlands oefenen?"** — "May I practise in Dutch?"
-- Use **"Sorry, ik leer nog. Kunt u langzaam praten?"** — "Sorry, I'm still learning. Can you speak slowly?"
-- Accept that this **will** happen and treat it as a logistics problem (find Dutch-only contexts: classes, language cafés, family) rather than a personal failure.
-
-### Belgium note
-
-In Belgium, *u* is used far more widely, even among peers. *Gij* is a Belgian-specific second person — NL learners can ignore it [Researcher §6 S31]. Netherlands rules above do **not** transfer to Belgium.
+### Practical A0 rule
+- Default to **je** with people your age or younger
+- Default to **u** with anyone serving you formally (waiter, shopkeeper, doctor, receptionist) until they signal otherwise
+- Switching from *u* to *je* mid-conversation is normal — follow the other person's lead
+- **Lesson 2 note:** *Mag ik de rekening, alstublieft?* uses the formal *alstublieft* — correct for addressing a waiter you do not know. *Alsjeblieft* is the informal equivalent.
 
 ---
 
-## 6. Content Recommendations for the App
+## 6. IPA + Respelling Table
 
-### Short phrases over isolated words
+**Coverage:** every word and phrase in the app's CATEGORIES array as of 2026-05-22, including all Les 1 and Les 2 vocabulary.
 
-Post-lesson practice is most effective when it mirrors real use. Instead of drilling *koffie* in isolation, present it as *een koffie, alsjeblieft* — rhythm, article, and pragmatic context at once. Every vocabulary item should ship with at least one example sentence (5–10 words). This is doubly important for a dyslexic learner where the orthography is already a load.
-
-### Curated post-lesson sets
-
-A0 learners have limited bandwidth. After a lesson, **5–8 items per session** is the right scope — not 30. The app should let the user pick what they covered that day and drill that small set across multiple exercise types, while spaced review pulls forward older sets [Researcher §2.1, §2.2].
-
-### Real-world anchoring (preserve the *mag ik X* frame)
-
-The user's first whole sentence — *Mag ik pinnen* — is unusually pragmatic and anchors the content to lived NL [Researcher §2.5]. The app should keep that anchoring central: build *mag ik koffie / een broodje / pinnen / hier zitten / iets vragen* as a productive frame rather than as five unrelated phrases. Tie practice to **pinnen, rekening, supermarkt, station, apotheek, fiets** — places and actions the learner meets daily.
-
-### Audio-first where possible
-
-Adult L2 acquisition leans heavily on listening, and this is doubly true for a dyslexic learner where decoding text is the bottleneck [Researcher §2.3, §4]. Each phrase should have audio, and listening drills should precede reading drills.
-
-### Avoid streaks
-
-Streaks shift motivation from intrinsic to loss-aversion and produce documented shame/anxiety on break [Researcher §2.4]. Use progress bars, mastery badges, or completion-of-a-known-set instead.
+**Key:**
+- IPA uses Netherlands Dutch conventions (not Flemish)
+- ★ = no English equivalent — audio is essential; respelling is approximate only (Researcher §7)
+- Respelling conventions: CAPITALS = stressed syllable; KH = Dutch g/ch throat scrape; UH = schwa; hyphens separate syllables
 
 ---
 
-## 7. App Content Audit — Current State (nederly.html VERSION 3)
+### Greetings & Farewells
 
-> Reviewing the CATEGORIES array and MINIMAL_PAIRS currently present in `nederly.html` at VERSION 3 (post-refresh).
-
-### 7.1 What is already in place and correct
-
-- **All nouns carry articles** — Transport, Places, Les 1 Thuis/Familie all present nouns as *de fiets / het station / het huis / de moeder*. Earlier gap closed.
-- **Numbers 1–20 complete** — één through twintig present in the Numbers category. Earlier gap closed.
-- **Kleuren (Colours)** present — rood, blauw, groen, geel, wit, zwart, oranje, grijs. New category added.
-- **Greetings includes "Hoe gaat het?" + "Goed, dank je wel"** — the standard NL small-talk exchange is now covered.
-- **Feelings & States now includes "Ik heb dorst"** — paired with "Ik heb honger" as intended.
-- **Les 1: Zinnen expanded** — Misschien, Ik weet het niet, Kunt u dat herhalen? are present alongside Ja/Nee/Soms/Mag ik pinnen.
-- **Minimal pairs expanded** — ui/ij contrast covered by **huis / hijs**, and the Dutch g vs h contrast covered by **goed / hoed**. eu/oo covered by **deur / door** (replaces the earlier non-word "noos" partially).
-- **Greetings / Courtesy formal-informal split** — Dank je wel / Dank u wel and Alsjeblieft / Alstublieft both present.
-
-### 7.2 Accuracy spot-checks (current VERSION 3)
-
-| Item | Status | Note |
-|------|--------|------|
-| Ik heb honger / Ik heb dorst | Correct | Both present, both use *hebben* |
-| de fiets, het station, het huis, het bed | Correct | Articles attached |
-| Mag ik pinnen? | Correct | NL Dutch, not Flemish |
-| Goedemorgen / Goedemiddag / Goedenavond | Correct | NL standard spellings |
-| Aangenaam | Correct | Used standalone; full form is *Aangenaam kennis te maken* |
-| Hoe heet jij? | Correct (informal) | Formal *Hoe heet u?* not yet present |
-| Kleuren — *oranje* | Correct | NL cultural salience worth noting in UI copy |
-| neus / noos minimal pair | Still present, *noos* is a non-word | Consider replacing with a real-word eu pair (see 7.4) |
-
-### 7.3 Remaining gaps (for this pipeline run — see §8)
-
-| Gap | Priority | Notes |
-|-----|----------|-------|
-| Food & Drink only has 5 items | High | Add thee, melk, bier, vlees, groente |
-| Transport missing rechtdoor, de fiets, het vliegveld, "Hoe kom ik bij…?" | High | All present in §2.7 above; need to be added to CATEGORIES |
-| Places missing de apotheek, de bibliotheek | Medium | Useful for real-NL navigation |
-| Hoe heet u? (formal counterpart) | Low | Pair with existing *Hoe heet jij?* for register practice |
-| Numbers 21+ with inversion not present | Medium | A short "Numbers 21–30" set teaches the inversion rule (eenentwintig…) |
-| No clock-time vocabulary | Low | Hoe laat is het?, kwart over, half, kwart voor — A0/A1 boundary |
-| No diminutives shown | Low | Pedagogically valuable to show *biertje, kopje, broodje* alongside *bier, kop, brood* once basics land |
-| No subordinate-clause example sentences | Defer | Grammar load too high for current learner level — week 7+ |
-
-### 7.4 Minimal pairs — VERSION 3 state
-
-Currently present: man/maan, bos/boos, bot/boot, met/meet, uit/oud, zijn/zien, **deur/door**, licht/likt, groot/kroon, neus/noos, vis/vies, zon/zoon, boom/bom, lang/lank, lach/lak, **huis/hijs**, **goed/hoed**.
-
-| Assessment | Detail |
-|------------|--------|
-| Strengths | Long/short vowel contrasts well covered; ui/ij now present (huis/hijs); Dutch g vs h now present (goed/hoed); eu vs oo now covered properly by deur/door. |
-| Lingering issue | neus / noos — *noos* is not a real Dutch word. Now that deur/door covers eu/oo with real words, neus/noos can be replaced. Candidates: **neus / muis** (eu vs ui, both real, both common), or **deur / duur** (eu vs uu — isolates two hard vowels against each other). |
-| Worth adding | A short-vs-long *uu* pair (e.g. *bus / buus* — but *buus* is not a word; better: *put / puut* fails too — use **mus / muis** for short u vs ui). Schwa contrasts are not in scope as minimal pairs at A0. |
+| dutch | ipa | respell |
+|-------|-----|---------|
+| Goedemorgen | /ˌɣudəˈmɔrɣən/ | KHoo-duh-MOR-khun ★ |
+| Goedemiddag | /ˌɣudəˈmɪdɑx/ | KHoo-duh-MID-dakh ★ |
+| Goedenavond | /ˌɣudənˈaːvɔnt/ | KHoo-dun-AH-vont ★ |
+| Hallo | /ˈɦɑloː/ | HAH-lo |
+| Tot ziens | /tɔt ˈzins/ | tot ZEENS |
+| Hoe gaat het? | /ˌɦu ˈɣaːt ɦɛt/ | hoo KHAHT hut ★ |
+| Goed, dank je wel | /ˌɣut ˈdɑŋk jə ˈvɛl/ | KHoot DANK yuh vel ★ |
 
 ---
 
-## 8. Suggested Next-Pipeline Improvements
+### Courtesy Phrases
 
-To apply **this** pipeline run, in priority order:
-
-1. **Expand Food & Drink** in CATEGORIES — add: thee, melk, bier, vlees, groente. (5 items → 10 items.)
-2. **Expand Transport & Directions** — add: rechtdoor (straight ahead), de fiets (bicycle), het vliegveld (airport), and the phrase **"Hoe kom ik bij…?"** (How do I get to…?). The bicycle is essential for NL daily life.
-3. **Expand Places** — add: de apotheek (pharmacy), de bibliotheek (library).
-4. **Add "Hoe heet u?"** to Introducing Yourself, beside the existing *Hoe heet jij?*, to teach the register pair directly.
-5. **Add a Numbers 21–30 mini-set** — eenentwintig, tweeëntwintig, drieëntwintig, vierentwintig, vijfentwintig, dertig. This teaches the inversion rule from §3.13 with the smallest viable set. Critical for phone numbers and prices.
-6. **Replace neus / noos** in MINIMAL_PAIRS with **neus / muis** (eu vs ui — both real, both common, both target hard sounds for English speakers).
-7. **Add a short Diminutives reference card** (not a vocab category — a reference) showing *bier / biertje, kop / kopje, brood / broodje, dag / dagje*, with the note "all diminutives take *het*". Recognition only, not production.
-8. **Add to Les 1: Zinnen** — the survival phrase **"Mag ik in het Nederlands oefenen?"** (May I practise in Dutch?) to address the switch-to-English barrier (§5).
-
-### Deferred to a later pipeline run
-
-- Clock-time vocabulary (Hoe laat is het?, kwart over, half, kwart voor).
-- Subordinate-clause word order examples — defer until V2 is stable for this learner (week 7+).
-- Possessives (*mijn, jouw, zijn, haar*) — useful once *hebben* lands.
-- Modal verb conjugation tables (*willen, kunnen, mogen, moeten*) — week 5 in the §1 sequence.
+| dutch | ipa | respell |
+|-------|-----|---------|
+| Dank je wel | /ˈdɑŋk jə ˌvɛl/ | DANK yuh vel |
+| Dank u wel | /ˈdɑŋk y ˌvɛl/ | DANK uu vel |
+| Alsjeblieft | /ˌɑlsjəˈbliːft/ | al-shuh-BLEEFT |
+| Alstublieft | /ˌɑlstyˈbliːft/ | al-stuu-BLEEFT |
+| Sorry | /ˈsɔri/ | SOR-ee |
 
 ---
 
-*End of dutch_expert.md. Hand off to: Phonetics Specialist (reads §2 vocab + §7 audit), Designer (reads §6, §8).*
+### Numbers 1–20
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| één | /eːn/ | AYN (flat — no glide) |
+| twee | /tweː/ | TVAY (flat) |
+| drie | /driː/ | DREE |
+| vier | /viːr/ | VEER |
+| vijf | /vɛif/ | VAYF ★ |
+| zes | /zɛs/ | ZES |
+| zeven | /ˈzeːvən/ | ZAY-vun |
+| acht | /ɑxt/ | AKHT (soft throat at end) |
+| negen | /ˈneːɣən/ | NAY-khun ★ |
+| tien | /tiːn/ | TEEN |
+| elf | /ɛlf/ | ELF |
+| twaalf | /tvaːlf/ | TVAHLF |
+| dertien | /ˈdɛrtiːn/ | DER-teen |
+| veertien | /ˈveːrtiːn/ | VAYR-teen |
+| vijftien | /ˈvɛiftiːn/ | VAYF-teen ★ |
+| zestien | /ˈzɛstiːn/ | ZES-teen |
+| zeventien | /ˈzeːvəntiːn/ | ZAY-vun-teen |
+| achttien | /ˈɑxtiːn/ | AKHT-teen |
+| negentien | /ˈneːɣəntiːn/ | NAY-khun-teen ★ |
+| twintig | /ˈtvɪntəx/ | TVIN-tikh |
+
+---
+
+### Numbers 21+ (Inversion)
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| eenentwintig | /ˌeːnənˈtvɪntəx/ | ay-nun-TVIN-tikh |
+| tweeëntwintig | /ˌtveːənˈtvɪntəx/ | tvay-un-TVIN-tikh |
+| vijfendertig | /ˌvɛifənˈdɛrtəx/ | vayf-un-DER-tikh ★ |
+
+---
+
+### Days of the Week
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| maandag | /ˈmaːndɑx/ | MAHN-dakh |
+| dinsdag | /ˈdɪnsdɑx/ | DINS-dakh |
+| woensdag | /ˈvuːnsdɑx/ | VOONS-dakh |
+| donderdag | /ˈdɔndərdɑx/ | DON-dur-dakh |
+| vrijdag | /ˈvrɛidɑx/ | VRAY-dakh ★ |
+| zaterdag | /ˈzaːtərdɑx/ | ZAH-tur-dakh |
+| zondag | /ˈzɔndɑx/ | ZON-dakh |
+| vandaag | /vɑnˈdaːx/ | van-DAKH |
+| morgen | /ˈmɔrɣən/ | MOR-khun ★ |
+
+---
+
+### Food & Drink
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| water | /ˈvaːtər/ | VAH-tur |
+| koffie | /ˈkɔfi/ | KOF-ee |
+| thee | /teː/ | TAY (flat) |
+| melk | /mɛlk/ | MELK |
+| bier | /biːr/ | BEER |
+| brood | /broːt/ | BROHT (flat oo — no "w" glide) |
+| kaas | /kaːs/ | KAHS |
+| appel | /ˈɑpəl/ | AP-ul |
+| vlees | /fleːs/ | FLAYS (flat — no "ee" glide) |
+| groente | /ˈɣruntə/ | KHROON-tuh ★ |
+
+---
+
+### Ordering & Shopping
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| Ik wil graag | /ɪk vɪl ˈɣraːx/ | ik vil KHRAHKH ★ |
+| Mag ik | /mɑx ɪk/ | makh ik |
+| Hoeveel kost dit? | /ˌɦuˈveːl kɔst dɪt/ | hoo-VAYL kost dit |
+| De rekening, alsjeblieft | /də ˈreːkənɪŋ ˌɑlsjəˈbliːft/ | duh RAY-kun-ing al-shuh-BLEEFT |
+| Dat is alles | /dɑt ɪs ˈɑləs/ | dat is AL-us |
+
+---
+
+### Transport & Directions
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| de trein | /də trɛin/ | duh TRAYN ★ |
+| de bus | /də bʏs/ | duh BUS |
+| de fiets | /də fiːts/ | duh FEETS |
+| het station | /ɦɛt staˈʃɔn/ | hut stah-SHON |
+| het vliegveld | /ɦɛt ˈfliːxfɛlt/ | hut FLEEKH-felt |
+| links | /lɪŋks/ | LINKS |
+| rechts | /rɛxts/ | REKHTS |
+| rechtdoor | /ˈrɛxtdoːr/ | REKHT-dohr |
+| Hoe kom ik bij? | /ˌɦu kɔm ɪk bɛi/ | hoo kom ik BAY ★ |
+
+---
+
+### Places
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| de supermarkt | /də ˈsyːpərˌmɑrkt/ | duh SUU-pur-markt ★ |
+| het ziekenhuis | /ɦɛt ˈziːkənˌɦœy̑s/ | hut ZEE-kun-hows ★ |
+| de apotheek | /də ˌaːpoˈteːk/ | duh ah-po-TAYK |
+| de bibliotheek | /də ˌbiːblijoˈteːk/ | duh BEE-blee-yo-TAYK |
+| de school | /də sxoːl/ | duh SKHOAL ★ |
+| het centrum | /ɦɛt ˈsɛntrʏm/ | hut SEN-trum |
+| de straat | /də straːt/ | duh STRAHT |
+
+---
+
+### Introducing Yourself
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| Ik heet | /ɪk heːt/ | ik HAYT |
+| Ik kom uit | /ɪk kɔm œy̑t/ | ik kom OWT ★ (ui — must hear) |
+| Ik spreek een beetje Nederlands | /ɪk spreːk ən ˈbeːtjə ˈneːdərˌlɑnts/ | ik sprayk un BAY-chuh NAY-dur-lants |
+| Hoe heet jij? | /ˌɦu ˈheːt jɛi/ | hoo HAYT yay ★ |
+| Aangenaam | /ˌaːnɣəˈnaːm/ | ahn-khuh-NAHM ★ |
+
+---
+
+### Describing Things
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| groot | /ɣroːt/ | KHROHT ★ |
+| klein | /klɛin/ | KLAYN ★ |
+| lekker | /ˈlɛkər/ | LEK-ur |
+| mooi | /moːi/ | MOH-ee |
+| duur | /dyːr/ | DUUR ★ (round lips as if saying "oo", tongue in "ee" position) |
+
+---
+
+### Feelings & States
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| Ik ben moe | /ɪk bɛn muː/ | ik ben MOO |
+| Ik ben ziek | /ɪk bɛn ziːk/ | ik ben ZEEK |
+| Ik ben blij | /ɪk bɛn blɛi/ | ik ben BLAY ★ |
+| Ik heb honger | /ɪk ɦɛb ˈɦɔŋər/ | ik hep HON-ur |
+| Het gaat goed | /ɦɛt ɣaːt ɣut/ | hut KHAHT KHOOT ★ |
+| Ik heb dorst | /ɪk ɦɛb dɔrst/ | ik hep DORST |
+
+---
+
+### Question Words
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| Wat? | /vɑt/ | VAT |
+| Waar? | /vaːr/ | VAHR |
+| Wanneer? | /vɑˈneːr/ | van-AYR |
+| Wie? | /viː/ | VEE |
+| Hoeveel? | /ɦuˈveːl/ | hoo-VAYL |
+
+---
+
+### Les 1: Thuis (Home)
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| het huis | /ɦɛt ɦœy̑s/ | hut HOWS ★ (ui — no English "ow" — must hear) |
+| de kamer | /də ˈkaːmər/ | duh KAH-mur |
+| de tafel | /də ˈtaːfəl/ | duh TAH-ful |
+| de stoel | /də stuːl/ | duh STOOL |
+| het bed | /ɦɛt bɛt/ | hut BET |
+| de deur | /də døːr/ | duh DUR ★ (round lips — say "dur" with "oo" lip shape) |
+| het raam | /ɦɛt raːm/ | hut RAHM |
+| de keuken | /də ˈkøːkən/ | duh KUR-kun ★ (eu — round lips, "ee" tongue) |
+| de badkamer | /də ˈbɑtˌkaːmər/ | duh BAT-kah-mur |
+| de lamp | /də lɑmp/ | duh LAMP |
+
+---
+
+### Les 1: Familie (Family)
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| de moeder | /də ˈmudər/ | duh MOO-dur |
+| de vader | /də ˈvaːdər/ | duh VAH-dur |
+| de broer | /də bruːr/ | duh BROOR |
+| de zus | /də zʏs/ | duh ZUS |
+| de oma | /də ˈoːmaː/ | duh OH-mah |
+| de opa | /də ˈoːpaː/ | duh OH-pah |
+| het kind | /ɦɛt kɪnt/ | hut KINT |
+| de baby | /də ˈbeːbi/ | duh BAY-bee |
+| de vriend | /də vriːnt/ | duh VREENT |
+| de vriendin | /də vriːnˈdɪn/ | duh vreent-DIN |
+
+---
+
+### Les 1: Klanken (Sound Examples)
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| de maan | /də maːn/ | duh MAHN |
+| de fiets | /də fiːts/ | duh FEETS |
+| de boom | /də boːm/ | duh BOHM (flat oo) |
+| de kat | /də kɑt/ | duh KAT |
+| de beer | /də beːr/ | duh BAYR (flat ee) |
+| de zon | /də zɔn/ | duh ZON |
+| de muur | /də myːr/ | duh MUUR ★ (uu — round lips, "ee" tongue) |
+| de vis | /də vɪs/ | duh VIS |
+| de steen | /də steːn/ | duh STAYN (flat) |
+| de jas | /də jɑs/ | duh YAS |
+| de auto | /də ˈɑutoː/ | duh OW-toh |
+| oud | /ɑut/ | OWT |
+| lach | /lɑx/ | LAKH (throat scrape at end) |
+| lang | /lɑŋ/ | LANG |
+| de bank | /də bɑŋk/ | duh BANK |
+| de school | /də sxoːl/ | duh SKHOAL ★ (sch — not "sh") |
+| de sjaal | /də ʃaːl/ | duh SHAHL |
+| nieuw | /niːu/ | NEE-oo |
+
+---
+
+### Les 1: Zinnen (Phrases)
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| Ja | /jaː/ | YAH |
+| Nee | /neː/ | NAY (flat) |
+| Soms | /sɔms/ | SOMS |
+| Mag ik pinnen? | /mɑx ɪk ˈpɪnən/ | makh ik PIN-nun |
+| Misschien | /mɪˈsxiːn/ | mis-SKHEEN ★ |
+| Ik weet het niet | /ɪk veːt ɦɛt niːt/ | ik vayt hut NEET |
+| Kunt u dat herhalen? | /kʏnt y dɑt ɦɛrˈhaːlən/ | kunt uu dat her-HAH-lun |
+
+---
+
+### Kleuren (Colours)
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| rood | /roːt/ | ROHT (flat oo) |
+| blauw | /blɑu/ | BLOW (rhymes with "how") |
+| groen | /ɣrun/ | KHROON ★ |
+| geel | /ɣeːl/ | KHAYL ★ (flat ee) |
+| wit | /vɪt/ | VIT |
+| zwart | /zvɑrt/ | ZVART |
+| oranje | /oːˈrɑnjə/ | oh-RAN-yuh |
+| grijs | /ɣrɛis/ | KHRAYS ★ |
+
+---
+
+### Les 2: Café — Drankjes (Drinks)
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| de koffie | /də ˈkɔfi/ | duh KOF-ee |
+| de cappuccino | /də ˌkɑpuˈtʃiːnoː/ | duh kap-oo-CHEE-noh |
+| de thee | /də teː/ | duh TAY (flat) |
+| de latte | /də ˈlɑtə/ | duh LAT-uh |
+| de frisdrank | /də ˈfrɪzdrɑŋk/ | duh FRIZ-drank |
+| het water | /ɦɛt ˈvaːtər/ | hut VAH-tur |
+
+---
+
+### Les 2: Café — Eten (Food)
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| het gebak | /ɦɛt ɣəˈbɑk/ | hut khuh-BAK ★ |
+| de appeltaart | /də ˈɑpəlˌtaːrt/ | duh AP-ul-tahrt |
+| het broodje | /ɦɛt ˈbroːtjə/ | hut BROH-chuh (flat oo; -tje = soft "ch") |
+| de croissant | /də krwɑˈsɑ̃/ | duh kwas-SAHN (near-French) |
+| de lunch | /də lʏntʃ/ | duh LUNSH |
+| de snack | /də snɛk/ | duh SNAK |
+
+---
+
+### Les 2: Café — In het café (Café setting)
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| het café | /ɦɛt kaːˈfeː/ | hut kah-FAY |
+| de tafel | /də ˈtaːfəl/ | duh TAH-ful |
+| de stoel | /də stuːl/ | duh STOOL |
+| de menukaart | /də ˈmɛnyˌkaːrt/ | duh MAY-nuu-kahrt ★ |
+| de ober | /də ˈoːbər/ | duh OH-bur |
+| de serveerster | /də sɛrˈveːrstər/ | duh ser-VAYR-stur |
+| de bestelling | /də bəˈstɛlɪŋ/ | duh buh-STEL-ing |
+| de rekening | /də ˈreːkənɪŋ/ | duh RAY-kun-ing |
+
+---
+
+### Les 2: Café — Werkwoorden (Verbs)
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| bestellen | /bəˈstɛlən/ | buh-STEL-un |
+| drinken | /ˈdrɪŋkən/ | DRINK-un |
+| eten | /ˈeːtən/ | AY-tun |
+| betalen | /bəˈtaːlən/ | buh-TAH-lun |
+| kiezen | /ˈkiːzən/ | KEE-zun |
+
+---
+
+### Les 2: Café — Veelgebruikte woorden (Common words)
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| alstjeblieft | /ˌɑlsjəˈbliːft/ | al-shuh-BLEEFT |
+| graag | /ɣraːx/ | KHRAHKH ★ |
+| lekker | /ˈlɛkər/ | LEK-ur |
+| nog | /nɔx/ | NOKH (soft throat at end) |
+| contant | /kɔnˈtɑnt/ | kon-TANT |
+
+---
+
+### Les 2: Café — Zinnen (Phrases)
+
+| dutch | ipa | respell |
+|-------|-----|---------|
+| Mag ik de menukaart? | /mɑx ɪk də ˈmɛnyˌkaːrt/ | makh ik duh MAY-nuu-kahrt ★ |
+| Ik wil graag een koffie. | /ɪk vɪl ˈɣraːx ən ˈkɔfi/ | ik vil KHRAHKH un KOF-ee ★ |
+| Wat raadt u aan? | /vɑt raːt y aːn/ | vat raht uu AHN |
+| Heeft u ook appeltaart? | /ˌɦeːft y oːk ˈɑpəltaːrt/ | hayft uu ohk AP-ul-tahrt |
+| Dat lijkt me lekker. | /dɑt lɛikt mə ˈlɛkər/ | dat LAYKT muh LEK-ur ★ |
+| Mag ik de rekening, alstublieft? | /mɑx ɪk də ˈreːkənɪŋ ˌɑlstyˈbliːft/ | makh ik duh RAY-kun-ing al-stuu-BLEEFT |
+| Kan ik contant betalen? | /kɑn ɪk kɔnˈtɑnt bəˈtaːlən/ | kan ik kon-TANT buh-TAH-lun |
+
+---
+
+## 7. Content Recommendations for Spaced Post-Lesson Practice
+
+Based on Researcher §2 (engagement strategies) and §4 (dyslexia considerations).
+
+### Session structure
+- **5–15 minutes per session, daily** — distributed practice outperforms weekly marathons for vocabulary retention (Researcher §2, Cambridge Core study on distributed practice)
+- **One category per session** — cognitive load stays manageable; dyslexic learners benefit from short, single-focus modules (Researcher §4)
+- **Interleave old and new** — after Lesson 2, every session should include some Les 1 words. Suggested ratio: 60% new lesson / 40% previous lessons
+
+### What to prioritise on flashcards
+- Always show: Dutch word, article (de/het), English gloss, IPA, respelling, ★ flag where applicable
+- For ★ words: audio is essential — text description alone is insufficient (Researcher §7, Dutch Sound Reference Guide internal 2026-05-20)
+- Phonetic hint position: immediately below the Dutch word, not below the translation (Researcher §7 evidence-based layout pattern)
+
+### Retrieval practice over re-reading
+- Seeing the Dutch word and actively producing the English (or vice versa) is far more effective than passively re-reading a list (Researcher §2, Frontiers in Education 2025 study)
+- Mix directions: Dutch → English and English → Dutch in the same session
+- 3–4 relearning sessions per word within 14 days produces substantially better recall than fewer sessions (Researcher §2)
+
+### Dyslexia-specific adjustments
+- Colour-code de/het on every card — reduces working memory load (Researcher §4)
+- Keep phonetic hints in the same position on every card — learners should not have to search for it (Researcher §7)
+- Avoid IPA-only display — plain English respelling outperforms IPA symbols in accessibility for beginners and dyslexic learners (Researcher §7)
+- Immediate, specific feedback after each card (correct/incorrect + brief reason) aids adult dyslexic learners more than delayed feedback (Researcher §4)
+- No time pressure — adequate time to process each card is a significant factor for dyslexic learners (Researcher §4)
+
+### Category sequencing within a session
+1. Warm-up with easiest category (Greetings, Numbers 1–10)
+2. Main block: lesson-specific vocabulary (Les 1 or Les 2 categories)
+3. End with a mixed-category round that includes ★ words — these need the most repetition
+4. Survival phrases last — multi-word items have highest cognitive load
+
+### Lesson 2 practice priorities
+- *graag*, *nog*, *contant* are high-frequency function words that appear across many real situations — target these for rapid automaticity
+- The Lesson 2 café dialogue provides a natural sentence context for all 30 vocabulary words — use full-phrase cards (not just single-word) for the Zinnen sub-category
+- Formal vs informal contrast (*alsjeblieft* vs *alstublieft*, *dank je wel* vs *dank u wel*) is worth a dedicated mini-round once core vocabulary is secure
+- *nog* and *lekker* are polysemous — flag them as "one word, many meanings" when first introduced (Researcher §1 trap 12)

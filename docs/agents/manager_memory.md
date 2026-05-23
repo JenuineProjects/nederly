@@ -12,6 +12,7 @@
 | 2026-05-20 | _(hotfix, no formal report)_ | Sound guide TTS fix: every vowel `speakAs` now uses a different real Dutch word (was raw letters/digraphs the TTS couldn't pronounce). Added `exPronounce` field with English respellings shown in always-visible pill on every sound card. |
 | 2026-05-20 | _(feature add, no formal report)_ | New **Lesson notes** section: `LESSONS` array embedded in HTML, new Home button, LessonsList + LessonDetail screens. Lesson 1 curated from `Lesson Notes/Lesson 1.md` into structured sections. Lesson 1 date corrected to 2026-05-18; sections refactored to bulleted lists. No VERSION bump (LESSONS is not stored in localStorage). |
 | 2026-05-20 | _(feature add, no formal report)_ | **Dutch Sound Reference Guide** added as a second card in Lesson notes. Card distinguished by `kind: 'reference'` (purple left-border, "Reference · updated YYYY-MM-DD" label, no "Lesson N" prefix). All 7 sections (single/long/diphthong/consonant/complex vowels, top 5, common mistakes, usage tip) from `Lesson Notes/Dutch Sound Reference Guide.md` embedded. |
+| 2026-05-22 | [2026-05-22-01-report.md](reports/2026-05-22-01-report.md) | Professional polish + phonetic display on flashcards. VERSION 5 → 6. 181 words updated with IPA/respelling. 50 CSS/JS changes applied. All 5 gates PASS. |
 
 ---
 
@@ -29,6 +30,7 @@
 | OpenDyslexic font loaded via `@font-face` from local WOFF2 | Pipeline, 2026-05-20 | 2026-05-20 |
 | Helper/secondary text colour is `#6B6B6B` (not `#A0A0A0` — fails WCAG AA) | Pipeline, 2026-05-20 | 2026-05-20 |
 | Slow playback rate = `0.75` (not `0.5` — distorts vowels) | Pipeline, 2026-05-20 | 2026-05-20 |
+| Every word object carries 7 phonetic fields: article, respelling, audioRequired, articulatoryHint, ipa, trapRank, soundCategory | Builder, 2026-05-22 | 2026-05-22 |
 
 ---
 
@@ -40,8 +42,9 @@
 | `'2'` | 2026-05-20 lesson 1 addition | Added Les 1 categories |
 | `'3'` | 2026-05-20 refresh pipeline | Articles on nouns, Numbers 1–20, Kleuren, new minimal pairs, dyslexia fixes |
 | `'4'` | 2026-05-20-01 (first full new-pipeline run) | Food/Transport/Places expansions, Numbers 21+ category, uit/ijs swap, neus/noos removed, progress bar, mastery card, sound guide toggle |
+| `'6'` | 2026-05-22-01 | Professional polish + phonetic display. 181 words updated. |
 
-**Next available: `'5'`**
+**Next available: `'7'`**
 
 ---
 
@@ -51,6 +54,7 @@
 - **Researcher saves agent runtime.** Downstream agents stop guessing at evidence. Trap rankings, streak bans, engagement choices all became cite-backed. Keep Researcher in every run. (2026-05-20-01)
 - **Citations make Gate review trivial.** When every Designer decision points to an upstream section, Gate 2 takes seconds. Reinforce "cite or it didn't happen" in spawn prompts. (2026-05-20-01)
 - **No-streaks needs a positive counterpart.** Saying "no streaks" without filling the motivational gap reads as deprivation. Pair every anti-pattern with at least one engagement feature recommendation. (2026-05-20-01)
+- **IPA/respelling must be added at data-entry time.** Retrofitting 181 words took the full Builder budget. Future lesson vocab should include these fields when first added. (2026-05-22-01)
 
 ---
 
@@ -58,15 +62,16 @@
 
 | Item | Source run | Status |
 |------|-----------|--------|
-| Push `nederly.html` to GitHub | 2026-05-20 | Pending — user wants to work locally first |
+| Push `nederly.html` to GitHub | 2026-05-20 | ~~Resolved — done 2026-05-22 in a hotfix~~ |
 | Download `OpenDyslexic-Regular.woff2` into the app folder | 2026-05-20 refresh | **Still pending — surface to user each run** |
 | Download `OpenDyslexic-Bold.woff2` for heading weight | 2026-05-20-01 | Pending — currently only Regular face loaded |
-| Lesson 2 vocabulary | Future | Awaiting next Dutch lesson |
+| Lesson 2 vocabulary | Future | ~~Resolved — added 2026-05-22 before this pipeline run~~ |
 | Grammar reference screen (diminutives, subordinate-clause word order, full number inversion 21–99) | 2026-05-20-01 (deferred) | Designer chose Option B (defer); candidate for v5 |
 | Non-decaying mastery badges | 2026-05-20-01 (deferred) | Dyslexia Expert §11.3 — engagement feature for future version |
 | Rotating daily prompt picker | 2026-05-20-01 (deferred) | Dyslexia Expert §11.4 |
 | Opt-in short-term goal nudge | 2026-05-20-01 (deferred) | Dyslexia Expert §11.5 |
 | Verify 320px viewport overflow | 2026-05-20-01 | Not verified this run; needs a browser check |
+| IPA/respelling for any new lesson vocab | 2026-05-22-01 | Add these fields at the time new words are added to CATEGORIES |
 
 **Resolved (do not carry forward):**
 - ~~Food & Drink expansion~~ ✅ shipped in VERSION 4

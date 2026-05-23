@@ -1,500 +1,451 @@
-# Phonetics Specialist — Reference Document
-
-> Netherlands Dutch phonetics for Nederly. Covers the sounds an A0 English-speaking dyslexic learner will encounter, ranked by difficulty. Cites vocab from `dutch_expert.md`. Respects display principles from `dyslexia_expert.md`. Grounded in `researcher.md` §1A (pronunciation challenges) and §5 (this learner's actual lesson 1 errors).
+# Nederly — Phonetics Specialist Agent Report
+*Focus: phonetic card data spec, sound inventory, drilling progressions, dyslexia-safe display*
+*Netherlands Dutch only | A0 beginner | Dyslexic adult English speaker*
+*Generated: 2026-05-22*
 
 ---
 
 ## 1. Sound Inventory at A0 Relevance
 
-Only sounds that appear in the Dutch Expert's A0 vocabulary. Sounds the learner won't encounter for months are excluded.
+Only sounds that appear in the app's current vocabulary (Dutch Expert §6). Organised by type.
 
-### Vowels (monophthongs)
+### Single Vowels
 
-| Spelling | IPA | Example word (Dutch Expert) | English approximation |
-|----------|-----|------------------------------|----------------------|
-| a (short) | /ɑ/ | `man`, `dank`, `vlees`† | British "cup" — NOT American "cat" |
-| aa / a (long) | /aː/ | `maan`, `gaat`, `straat` | "father" — longer and more open |
-| e (short) | /ɛ/ | `met`, `het`, `bed` | "bed" |
-| ee / e (long) | /eː/ | `geen`, `een`, `apotheek` | "day" — flat hold, no glide |
-| i (short) | /ɪ/ | `dit`, `zijn`, `fiets`‡ | "sit" |
-| ie (long) | /iː/ | `wie`, `niet`, `fiets`, `vliegveld`, `bibliotheek` | "see" — flat hold, no glide |
-| o (short) | /ɔ/ | `bos`, `nog`, `pop` | British "lot" |
-| oo / o (long) | /oː/ | `groot`, `ook`, `brood` | "go" — flat hold, no glide |
-| u (short) | /ʏ/ | `bus`, `kun`, `punt` | No English equivalent — rounded front lax |
-| uu / u (long) | /yː/ | `uur`, `muur`, `duur` | No English equivalent — long rounded front |
-| eu | /øː/ | `leuk`, `neus`, `deur`, `keuken` | No English equivalent — rounded mid-front |
-| ə (schwa) | /ə/ | `de`, `een` (unstressed), `-en` endings | English "the" unstressed |
+| IPA | Orthography | Example word | Notes |
+|-----|-------------|--------------|-------|
+| /ɑ/ | a | kat, lamp | Short open back — like "ah" in "father" but shorter |
+| /ɛ/ | e | bed, melk | Short mid-front — like "eh" in "bed" |
+| /ɪ/ | i | vis, kind | Short high-front — like "ih" in "bit" |
+| /ɔ/ | o | koffie, zon | Short mid-back rounded — like "o" in "hot" |
+| /ʏ/ | u | bus, zus | Short front-rounded — no English equivalent; ★ audio required |
 
-† `vlees` is /eː/, not /ɑ/ — see §9. ‡ `fiets` is /iː/ via the `ie` digraph.
+### Long Vowels
+
+| IPA | Orthography | Example word | Notes |
+|-----|-------------|--------------|-------|
+| /aː/ | aa / a (open syll.) | maan, tafel, kaas | Long open — like "ah" held flat, no glide |
+| /eː/ | ee / e (open syll.) | beer, zeven, thee | Long mid-front — like "ay" held flat, no "ee" drift |
+| /iː/ | ie | fiets, vier, drie | Long high-front — like "ee" in "feet" |
+| /oː/ | oo / o (open syll.) | boom, rood, brood | Long mid-back rounded — held flat, no "ow" glide |
+| /uː/ | oe | stoel, moeder, broer | Long high-back rounded — like "oo" in "moon" |
+| /yː/ | uu / u (open syll.) | muur, duur | Long front-rounded ★ — round lips, keep tongue at "ee" height |
+| /øː/ | eu | deur, keuken | Long mid-front rounded ★ — round lips, tongue at mid "ee" height |
 
 ### Diphthongs
 
-| Spelling | IPA | Example word | Description |
-|----------|-----|-------------|-------------|
-| ui | /œy/ | `huis`, `uit`, `buik` | Starts rounded, glides forward — no English equivalent |
-| ij / ei | /ɛi/ | `zijn`, `trein`, `ijs` | Starts at /ɛ/, glides to /i/ — lower start than English "day" |
-| ou / au | /ɑu/ | `goud`, `blauw`, `oud` | Close to English "how" — back start point |
+| IPA | Orthography | Example word | Notes |
+|-----|-------------|--------------|-------|
+| /ɛi/ | ij / ei | zijn, vijf, klein | Glide from "eh" to "ee" — not the wide English "eye" |
+| /œy̑/ | ui | huis, ik kom uit | ★ No English equivalent — hardest Dutch vowel |
+| /ɑu/ | ou / au | oud, auto, blauw | Glide from "ah" to "oo" — like "ow" in "how" |
 
-### Consonants (A0 relevance only)
+### Consonants of Particular Difficulty
 
-| Spelling | IPA | Example | Notes |
-|----------|-----|---------|-------|
-| g | /ɣ/ (or /x/ in northern NL) | `goed`, `gaan`, `groente` | Voiced velar/uvular fricative — no English equivalent |
-| ch | /x/ | `acht`, `zacht`, `lach` | Voiceless velar fricative — like Scottish "loch" |
-| sch (initial) | /sx/ | `school`, `schoen` | /s/ + /x/ blended — NOT English "sh" |
-| sch (final, -isch) | /s/ | `praktisch`, `logisch` | Simplifies to plain /s/ |
-| r | /r/ or /ʀ/ | `rechts`, `rechtdoor`, `trein` | Trilled (front) or uvular (back) — never English /ɹ/ |
-| v | /v/ or /f/ | `vijf`, `vliegveld`, `vlees` | Often devoiced to /f/ |
-| z | /z/ or /s/ | `zijn`, `ziek`, `zus` | Often devoiced to /s/ |
-| w | /ʋ/ | `water`, `wonen` | Lower lip to upper teeth, less friction than /v/ |
-| j | /j/ | `jij`, `ja` | Like English "y" |
-| ng | /ŋ/ | `lang`, `honger` | Like English "sing" |
-| Consonant clusters | various | `vliegveld` (vl-+-ld), `herfst`, `slecht` | Stack patterns uncommon in English [Researcher §1A item 9] |
+| IPA | Orthography | Example word | Notes |
+|-----|-------------|--------------|-------|
+| /ɣ/ | g / ch (initial) | goed, groot, graag | Voiced velar fricative ★ — throat scrape, voiced |
+| /x/ | ch / g (final) | lach, nog, acht | Voiceless velar fricative ★ — softer throat scrape at word end |
+| /sχ/ | sch | school, misschien | /s/ + voiceless throat scrape blended — not "sh" |
+| /ɦ/ | h | huis, hallo, heeft | Breathy glottal approximant — softer than English /h/ |
+| /ʃ/ | sj / -tje | sjaal, broodje | Like English "sh" — only correct for sj and tje, not sch |
+| /ə/ | e (unstressed) | de, een, kamer | Schwa — very short "uh"; the most frequent Dutch sound |
 
 ---
 
 ## 2. Top 10 Traps — Ranked by Priority
 
-**Ranking reconsidered against Researcher §1A.** The prior version placed `ui` at #1. The Researcher's evidence — citing HearDutchHere, Babbel, Wikipedia hard/soft G, LearnDutch.org, Kaiwa Blog, and learner-forum consensus — ranks **`g`/`ch` at #1 and `ui` at #2**. Reasons for adopting the Researcher's order here:
+Severity scale: **3** = must hear before any attempt, text cannot substitute; **2** = significant trap, audio strongly recommended; **1** = manageable with good respelling.
 
-1. **Frequency.** `g`/`ch` appears in core greetings (`goedemorgen`, `Hoe gaat het?`), the most-used modal (`mag`), and in *acht*, *lach*, *zacht* etc. It is unavoidable from lesson 1, minute 1. `ui` is concentrated in fewer high-frequency words (`huis`, `uit`, `buik`).
-2. **Sociolinguistic visibility.** Using English /ɡ/ for Dutch `g` is the single most-cited "instantly foreign" giveaway [Researcher §1A item 1].
-3. **The user's own data.** Lesson 1 marked `g` with a blank transcription (no English mapping) — same as `ui` — but the user will *say* `goedemorgen` many times before they say `huis` [Researcher §5].
-
-`ui` remains #2 because severity-per-utterance is still maximal (the word becomes unrecognisable), but **frequency × pedagogical urgency favours `g` as #1**.
-
-Final ordering below matches Researcher §1A items 1–10.
-
----
-
-### Trap 1 — `g` and `ch` /ɣ/ /x/  ⬆ promoted from #2
-
-- **Orthography:** `g` (initial = /ɣ/ voiced; final = /x/ voiceless), `ch` (always /x/)
-- **Articulation:** Continuous friction at the back of the throat. Northern NL: harder, more uvular. Southern NL: softer, closer to /h/. Both are correct Netherlands Dutch [Researcher §1A item 1, S3].
-- **English substitute:** /ɡ/ (a stop, as in "go"), /k/, or /h/ — none are fricatives at the right place
-- **A0 example:** `goedemorgen`, `gaan`, `Hoe gaat het?`, `groente`, `acht`, `lach`
-- **Severity: 3** — marks the speaker as foreign on word one; using English /ɡ/ produces a sound that does not exist in standard Dutch
-- **User's lesson 1 status:** transcription column was **blank** — they have no English mapping yet [Researcher §5]
-
-### Trap 2 — `ui` /œy/
-
-- **Orthography:** `ui`
-- **Articulation:** Start with rounded lips (as in "oo"), glide tongue forward and upward toward /i/ without unrounding
-- **English substitute:** /aɪ/ (as in "my") — wrong vowel quality entirely [Researcher §1A item 2, S1/S6/S7]
-- **A0 example:** `huis`, `uit`, `buik`
-- **Severity: 3** — words become unrecognisable
-- **User's lesson 1 status:** transcription column was **blank** — confirmed hardest sound [Researcher §5]
-
-### Trap 3 — `eu` /øː/
-
-- **Orthography:** `eu`
-- **Articulation:** Round lips as for /oː/, then without moving lips, position tongue forward as for /eː/
-- **English substitute:** /ɜː/ ("her") or /juː/ ("you") — neither is right [Researcher §1A item 3, S8]
-- **A0 example:** `leuk`, `neus`, `deur`, `keuken`
-- **Severity: 3** — high-frequency core vocab
-- **User's lesson 1 status:** transcribed as **"ouw"** — confused with `ou` [Researcher §5]. Fix-up cue in §10.
-
-### Trap 4 — `uu` /yː/ and short `u` /ʏ/
-
-- **Orthography:** `uu`, `u`
-- **Articulation:** Tight lip rounding, tongue high and forward (the "ee" position). Short /ʏ/ is the lax counterpart.
-- **English substitute:** /uː/ ("food") — loses front-tongue position [Researcher §1A item 4]
-- **A0 example:** `uur`, `muur`, `duur`, `bus` (`u` here is /ʏ/, not English /ʌ/)
-- **Severity: 2** — comprehension survives but sounds strongly foreign
-
-### Trap 5 — `ee` / `oo` flat hold (no glide)
-
-- **Orthography:** `ee`, `oo` (and single `e`/`o` in open syllables)
-- **Articulation:** Hold steady — DO NOT glide. English `say` glides to /j/; English `go` glides to /w/. Dutch must stay flat.
-- **English substitute:** /eɪ/ and /oʊ/ — the glide is the single most common accent giveaway [Researcher §1A item 5, S4/S9]
-- **A0 example:** `geen`, `apotheek`, `bibliotheek`, `groot`, `brood`, `door`
-- **Severity: 2** — intelligible but unmistakably foreign
-- **User's lesson 1 status:** transcribed `ee` as **"a"** — they have arrived at an English "ay" target *without* glide-blocking discipline. Right destination, accidental route. Fix-up cue in §10.
-
-### Trap 6 — `ij` / `ei` /ɛi/
-
-- **Orthography:** `ij`, `ei` (two spellings, identical sound)
-- **Articulation:** Starts at /ɛ/ (open like "bed"), glides up to /i/. Lower starting point than English /eɪ/.
-- **English substitute:** English /aɪ/ (as in "eye") — mouth opens far too wide [Researcher §1A item 6, S4]
-- **A0 example:** `zijn`, `trein`, `klein`, `ijs`
-- **Severity: 2** — intelligible but heavily marked; `zijn` is one of the most-used words in Dutch
-- **User's lesson 1 status:** transcribed both `ij` and `ei` as **"i"** (English *eye*) — the over-open-mouth error confirmed [Researcher §5]. Fix-up cue in §10.
-
-### Trap 7 — Unstressed `e` schwa /ə/
-
-- **Orthography:** unstressed `e`, `-en` word endings, function words `de`/`een`
-- **Articulation:** Reduce to /ə/ — the same as English "the" unstressed
-- **English substitute:** Learners pronounce the orthographic `e` as /eː/ or /ɛ/ — over-articulating function words
-- **A0 example:** `de` /də/, `een` /ən/ (indefinite article — different from `één` /eːn/ "one"), `goedemorgen` ends `-gen` /ɣən/
-- **Severity: 2** — affects the rhythm of *every* sentence; over-articulating `de` and `een` is the most-cited beginner schwa error [Researcher §1A item 7, S1]
-- **Pedagogical note:** Rules for which written `e` reduces are not transparent — teach by ear, paired with audio
-
-### Trap 8 — `sch` cluster /sx/
-
-- **Orthography:** `sch-` (initial), `-isch` (final)
-- **Articulation:** Initial — pronounce /s/ then immediately the throat /x/. NOT English "sh". Final `-isch` simplifies to /s/.
-- **English substitute:** /ʃ/ ("sh") — learners with German exposure especially over-apply this [Researcher §1A item 8, S9]
-- **A0 example:** `school`, `schoen` (initial /sx/); `praktisch`, `logisch` (final /s/)
-- **Severity: 2** — `school` mispronounced as `shool` is intelligible but immediately foreign
-
-### Trap 9 — Consonant clusters
-
-- **Orthography:** stacked consonants — `vl-`, `-rfst`, `-ld`, `-cht`
-- **Articulation:** Articulate each consonant; don't drop or insert a vowel
-- **English substitute:** Insertion of schwa between consonants, or dropping the middle consonant [Researcher §1A item 9, S10/S11]
-- **A0 example:** `vliegveld` (vl- + -ld), `herfst`, `slecht`, `acht` (-cht)
-- **Severity: 1–2** — usually intelligible; produces a slightly stilted English accent
-
-### Trap 10 — Fast connected speech / reduction
-
-- **Phenomenon:** Native Dutch fuses words and drops unstressed vowels heavily
-- **Articulation problem (learner side):** Production isn't the issue — *recognition* is. Learners can produce slowly but fail to parse natural-tempo input [Researcher §1A item 10, S12/S13]
-- **A0 example:** `Hoe gaat het?` often surfaces as /uɣaːtət/ in casual speech; `Mag ik...` as /mɑɣɪk/
-- **Severity: 2** — affects listening comprehension; not production
-- **App implication:** Listen-and-repeat should offer a 0.75× option (Web Speech API `utterance.rate = 0.75`) but also a 1.0× option so the learner trains both careful and natural rates
-
-> **Lower priority but still on the radar:**
-> — `r` (alveolar vs uvular) — comprehension barely affected; sociolinguistically variable across NL.
-> — `w` /ʋ/ — minor; intelligible.
-> — `ou`/`au` /ɑu/ — subtle start-point difference from English "ow"; rarely impairs comprehension.
+| Rank | IPA | Orthography | Articulation | Why English speakers fail | A0 example | Severity |
+|------|-----|-------------|--------------|--------------------------|------------|----------|
+| 1 | /œy̑/ | ui | Lips round tightly (as for "oo"), tongue starts open (as for "ah") and glides forward-upward | No English vowel remotely similar; learners hear "ow" or "oy" and replicate one of those — both wrong | *huis* (Dutch Expert §6 — Les 1: Thuis) | 3 |
+| 2 | /ɣ/ | g / ch initial | Back of tongue approaches velum; air forced through without full closure — voiced friction | English /g/ is a full stop; learners produce "goot" not "KHoot"; Northern NL version is harsher than expected | *goed* (Dutch Expert §6 — Goedemorgen) | 3 |
+| 3 | /øː/ | eu | Lips round as for /oː/, tongue stays at /eː/ position — simultaneously | English has no mid-front rounded vowel; learners default to "ur" or "or" | *deur, keuken* (Dutch Expert §6 — Les 1: Thuis) | 3 |
+| 4 | /eː/ long flat | ee | Jaw barely drops; lips spread slightly; hold the vowel without drifting upward | English "ay" is a diphthong /eɪ/ — the "ee" glide at the end is automatic and deeply ingrained | *thee, beer* (Dutch Expert §6 — Café Drinks, Klanken) | 2 |
+| 5 | /oː/ long flat | oo | Lips round; hold mid-back position without moving toward /w/ | English "oh" is a diphthong /oʊ/ — the "w" glide is unconscious and hard to suppress | *boom, brood, rood* (Dutch Expert §6 — Klanken, Kleuren) | 2 |
+| 6 | /ɛi/ | ij / ei | Glide from mid "eh" to high-front "ee" — jaw stays mostly closed | English speakers open the jaw too far — producing /aɪ/ ("eye") instead of /ɛi/ | *zijn, vijf* (Dutch Expert §6 — Feelings, Numbers) | 2 |
+| 7 | /yː/ | uu | Lips round fully (as for /uː/ "oo"), tongue rises to the front (as for /iː/ "ee") | English has no front-rounded long vowel; learners produce plain "oo" which sounds like a different word | *muur, duur* (Dutch Expert §6 — Klanken, Describing Things) | 3 |
+| 8 | /sχ/ | sch | Produce /s/, then immediately blend into the voiceless throat scrape — no pause | English learners say "sh" (German influence) or drop the throat scrape entirely | *school, misschien* (Dutch Expert §6 — Klanken, Les 1: Zinnen) | 2 |
+| 9 | /ə/ | e unstressed | Jaw almost closed, tongue neutral, extremely short — like "a" in "about" | Beginners over-pronounce: "day TAH-ful" instead of "duh TAH-ful" for *de tafel*; schwa is the most frequent Dutch sound | *de, een, kamer* (Dutch Expert §6 — throughout) | 1 |
+| 10 | /x/ word-final | -g / -ch | Voiceless velar fricative — softer than the initial /ɣ/; tongue slightly less tense | English /g/ and /k/ both end with silence; learners drop the friction or harden it to /k/ | *nog, lach, acht* (Dutch Expert §6 — Café Common Words, Klanken) | 1 |
 
 ---
 
 ## 3. Minimal Pair Sets
 
-One set per top trap, plus the load-bearing `ui` vs `ij` and `g` vs `ch` contrasts. All words are real A0-level Netherlands Dutch unless marked with \* (non-word).
+All words are real A0 vocabulary from Dutch Expert §6. Three pairs per trap.
+
+### Trap 1 — ui /œy̑/
+
+| Word A | Word B | Contrast |
+|--------|--------|---------|
+| *huis* /ɦœy̑s/ | *oud* /ɑut/ | ui vs ou — both A0 words; different diphthongs |
+| *ik kom uit* /œy̑t/ | *oud* /ɑut/ | ui vs ou in short frames |
+| *huis* (listen-repeat) | *het ziekenhuis* | Same ui in two word-frames; no clean minimal pair at A0 — drill as isolated sound |
+
+**Note:** True minimal pairs for ui are rare at A0. Prioritise listen-and-repeat with *huis* (Dutch Expert §6 — Les 1) and *ik kom uit* (Dutch Expert §6 — Introducing Yourself) before attempting pair contrasts.
+
+### Trap 2 — g/ch /ɣ/
+
+| Word A | Word B | Contrast |
+|--------|--------|---------|
+| *goed* /ɣut/ | *koud* /kɑut/ | /ɣ/ vs /k/ initial — voiced friction vs hard stop |
+| *groot* /ɣroːt/ | *brood* /broːt/ | /ɣr/ vs /br/ — throat scrape cluster vs English-like cluster |
+| *graag* /ɣraːx/ | *kaas* /kaːs/ | /ɣr/ vs /k/ — both in food/café vocabulary |
+
+### Trap 3 — eu /øː/
+
+| Word A | Word B | Contrast |
+|--------|--------|---------|
+| *deur* /døːr/ | *duur* /dyːr/ | eu /øː/ vs uu /yː/ — both rounded front vowels, different height |
+| *keuken* /køːkən/ | *koken* (not A0) | — use *deur* vs *duur* as primary pair |
+| *deur* /døːr/ | *broer* /bruːr/ | eu /øː/ vs oe /uː/ — mid vs high back-front contrast |
+
+### Trap 4 — Long flat ee /eː/
+
+| Word A | Word B | Contrast |
+|--------|--------|---------|
+| *beer* /beːr/ | *bier* /biːr/ | ee /eː/ vs ie /iː/ |
+| *thee* /teː/ | *drie* /driː/ | ee vs ie in short words |
+| *zeven* /zeːvən/ | *vis* /vɪs/ | Long ee vs short i — number vs easy noun |
+
+### Trap 5 — Long flat oo /oː/
+
+| Word A | Word B | Contrast |
+|--------|--------|---------|
+| *rood* /roːt/ | *brood* /broːt/ | Same oo vowel, different consonant frame — both food/colour vocab |
+| *boom* /boːm/ | *broer* /bruːr/ | oo /oː/ vs oe /uː/ — mid vs high back rounded |
+| *stoel* /stuːl/ | *school* /sxoːl/ | oe /uː/ vs oo /oː/ — high vs mid back rounded |
+
+### Trap 6 — ij/ei /ɛi/
+
+| Word A | Word B | Contrast |
+|--------|--------|---------|
+| *zijn* /zɛin/ | *zien* /ziːn/ | ij /ɛi/ vs ie /iː/ |
+| *vijf* /vɛif/ | *vier* /viːr/ | ij vs ie in adjacent numbers (5 vs 4) |
+| *klein* /klɛin/ | *drie* /driː/ | ij vs ie — adjective vs number |
+
+### Trap 7 — uu /yː/
+
+| Word A | Word B | Contrast |
+|--------|--------|---------|
+| *duur* /dyːr/ | *deur* /døːr/ | uu /yː/ vs eu /øː/ — both front-rounded, different height |
+| *muur* /myːr/ | *moeder* /mudər/ | uu vs oe — same initial consonant frame |
+| *duur* /dyːr/ | *deur* /døːr/ | Repeat the uu/eu contrast — this pair is the primary drill for Trap 7 |
+
+### Trap 8 — sch /sχ/
+
+| Word A | Word B | Contrast |
+|--------|--------|---------|
+| *school* /sxoːl/ | *sjaal* /ʃaːl/ | /sχ/ vs /ʃ/ — the exact confusion to fix |
+| *school* /sxoːl/ | *stoel* /stuːl/ | sch vs st — both consonant clusters, different onset |
+| *misschien* /mɪsxiːn/ | *school* /sxoːl/ | sch in two word-positions — mid-word vs initial |
+
+### Trap 9 — Schwa /ə/
+
+| Word A | Word B | Contrast |
+|--------|--------|---------|
+| *de tafel* /də ˈtaːfəl/ | *één tafel* /eːn ˈtaːfəl/ | Schwa article vs stressed numeral — same noun |
+| *een* /ən/ (article) | *één* /eːn/ (number one) | Indefinite article (schwa) vs the number "one" (full vowel) |
+| *kamer* /ˈkaːmər/ | — | Hear the schwa in the final syllable; no clean minimal pair — drill as isolated sound |
+
+### Trap 10 — Word-final /x/
+
+| Word A | Word B | Contrast |
+|--------|--------|---------|
+| *nog* /nɔx/ | *rok* (skirt — not A0) | — use *nog* vs *acht* as frame contrast instead |
+| *lach* /lɑx/ | *lang* /lɑŋ/ | Final /x/ vs final /ŋ/ — both common endings |
+| *acht* /ɑxt/ | *acht* (listen-repeat) | Final cluster /xt/ — drill as isolated sound |
 
 ---
 
-> **`g` /ɣ/ word-initial vs /h/** — `goed` /ɣut/ vs `hoed` /hut/ (good vs hat), `gaat` /ɣaːt/ vs `haat` /haːt/ (goes vs hate), `geel` /ɣeːl/ vs `heel` /heːl/ (yellow vs whole)
->
-> *Note: Dutch /ɡ/ and /k/ do not contrast in standard Dutch — the trap is the fricative quality, not voicing. The /h/ contrast above is the most pedagogically useful real-word demonstration.*
+## 4. Visual and Articulatory Cues
 
-> **`ch` /x/ word-final vs /k/** — `acht` /ɑxt/ vs `akt` /ɑkt/ (eight vs act), `licht` /lɪxt/ vs `likt` /lɪkt/ (light vs licks), `zacht` /zɑxt/ vs `zakt` /zɑkt/ (soft vs sinks)
+One sentence per trap, written for on-screen display. Plain language, no IPA jargon.
 
-> **`ui` /œy/ vs `ou` /ɑu/** — `huis` /hœys/ vs `hout` /hɑut/ (house vs wood), `uit` /œyt/ vs `oud` /ɑut/ (out vs old), `buik` /bœyk/ vs `boud` /bɑut/ (belly vs bold)
-
-> **`eu` /øː/ vs `oo` /oː/** — `deur` /døːr/ vs `door` /doːr/ (door vs through), `leuk` /løːk/ vs `look`\* (`look` archaic standalone — not a real A0 word; prefer deur/door), `neus` /nøːs/ vs `noos`\* (non-word — **REMOVE**, see below)
-
-> **`uu` /yː/ vs `oe` /uː/** — `muur` /myːr/ vs `moer` /muːr/ (wall vs nut/bolt), `duur` /dyːr/ vs `door` /doːr/ (expensive vs through), `vuur` /vyːr/ vs `voer` /vuːr/ (fire vs feed/fodder)
-
-> **`ee` /eː/ no-glide vs English /eɪ/** — `geen` /ɣeːn/ (none) — drill as *flat hold*, not English "gain"; `been` /beːn/ (leg) vs English "bain"; `thee` /teː/ (tea) vs English "tay"
-
-> **`ij`/`ei` /ɛi/ vs `ee` /eː/** — `zijn` /zɛin/ vs `zien` /ziːn/ (to be vs to see — illustrates the diphthong vs long monophthong), `klein` /klɛin/ vs `kleen`\* (small — /eː/ makes non-word), `mijn` /mɛin/ vs `mien`\* (mine — same pattern)
-
-> **Schwa contrasts** — function words only: `de` /də/ vs `dé` (emphatic — rare); `een` /ən/ (indef. article, schwa) vs `één` /eːn/ (the number, stressed). The `één` vs `een` contrast is the cleanest minimal schwa demonstration available and uses two real words.
-
-> **`sch` /sx/ vs `sh`-substitution** — `school` /sxoːl/ — drill in isolation; English `shool` is not a Dutch word. `schoen` /sxun/ — single drill word, no minimal pair.
-
-> **Long vs short `a`** — `man` /mɑn/ vs `maan` /maːn/ (man vs moon), `dak` /dɑk/ vs `daak`\* (roof — non-word), `tak` /tɑk/ vs `taak` /taːk/ (branch vs task)
-
-> **Long vs short `o`** — `bos` /bɔs/ vs `boos` /boːs/ (forest vs angry), `bot` /bɔt/ vs `boot` /boːt/ (bone vs boat), `kok` /kɔk/ vs `kook` /koːk/ (cook-noun vs cook-imperative)
-
-> **Long vs short `e`** — `met` /mɛt/ vs `meet` /meːt/ (with vs measure), `ben` /bɛn/ vs `been` /beːn/ (am vs leg/bone), `bel` /bɛl/ vs `beel`\* (bell — non-word)
+| Trap | On-screen hint |
+|------|----------------|
+| ui | Round your lips tight as if to whistle, then let your tongue start open and glide forward — audio is essential for this sound. |
+| g/ch initial | Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g". |
+| eu | Shape your lips into an "oo" circle, then say "ay" without moving your lips — keep both at once. |
+| ee flat | Say "ay" and stop — do not let your mouth slide to "ee" at the end; hold the vowel still. |
+| oo flat | Say "oh" and stop — do not let your lips push forward into a "w" shape; hold the vowel still. |
+| ij/ei | Start at "eh" and glide to "ee" — your jaw stays mostly closed; this is not the wide English "eye". |
+| uu | Make an "oo" lip shape, then say "ee" without changing your lips — the tension feels odd at first. |
+| sch | Say "s" then immediately add a soft throat scrape — it is two sounds blended fast, not "sh". |
+| schwa | Say "uh" — very quickly and softly; *de* sounds like the "a" in "about", not like "day". |
+| -g/-ch final | Let the word end with a soft breath of friction — do not cut the sound off clean like English. |
 
 ---
 
-### 3.1 `ui` /œy/ vs `ij` /ɛi/ — load-bearing contrast
+## 5. IPA Presentation for Dyslexic Learners
 
-Both diphthongs have no English equivalent. English speakers often merge them or substitute /aɪ/ for both. Starting point is the discriminating cue: `ui` lips rounded; `ij` lips spread, low start.
+### Which IPA Symbols Are Confusing
 
-| Word A | IPA A | English A | Word B | IPA B | English B | Notes |
-|--------|-------|-----------|--------|-------|-----------|-------|
-| `uit` | /œyt/ | out | `ijs` | /ɛis/ | ice | **Recommended replacement for huis/hijs** — both A0 high-frequency [see §3.2] |
-| `huis` | /hœys/ | house | `hijs` | /hɛis/ | hoists (3sg) | **Currently in app — reassessed, recommended for replacement** [see §3.2] |
-| `buik` | /bœyk/ | belly | `bijt` | /bɛit/ | bites (3sg) | Near-minimal frame; both A0 |
-| `muis` | /mœys/ | mouse | `meis`\* | — | non-word | Use only for `ui` drill, not the contrast |
+The following symbols must never appear alone in user-facing display. They are stored internally for reference only. (Dyslexia Expert §8; Researcher §7.)
 
-### 3.2 Reassessment: `huis` / `hijs` — recommend replacement
+| Symbol | Problem | Resolution |
+|--------|---------|------------|
+| /œy̑/ | Multi-character ligature; no intuitive English anchor | Replace with respelling: OWT ★ |
+| /ɣ/ | Looks like a Latin "y" with a descender; visually confusing | Replace with respelling: KH |
+| /øː/ | Slashed-o with length diacritic — hard to parse | Replace with respelling: UR or KUR |
+| /ː/ (length mark) | Invisible to beginners; long and short vowels look identical | Respelling uses doubled letters or CAPS for stress emphasis |
+| /ɦ/ | Looks like English "h" but is phonetically different | Respelling: plain "h" is close enough at A0 |
+| /ʏ/ | Upsilon — unfamiliar; easily confused with /ʊ/ | Respelling: UU or short form |
 
-The brief flags that `hijs` (3sg of *hijsen* "to hoist") is not A0-recognisable on its own [Researcher §5 implication; brief item 5]. Confirmed: while `huis/hijs` is a clean minimal frame, `hijs` is verb morphology a beginner has no reason to know. Showing a non-word-recognisable form in a discrimination task creates a confound — the learner may pick the unfamiliar form not because they heard the contrast but because they don't recognise the word.
+### Color-Coding Scheme
 
-**Recommended replacement: `uit` /œyt/ (out) vs `ijs` /ɛis/ (ice)**
+Using Dyslexia Expert §2 palette only. Applied to the respelling chip — never to the Dutch word itself.
 
-- Both are common A0 standalone nouns/adverbs
-- Both have the same consonantal frame around the diphthong (/-t/ vs /-s/ — close enough for the contrast to be heard; the vowel is what carries the load)
-- `ijs` connects naturally to food/drink vocab (Dutch Expert §2.5 expansion — could be added)
-- `uit` already appears in user's existing phonetics drill words [Researcher §5 vocab list]
+| Category | Token | Hex | When used |
+|----------|-------|-----|-----------|
+| Phonetic chip (default) | `--accent-purple` on `--accent-purple-light` | `#5C3F8F` on `#F0EBF9` | All respellings — standard state |
+| Audio-required star badge | `--accent-amber` | `#B35C00` | ★ flag — ui, g/ch, eu, uu — appears inline after respelling |
+| Articulatory hint text | `--text-secondary` | `#5C5C5C` | One-line on-screen hint (section 4 above) |
+| Success state chip border | `--accent-green` | `#2F7A3B` | Chip border only when learner self-reports "got it" |
+| Missed state chip border | `--accent-amber` | `#B35C00` | Chip border only on "practice again" — amber not red |
+| de article chip | `--accent-blue` | `#2E6DA4` | Article displayed on card back |
+| het article chip | `--accent-green` | `#2F7A3B` | Article displayed on card back |
 
-Alternative if a tighter frame is preferred: `huis` (house) vs `heis` — but *heis* is not a standard word either. The closest *real* tight minimal pair (same consonant frame) for ui/ij is impossible to construct with two A0 words because Dutch lexicon doesn't offer one. `uit`/`ijs` is the best real-A0 substitute.
+**Do not use red on the phonetic chip.** Red signals error; the phonetic hint is a tool, not a judgement. (Dyslexia Expert §6.)
 
-### 3.3 `neus` / `noos` — recommend removal
+### Chunking Conventions
 
-`noos` is not a Dutch word [Dutch Expert §7.2]. Now that `deur`/`door` is in the app and cleanly covers the `eu` /øː/ vs `oo` /oː/ contrast with two real high-frequency words, **`neus/noos` should be removed entirely**, not replaced.
-
-Rationale:
-- `deur`/`door` already does the job with two real A0 words
-- Adding a second eu/oo pair is redundant for an A0 learner
-- Keeping a non-word `noos` violates the "real A0 words only" constraint and risks the learner internalising it as Dutch
-
-If a second `eu` drill is wanted, use **single-word `eu` cue cards** (`neus`, `leuk`, `keuken`, `apotheek`) rather than forcing a minimal pair.
-
-### 3.4 `g` /ɣ/ vs `ch` /x/ — voiced–voiceless velar fricative
-
-Exact same-position minimal pairs are rare because Dutch `g` is mostly word-initial and `ch` is medial/final. The pairs below contrast the two sounds in analogous positions.
-
-| Word A | IPA A | English A | Word B | IPA B | English B | Notes |
-|--------|-------|-----------|--------|-------|-----------|-------|
-| `goed` | /ɣut/ | good | `hoed` | /hut/ | hat | /ɣ/ vs /h/ — the substitution the user is likely making |
-| `gaan` | /ɣaːn/ | to go | `lach` | /lɑx/ | laugh (imp.) | /ɣ/ onset vs /x/ coda — same place, voicing differs |
-| `zacht` | /zɑxt/ | soft | `zag` | /zɑx/ | saw (past) | both end in /x/ — illustrates final `g` devoices to /x/ |
-
-> **Teaching note:** Word-final `g` devoices to /x/ in Netherlands Dutch — same sound as `ch`. `weg` ends /x/, not /ɣ/. /ɣ/ only occurs at the start of a syllable. Consistent rule once learners know it.
+- Syllable separator: **hyphen** (`-`) — consistent with Dutch Expert §6 throughout
+- Stress mark: **CAPITALS** on stressed syllable — e.g. `KAH-mur`, `KHRAHKH`
+- Star flag: **★** after the respelling, inline — e.g. `HOWS ★`
+- Maximum one respelling per card face — do not stack two phonetic systems (Dyslexia Expert §8)
+- If IPA is added later: render inside the chip in parentheses at 13px, subordinate to the respelling — e.g. `HOWS ★ (/ɦœy̑s/)` — never the other way round (Dyslexia Expert §8)
 
 ---
 
-## 4. Visual & Articulatory Cues
+## 6. Phonetic Card Data Spec
 
-One sentence per trap, suitable for display in the app card.
+Defines the exact data fields each word card must carry at runtime to support phonetics-during-practice. Implemented in the JavaScript `CATEGORIES` array in `index.html`.
 
-| Sound | Cue |
-|-------|-----|
-| `g` /ɣ/ | *"Make friction at the back of your throat — like a very soft snore while you voice."* |
-| `ch` /x/ | *"Like clearing your throat gently — friction at the back, no voice, no stop."* |
-| `ui` /œy/ | *"Round your lips like 'oo', then glide toward 'ee' without unrounding."* |
-| `eu` /øː/ | *"Shape your lips for 'oh', then say 'ay' without moving your lips."* |
-| `uu` /yː/ | *"Tight 'oo' lip shape, then push your tongue forward as if saying 'ee'."* |
-| `ee` /eː/ | *"Hold the sound flat — don't let it slide into a 'y'. Like the start of 'say', frozen."* |
-| `oo` /oː/ | *"Hold the sound flat — don't let it slide into a 'w'. Like the start of 'go', frozen."* |
-| `ij`/`ei` /ɛi/ | *"Start lower than English 'ay' — open your mouth a little more, then glide up."* |
-| Schwa /ə/ | *"Don't pronounce 'de' or 'een' fully — relax them, like English 'the' before a consonant."* |
-| `sch-` /sx/ | *"Say 's', then immediately the throat sound — not 'sh'."* |
-| `ou`/`au` /ɑu/ | *"Start further back in your mouth than English 'ow' — aim for 'ah' then glide to 'oo'."* |
-| `w` /ʋ/ | *"Touch your lower lip to your upper teeth lightly — less pressure than 'v', no lip rounding."* |
+### Field Definitions
 
-### Mouth-position diagram needs
+| Field | Type | Example value | Required? |
+|-------|------|---------------|-----------|
+| `dutch` | string | `"huis"` | Yes |
+| `english` | string | `"house"` | Yes |
+| `article` | string or null | `"het"` | Yes for nouns; null for verbs, phrases, adverbs |
+| `respelling` | string | `"HOWS"` | Yes |
+| `audioRequired` | boolean | `true` | Yes — true for all ★ sounds |
+| `articulatoryHint` | string | `"Round your lips tight as if to whistle…"` | Yes |
+| `trapRank` | number or null | `1` | Yes — 1–10 from section 2; null if not a trap sound |
+| `ipa` | string | `"/ɦœy̑s/"` | Yes — stored but not shown by default |
+| `syllableCount` | number | `1` | Yes — used for chunking multi-syllable phrases |
+| `phraseChunks` | string[] or null | `null` | Null for single words; array for phrases (see below) |
+| `soundCategory` | string | `"ui-diphthong"` | Yes — used by drilling progression logic (section 7) |
+| `audioFile` | string | `"huis.mp3"` | Yes — filename relative to audio asset directory |
 
-The app should commission or source static diagrams for:
+### Display Rules — Shown by Default vs On-Demand
 
-| Sound | What the diagram must show |
-|-------|---------------------------|
-| `g`/`ch` /ɣ/ /x/ | Back-of-throat constriction (sagittal); voicing indicator on/off |
-| `ui` /œy/ | Lip rounding (start) + tongue forward position (end of glide) |
-| `eu` /øː/ | Rounded lips + front tongue position (sagittal) |
-| `uu` /yː/ | Tight lip rounding + high front tongue |
-| `ee`/`oo` no-glide | Stationary tongue position with "hold" indicator vs English's offglide arrow |
+| Field | Card front (default) | On-demand |
+|-------|---------------------|-----------|
+| `dutch` | Yes — 32px centred, `--text-primary` | — |
+| `respelling` chip | Yes — 15px chip, purple (`#5C3F8F` on `#F0EBF9`) | — |
+| `audioRequired` ★ badge | Yes — amber `#B35C00` inline after respelling | — |
+| `articulatoryHint` | No — hidden | Tap the ★ badge to reveal below the chip |
+| `english` | No — behind reveal line | Tap "reveal" |
+| `article` | No — behind reveal line (colour-coded chip) | Tap "reveal" |
+| `ipa` | No | Settings toggle only (advanced users) |
+| `trapRank` | No — internal | Never shown |
+| `soundCategory` | No — internal | Never shown |
 
----
+**Rationale:** the articulatory hint is hidden by default to prevent visual overload, but is one tap away via the ★ badge — available before reveal, so the learner can access it before attempting recall. (Researcher §7; Dyslexia Expert §8.)
 
-## 5. IPA Presentation Guidelines for Dyslexic Learners
-
-### Visually confusing IPA symbols
-
-These symbols look like rotated or mirrored letters — known difficulty for dyslexic readers. **Never show these text-only; always pair with audio.**
-
-| Symbol | Looks like | Must pair with |
-|--------|-----------|----------------|
-| /ɛ/ | reversed-e | Audio + label "open e" |
-| /ɔ/ | rotated c | Audio + label "open o" |
-| /ø/ | o with slash | Audio + label "rounded e" |
-| /œ/ | oe ligature | Audio + label |
-| /ʏ/ | upsilon | Audio + label "short ü" |
-| /ɣ/ | gamma | Audio + label "Dutch g" |
-| /ʋ/ | v-like | Audio + label "Dutch w" |
-| /ŋ/ | n with hook | Audio + label "ng" |
-| /ə/ | rotated e | Audio + label "schwa" |
-
-**Rule:** Show IPA as a *secondary* label, never the primary identifier. Primary = Dutch spelling. IPA appears below or beside, in smaller text (16px, `#6B6B6B`).
-
-> **Color confirmed:** IPA labels use **`#6B6B6B`** (contrast ~4.9:1 vs `#FAF3E0` background — passes WCAG AA at all sizes). The previously specified `#A0A0A0` fails WCAG AA (2.36:1) and must not be used. See `dyslexia_expert.md §2`. Already correct in VERSION 3.
-
-### Color-coding — mapped to Dyslexia Expert palette
-
-| Sound category | Hex | Dyslexia Expert token |
-|---------------|-----|-----------------------|
-| Long vowels (aa, ee, oo, uu, ie) | `#2E6DA4` | Accent Blue |
-| Short vowels (a, e, i, o, u) | `#3A7D44` | Accent Green |
-| Diphthongs (ui, ij/ei, ou/au) | `#E07B39` | Accent Orange |
-| Hard consonants (g, ch, sch, r) | `#D94F3D` | Accent Red |
-| Schwa / silent / irregular | `#6B4FA0` | Accent Purple |
-
-Apply colors **to the specific letters** within a word, not the whole word:
-> `h`**`ui`**`s` — only `ui` is Accent Orange.
-
-### Chunking conventions
-
-For multi-syllable words, show chunks separated by a middle dot (·). IPA chunks below:
+### Recommended Display Order — Single-Word Card
 
 ```
-goe·de·mor·gen
-/ɣu · də · mɔr · ɣən/
-
-a·po·theek
-/aː · poː · teːk/
-
-bi·bli·o·theek
-/bi · bli · oː · teːk/
++-----------------------------------------------+
+|                                               |
+|   [Dutch word]              32px centred      |
+|   [respelling chip ★]       15px chip centred |
+|                                               |
+|   [ Play ]  [ Slow ]    <- always visible     |
+|                                               |
+|   - - - - - tap to reveal - - - - - - - - -  |
+|                                               |
+|   [article chip + English meaning]  18px      |
+|   [articulatory hint — if ★ tapped]  16px    |
+|                                               |
++-----------------------------------------------+
 ```
 
-Rules:
-- Maximum 2 syllables shown simultaneously without chunking
-- Chunks align vertically (Dutch above, IPA below)
-- For flashcards: full word first (audio) → reveal chunks on tap
+Layer order: Dutch word → phonetic chip → audio controls → reveal line → translation. This matches Dyslexia Expert §8 card layout exactly.
+
+### Phrase Cards — Multi-Word Chunking
+
+For phrases (Zinnen categories in Les 1 and Les 2), `phraseChunks` holds the respelling broken into word-level units.
+
+**Field structure — example:**
+
+```json
+{
+  "dutch": "Mag ik de rekening, alstublieft?",
+  "english": "May I have the bill, please?",
+  "article": null,
+  "respelling": "makh ik duh RAY-kun-ing al-stuu-BLEEFT",
+  "phraseChunks": ["makh", "ik", "duh", "RAY-kun-ing", "al-stuu-BLEEFT"],
+  "audioRequired": false,
+  "articulatoryHint": "The article 'de' is a very short 'duh' — do not say 'day'.",
+  "trapRank": 9,
+  "ipa": "/mɑx ɪk də ˈreːkənɪŋ ˌɑlstyˈbliːft/",
+  "syllableCount": 9,
+  "soundCategory": "schwa",
+  "audioFile": "mag-ik-de-rekening-alstublieft.mp3"
+}
+```
+
+**Chunking display rules for phrases:**
+- Show the full `respelling` string on the chip as one line by default
+- If the string exceeds 16 characters: wrap at word boundaries using `phraseChunks`, one chunk per visual group, left-aligned inside the chip
+- Never break a hyphenated syllable group across lines — `RAY-kun-ing` stays on one line
+- `phraseChunks` are also used in listen-and-repeat to highlight the chunk currently playing (section 8)
+
+### Minimal Example — Vocabulary Word
+
+```json
+{
+  "dutch": "keuken",
+  "english": "kitchen",
+  "article": "de",
+  "respelling": "KUR-kun",
+  "phraseChunks": null,
+  "audioRequired": true,
+  "articulatoryHint": "Shape your lips into an 'oo' circle, then say 'ay' without moving your lips.",
+  "trapRank": 3,
+  "ipa": "/ˈkøːkən/",
+  "syllableCount": 2,
+  "soundCategory": "eu-vowel",
+  "audioFile": "keuken.mp3"
+}
+```
+
+*(Dutch Expert §6 — Les 1: Thuis)*
 
 ---
 
-## 6. Drilling Progressions
+## 7. Drilling Progressions
 
-Aligned with Dutch Expert §1 weeks and dyslexia-friendly short-session principles.
+Order to introduce sounds given the A0 vocabulary sequence. Lower-severity traps first; highest-severity traps introduced early and revisited every session.
 
-| Phase | Sounds | Linked vocab | Session |
-|-------|--------|-------------|---------|
-| Phase 1 (Week 1–2) | `g`/`ch`, basic consonants, short a/e/i/o, /j/ | Greetings, courtesy, numbers 1–10, family/rooms (existing 30 nouns) | 5 min — 5 items max |
-| Phase 2 (Week 2–3) | Long vowels aa/ee/oo/ie, /ɛi/ (zijn, trein), schwa in `de`/`-en` | `zijn`, transport (`de fiets`, `het vliegveld`), places (`apotheek`, `bibliotheek`) | 8 min — 5 items |
-| Phase 3 (Week 3–4) | /ɣ/ deepening, /x/, short u /ʏ/, sch- /sx/ | `Hoe gaat het?`, `acht`, `school`, `schoen`, `bus` | 8 min — 5 items |
-| Phase 4 (Week 4–5) | /øː/ (eu), /yː/ (uu), /ʋ/ (w) | `leuk`, `neus`, `deur`, `keuken`, `uur`, `muur`, `water` | 10 min — 6 items |
-| Phase 5 (Week 5–6) | /œy/ (ui), /ɑu/ (ou/au), minimal pairs | `huis`, `uit`, `ijs`, `goud`, `blauw`; ui vs ij contrast | 10 min — 5 items + 2 minimal pair drills |
-| Phase 6 (Week 6+) | Connected-speech listening, number-inversion prosody | `eenentwintig`, `tweeëntwintig`; subordinate-clause prosody (see §11) | 10 min — listening-only drills |
+### Week 1 — Sound Anchoring
 
-**Dyslexia-friendly pacing rules:**
-- Never introduce more than 2 new sounds in a single session
-- Always warm up with a known sound before introducing a new one
-- Minimal pair drills only after each sound has been practiced separately
-- No rapid-fire mode — learner controls pace (tap to advance)
+Introduce in order. Do not advance until the learner has heard and attempted each at least 3 times.
 
----
+| Step | Sound | First word | Rationale |
+|------|-------|------------|-----------|
+| 1 | Schwa /ə/ | *de tafel* | Most frequent Dutch sound — sets the baseline for every article |
+| 2 | Long flat /eː/ | *thee*, *beer* | Short words, immediately usable; contrast with English "ay" glide |
+| 3 | Long flat /oː/ | *boom*, *rood* | Parallels ee — same flat-hold rule, different position |
+| 4 | /ɣ/ initial g | *goedemorgen* | Unavoidable from lesson 1; ★ audio required — hear first, imitate second |
+| 5 | /ɦ/ h | *hallo*, *huis* | Breathy — easier than /ɣ/; introduce before the ui diphthong |
+| 6 | /œy̑/ ui | *huis* | Hardest sound — introduce early so the ear begins adjusting; ★ audio required |
+| 7 | /ɛi/ ij | *zijn*, *vijf* | Related diphthong; contrast explicitly with the wide English "eye" |
 
-## 7. What the App's Exercise Types Need from Phonetics
+### Week 2 — Consolidation and Extension
 
-### `listen_and_repeat`
+| Step | Sound | First word | Rationale |
+|------|-------|------------|-----------|
+| 8 | /øː/ eu | *deur*, *keuken* | Café vocabulary makes this immediately useful; ★ audio required |
+| 9 | /yː/ uu | *muur*, *duur* | Close relative of eu — introduce together to highlight height contrast |
+| 10 | /sχ/ sch | *school* | Encountered in Klanken; contrast immediately with *sjaal* — same lesson |
+| 11 | /x/ word-final | *nog*, *lach*, *acht* | Softer variant; learners have now heard /ɣ/ for a week |
+| 12 | /uː/ oe | *stoel*, *broer* | Long back-rounded — usually correct via English "oo"; easier filler |
 
-| Field | Type | Example |
-|-------|------|---------|
-| `dutch` | string | `"goedemorgen"` |
-| `english` | string | `"good morning"` |
-| `ipa` | string | `"ɣudəmɔrɣən"` |
-| `ipa_chunks` | string[] | `["ɣu", "də", "mɔr", "ɣən"]` |
-| `spelling_chunks` | string[] | `["goe", "de", "mor", "gen"]` |
-| `color_codes` | object | `{"g": "#D94F3D", "oe": "#2E6DA4"}` |
-| `tricky_sounds` | string[] | `["ɣ"]` |
-| `articulatory_hint` | string | `"Make friction at the back of your throat..."` |
-| `audio_tts_input` | string | Dutch passed to `window.speechSynthesis` (Web Speech API, `lang: 'nl-NL'`) |
+### Weeks 3–4 — Minimal Pair Discrimination
 
-### `minimal_pair`
+Introduce minimal pair drills (section 3) in this order:
 
-| Field | Type | Example |
-|-------|------|---------|
-| `word_a` | string | `"uit"` |
-| `word_b` | string | `"ijs"` |
-| `ipa_a` | string | `"œyt"` |
-| `ipa_b` | string | `"ɛis"` |
-| `english_a` | string | `"out"` |
-| `english_b` | string | `"ice"` |
-| `contrast` | string | `"ui vs ij — two hardest Dutch diphthongs"` |
-| `contrast_description` | string | `"Both have no English equivalent. ui starts rounded; ij starts spread and lower."` |
-| `color_a` | hex | `"#E07B39"` |
-| `color_b` | hex | `"#E07B39"` |
-| `tricky_sound` | string | `"œy vs ɛi"` |
+1. *beer* vs *bier* — ee /eː/ vs ie /iː/ (Trap 4)
+2. *boom* vs *stoel* — oo /oː/ vs oe /uː/ (Trap 5)
+3. *zijn* vs *zien* — ij /ɛi/ vs ie /iː/ (Trap 6)
+4. *school* vs *sjaal* — sch /sχ/ vs sj /ʃ/ (Trap 8)
+5. *duur* vs *deur* — uu /yː/ vs eu /øː/ (Traps 7 and 3 together)
+6. *goed* vs *koud* — /ɣ/ vs /k/ (Trap 2)
+7. *huis* and *ik kom uit* — listen-repeat only (no clean A0 minimal pair for ui)
 
-### `flashcard`
+### Spaced Repetition by Severity
 
-| Field | Type | Notes |
-|-------|------|-------|
-| `dutch` | string | Front |
-| `english` | string | Back (revealed on tap) |
-| `ipa` | string | Shown on back |
-| `spelling_chunks` | string[] | Shown on front after first play |
-| `color_codes` | object | Applied to `dutch` letters on front |
-| `audio_tts_input` | string | Played on front before reveal (Web Speech API) |
+| Severity | Re-drill frequency |
+|----------|--------------------|
+| 3 (ui, g/ch, eu, uu) | Every session — minimum 3 cards per session |
+| 2 (ee flat, oo flat, ij, sch) | Every other session |
+| 1 (schwa, final /x/) | Once per lesson cycle; on-demand thereafter |
 
-### `minimal_pair_discrimination`
-
-| Field | Type | Notes |
-|-------|------|-------|
-| `pair` | MinimalPair | The pair object above |
-| `played_word` | `"a"` or `"b"` | Randomly assigned at runtime |
-| `distractor_count` | number | Always 1 (binary choice — never add a third option) |
+*(Based on Dutch Expert §7: 60% new / 40% review; and Researcher §2: 3–4 relearning sessions per word within 14 days.)*
 
 ---
 
-## 8. Phonetics Notes — Greetings Category
+## 8. Exercise Type Requirements
 
-The Dutch Expert (`dutch_expert.md §2.1, §7`) keeps `Hoe gaat het?` / `Goed, dank je wel` in Greetings. Two top-trap sounds:
+What phonetic data each exercise type needs from the card data spec (section 6).
 
-| Sound | In phrase | Trap | Notes |
-|-------|-----------|------|-------|
-| `g` /ɣ/ | `gaat`, `goed` | Trap 1 | Voiced velar fricative — using English /ɡ/ sounds strongly foreign |
-| `aa` /aː/ | `gaat` | Long-vs-short contrast | Same /aː/ as `maan`; must not shorten to /ɑ/ |
+### Flashcard (hear → recall)
 
-**Phonetic data for the phrase:**
+| Data field | Source | Display location |
+|------------|--------|-----------------|
+| `dutch` | `dutch` | Front — 32px centred |
+| Respelling chip | `respelling` | Front — 15px chip, purple |
+| ★ badge | `audioRequired` | Front — amber inline badge |
+| Articulatory hint | `articulatoryHint` | Front — hidden; revealed on ★ tap |
+| Audio | `audioFile` | Front — Play + Slow buttons always visible |
+| Article | `article` | Back (after reveal) — colour-coded chip |
+| English meaning | `english` | Back (after reveal) |
+| IPA | `ipa` | Back only, 13px inside chip parentheses if user enables in settings |
 
-| Field | Value |
-|-------|-------|
-| Dutch | `Hoe gaat het?` |
-| English | How are you? |
-| IPA | /huː ɣaːt hɛt/ |
-| Spelling chunks | `Hoe · gaat · het` |
-| IPA chunks | `huː · ɣaːt · hɛt` |
-| Color codes | `g` → `#D94F3D`; `aa` → `#2E6DA4` |
-| Tricky sounds | `ɣ`, `aː` |
-| Articulatory hint | *"The 'g' is voiced throat-friction — not English 'g'. The 'aa' is long: hold it a full beat."* |
-| `audio_tts_input` | `"Hoe gaat het?"` (Web Speech API, `lang: 'nl-NL'`) |
+### Minimal Pair Exercise
 
-> **Standard response:** `Goed, dank je wel` /ɣut dɑŋk jə wɛl/ — `g` is /ɣ/, `je` reduces to schwa /jə/, `w` is /ʋ/. Three traps in five words — high-density practice.
+| Data field | Source | Display location |
+|------------|--------|-----------------|
+| Two Dutch words | `dutch` × 2 | Both words shown, 32px |
+| Two audio files | `audioFile` × 2 | Play button per word |
+| Two respelling chips | `respelling` × 2 | Below each word, 15px chip |
+| Sound category (pairing) | `soundCategory` × 2 | Internal — not shown |
+| Trap rank (pairing) | `trapRank` × 2 | Internal — not shown |
+| Articulatory hint | `articulatoryHint` (primary trap word) | Below both words — applies to the contrast being drilled |
 
----
+**Pairing logic:** cards share the same `soundCategory` slot but differ in the trap vowel. The exercise engine uses `trapRank` to select which sound is being drilled and picks the partner card from the minimal pair sets (section 3).
 
-## 9. Phonetics of Newly Added Vocab (Food, Transport, Places)
+**Outcome display:** after the learner taps a word, show the correct answer with chip highlighting — matched word chip gains green border (`#2F7A3B`), unmatched gains amber border (`#B35C00`). (Dyslexia Expert §6.)
 
-The Dutch Expert §2.5–§2.8 adds these items. Below: which trap each one drills.
+### Listen and Repeat
 
-| Word | IPA | Category | Trap(s) exercised |
-|------|-----|----------|-------------------|
-| `thee` | /teː/ | Food | `ee` flat-hold (Trap 5) — no glide; do NOT say "tay" |
-| `melk` | /mɛlk/ | Food | Short `e` /ɛ/ + /-lk/ cluster (Trap 9 light) |
-| `bier` | /biːr/ | Food | Long `ie` /iː/ + Dutch `r` (Trap on the radar) |
-| `vlees` | /vleːs/ | Food | `vl-` cluster (Trap 9) + `ee` flat-hold (Trap 5); `v` may devoice to /f/ |
-| `groente` | /ɣruntə/ | Food | `g` /ɣ/ (Trap 1) + `oe` /u/ + final schwa (Trap 7) — three traps in one word |
-| `rechtdoor` | /rɛxtdoːr/ | Transport | `ch` /x/ (Trap 1) + `-cht` cluster (Trap 9) + `oo` flat-hold (Trap 5) |
-| `de fiets` | /də fiːts/ | Transport | Schwa in `de` (Trap 7) + `ie` /iː/ — note: `ie` is /iː/, NOT /ɛi/ (do not confuse with `ij`/`ei`) |
-| `het vliegveld` | /(h)ət vliːxvɛlt/ | Transport | `vl-` cluster + `ie` /iː/ + `-gv-` cluster + final `-ld` (Trap 9 heavy) — *this is a cluster gauntlet* |
-| `de apotheek` | /də aːpoːteːk/ | Places | Three long vowels in a row: `a` /aː/, `o` /oː/, `ee` /eː/ — Trap 5/6 stress test; stress on `-theek` |
-| `de bibliotheek` | /də biːbliːoːteːk/ | Places | Same `-theek` /-teːk/ stress as apotheek; multiple `i` /iː/ — chunking essential |
+| Data field | Source | Display location |
+|------------|--------|-----------------|
+| Dutch word or phrase | `dutch` | Large, centred |
+| Respelling | `respelling` | Chip, centred |
+| Phrase chunks | `phraseChunks` | Highlighted one chunk at a time during slow playback |
+| Audio | `audioFile` | Auto-plays once on card load (first card only); tap-to-play thereafter |
+| Articulatory hint | `articulatoryHint` | Always visible for this exercise type — not hidden |
+| Slow speed | — | 0.75× via Web Audio API `playbackRate` |
+| ★ badge | `audioRequired` | Always visible |
+| Syllable count | `syllableCount` | Used to pace chunk-highlight animation |
 
-**App implication:** `het vliegveld`, `groente`, and `rechtdoor` should be tagged as high-load items — chunk them aggressively (§5), drill in isolation before sentence frames.
+**Chunk highlighting for phrases:** during slow playback, each `phraseChunks` item is highlighted sequentially with a `--accent-purple-light` background tint as the audio passes through it. Timing is approximated from `syllableCount` — exact alignment requires audio timestamps (future enhancement). Approximate timing is acceptable at v1.
 
----
-
-## 10. The User's Lesson 1 Transcription Errors — Fix-up Cues
-
-Grounded in Researcher §5. The user's own transcription column from lesson 1 reveals exactly where their ear sits today. Each row maps the error to the trap and the cue to display the *first* time the app introduces that sound.
-
-| Sound | User's transcription | What it tells us | Trap | Fix-up cue (display in app) |
-|-------|---------------------|------------------|------|-----------------------------|
-| `ui` | *(blank)* | No English mapping exists — they've shelved it | Trap 2 | *"No English sound for this. Start rounded like 'oo', glide forward to 'ee'. Tap Play and copy."* |
-| `eu` | "ouw" | Confused with `ou` — they're hearing rounding but adding the wrong glide | Trap 3 | *"This is NOT 'ou'. Lips don't move. Round lips for 'oh', then say 'ay' inside that lip shape."* |
-| `ee` | "a" | Reached the right English target ("ay") accidentally, without the no-glide discipline | Trap 5 | *"Hold it flat. English 'say' slides into a 'y' — this doesn't. Freeze your mouth halfway through."* |
-| `ij`/`ei` | "i" (English eye) | Mouth too open at the start | Trap 6 | *"Don't open as wide as 'eye'. Start with 'eh' — like the start of 'bed' — then glide up."* |
-| `g` | *(blank)* | No English mapping — same status as `ui` | Trap 1 | *"No English sound for this either. Friction at the back of your throat, voice on. Like a soft snore."* |
-
-**App integration:** these cues should appear as the *first card* the user sees when they tap into a category that introduces that sound. After that, the standard articulatory cue from §4 takes over. The fix-up cue's job is to displace the *specific wrong mental model* the user already has.
+**Self-assessment:** after the learner attempts to repeat, show "Sounded right" and "Try again" — not "Correct/Incorrect". No automated pronunciation scoring at v1. (Dyslexia Expert §5, §6.)
 
 ---
 
-## 11. Number Inversion & Subordinate-Clause Prosody (brief)
+## 9. Corrections and Validations to Dutch Expert §6
 
-These are not new phonemes but they change the prosody of utterances the user will hear and produce. Brief notes only.
+The IPA + respelling table in Dutch Expert §6 is accurate for Netherlands Dutch. The following minor notes apply.
 
-### 11.1 Number inversion — `eenentwintig`, `tweeëntwintig` (Dutch Expert §3.13)
-
-| Feature | Detail |
-|---------|--------|
-| Length | 4 syllables (`ee·nen·twin·tig`) or 5 (`twee·ën·twin·tig`) |
-| Stress | Primary on `twin`, secondary on first syllable; `-tig` reduces |
-| The `ë` diaeresis | In `tweeëntwintig`, the `ë` marks a **syllable break**, not a separate sound. `twee` ends; `ën` begins as a new syllable. NOT a different vowel. |
-| `een` reduction | The unstressed `-en-` joining element is /ən/ schwa in fast speech, even though `één` (the standalone number "one") is /eːn/ |
-| Phonetic risk | Learner says four discrete syllables at equal weight (`EEN-EN-TWIN-TIG`) — sounds robotic; native says /eːnəntwɪntəx/ with reduction |
-
-**App cue:** *"The `ë` is a syllable break, not a new sound. The `-en-` in the middle is schwa — relax it."*
-
-### 11.2 Subordinate-clause verb-final — prosody only (Dutch Expert §3.5)
-
-Not a phonetic feature per se, but worth a phonetics flag: in subordinate clauses (`Ik ga naar huis omdat ik moe ben`), the finite verb shows up at the **end** of the clause, often after a noticeable pause and with terminal intonation. The clause-final verb carries the prosodic peak in a way English clauses don't.
-
-**Phonetic implication for listening drills:** when the app introduces subordinate clauses (week 7+), include slow-tempo playback so the learner can hear the clause-final verb without it being swallowed by reduction. Web Speech API `utterance.rate = 0.75` is sufficient.
-
-Not in scope for the current pipeline run — defer to a later iteration once V2 is stable.
+| Word | Dutch Expert entry | This agent's note |
+|------|--------------------|-------------------|
+| *vijf* | `VAYF ★` | The ★ is justified — /ɛi/ is not identical to English "ay" but is the closest anchor; the star signals to listen carefully, not that text is entirely useless |
+| *twee* | `TVAY (flat)` | Correct — the "flat" reminder is essential; retain it in `articulatoryHint` |
+| *deur* | `DUR ★` | Accurate, but "dur" may suggest a rhotic vowel to English speakers; add hint: "do not extend the r" |
+| *de supermarkt* | `SUU-pur-markt ★` | The ★ is for /yː/ in *super* — correct; ensure the audio file covers the full phrase, not just the noun |
+| *broodje* | `BROH-chuh` | The -tje as "chuh" is correct for Netherlands Dutch; the "flat oo" note in Dutch Expert §6 is essential — include it in `articulatoryHint` |
+| *alsjeblieft / alstjeblieft* | Two spellings used across §6 | *alsjeblieft* is the standard spelling — flag the variant in the `english` field: "spelling variant: alstjeblieft also seen" |
 
 ---
 
-*End of phonetics.md. Hand off to: Designer (uses §5 color codes + §7 exercise data shapes); implementation (replace `huis/hijs` with `uit/ijs`, remove `neus/noos`, integrate §9 cluster-heavy items, surface §10 fix-up cues on first encounter).*
+*End of Phonetics Specialist Report*
+*Cite this document as: Nederly Phonetics Specialist Agent, 2026-05-22*
+*Inputs: Dutch Expert §6 (IPA + respelling table), Researcher §1, §5, §7, Dyslexia Expert §2, §8*

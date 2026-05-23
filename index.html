@@ -3,9 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#FAF3E0" />
+  <meta name="theme-color" content="#F7F2E8" />
   <title>Nederly</title>
   <style>
+    :root {
+      /* Backgrounds */
+      --bg:             #F7F2E8;
+      --surface:        #FFFFFF;
+      --surface-raised: #F0EBE0;
+
+      /* Text */
+      --text-primary:   #1A1A1A;
+      --text-secondary: #5C5C5C;
+
+      /* Borders */
+      --border:         #D4CBBA;
+      --border-light:   #E0D8C8;
+
+      /* Accent — Blue (primary CTA, active states) */
+      --accent-blue:       #2E6DA4;
+      --accent-blue-light: #E8F0F9;
+
+      /* Accent — Green (success) */
+      --accent-green:       #2F7A3B;
+      --accent-green-light: #EBF5EC;
+
+      /* Accent — Red (error — use sparingly) */
+      --accent-red:       #C0392B;
+      --accent-red-light: #FDECEA;
+
+      /* Accent — Amber (audio-required flag, missed state) */
+      --accent-amber:       #B35C00;
+      --accent-amber-light: #FDF3E6;
+
+      /* Accent — Purple (phonetic chip) */
+      --accent-purple:       #5C3F8F;
+      --accent-purple-light: #F0EBF9;
+
+      /* Spacing — 8px rhythm */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 40px;
+    }
+
     @font-face {
       font-family: 'OpenDyslexic';
       src: url('OpenDyslexic-Regular.woff2') format('woff2');
@@ -15,7 +57,7 @@
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #FAF3E0;
+      background: #F7F2E8;
       font-family: 'OpenDyslexic', system-ui, -apple-system, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -30,11 +72,12 @@
 
     /* Header */
     .header {
-      display: flex; align-items: center; padding: 12px 20px;
-      border-bottom: 1px solid #E0D8C8; background: #FAF3E0;
+      display: flex; align-items: center; padding: 14px 20px;
+      border-bottom: 1px solid #D4CBBA; background: #FFFFFF;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
       position: sticky; top: 0; z-index: 10;
     }
-    .header h1 { font-size: 20px; font-weight: 600; color: #1A1A1A; }
+    .header h1 { font-size: 22px; font-weight: 700; color: #1A1A1A; }
     .back-btn {
       background: none; border: none; color: #2E6DA4;
       font-size: 22px; padding: 4px 12px 4px 0; cursor: pointer;
@@ -45,12 +88,13 @@
 
     /* Nav / Category buttons */
     .nav-btn {
-      background: #FAF3E0; border: 1px solid #E0D8C8; border-radius: 8px;
+      background: #FFFFFF; border: 1px solid #D4CBBA; border-radius: 12px;
       padding: 16px 24px; min-height: 64px; text-align: left;
       font-size: 18px; color: #1A1A1A; width: 100%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
       transition: background 0.1s;
     }
-    .nav-btn:hover { background: #F0E8D0; }
+    .nav-btn:hover { background: #F0EBF9; }
 
     /* Progress link */
     .text-btn {
@@ -60,12 +104,12 @@
     }
 
     /* Progress dots */
-    .dots { display: flex; gap: 6px; flex-wrap: wrap; }
+    .dots { display: flex; gap: 8px; flex-wrap: wrap; }
     .dot {
       width: 8px; height: 8px; border-radius: 50%;
       background: #E0D8C8; flex-shrink: 0;
     }
-    .dot.done { background: #3A7D44; }
+    .dot.done { background: #2F7A3B; }
     .dot.active { background: #2E6DA4; }
 
     /* Category progress bar — Per Dyslexia Expert §11.1 */
@@ -88,53 +132,103 @@
     }
     .progress-label {
       font-size: 16px;
-      color: #6B6B6B;
+      color: #5C5C5C;
       flex-shrink: 0;
     }
 
     /* Flashcard */
     .card {
-      background: #FAF3E0; border: 2px solid #E0D8C8; border-radius: 12px;
-      padding: 24px; min-height: 200px; display: flex; flex-direction: column;
+      background: #FFFFFF; border: 1px solid #D4CBBA; border-radius: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 28px 24px; min-height: 220px; display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 16px;
       cursor: pointer; user-select: none; transition: border-color 0.15s;
     }
-    .card.revealed { border-color: #2E6DA4; cursor: default; }
-    .card-word { font-size: 26px; line-height: 40px; text-align: center; }
-    .card-ipa { font-size: 16px; color: #6B6B6B; }
-    .card-english { font-size: 18px; color: #1A1A1A; }
-    .card-tap { font-size: 16px; color: #6B6B6B; }
+    .card.revealed { border: 2px solid #2E6DA4; box-shadow: 0 2px 12px rgba(46,109,164,0.15); cursor: default; }
+    .card-word { font-size: 32px; line-height: 48px; letter-spacing: 0.02em; text-align: center; color: #1A1A1A; }
+    .card-english { font-size: 18px; line-height: 29px; color: #1A1A1A; text-align: center; }
+    .card-tap { font-size: 16px; color: #5C5C5C; }
     .play-row { display: flex; gap: 8px; }
+
+    /* Phonetic chip */
+    .card-phonetic {
+      font-size: 15px;
+      line-height: 24px;
+      letter-spacing: 0.03em;
+      color: #5C3F8F;
+      background: #F0EBF9;
+      border-radius: 6px;
+      padding: 2px 10px;
+      display: inline-block;
+      font-style: normal;
+      text-align: center;
+      max-width: 100%;
+    }
+    .phonetic-star {
+      color: #B35C00;
+      font-size: 14px;
+      margin-left: 4px;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+
+    /* Articulatory hint */
+    .articulatory-hint {
+      font-size: 16px;
+      line-height: 26px;
+      color: #5C5C5C;
+      text-align: center;
+      padding: 4px 8px;
+      display: none;
+    }
+    .articulatory-hint.visible {
+      display: block;
+    }
+
+    /* Article chip */
+    .article-chip {
+      display: inline-block;
+      font-size: 15px;
+      line-height: 22px;
+      padding: 1px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .article-chip.de  { background: #E8F0F9; color: #2E6DA4; }
+    .article-chip.het { background: #EBF5EC; color: #2F7A3B; }
 
     /* Play button */
     .play-btn {
-      background: #2E6DA4; color: white; border: none; border-radius: 8px;
-      padding: 8px 16px; font-size: 18px; cursor: pointer; min-height: 48px;
+      background: #2E6DA4; color: white; border: none; border-radius: 12px;
+      padding: 10px 20px; font-size: 18px; cursor: pointer; min-height: 56px;
+      box-shadow: 0 2px 6px rgba(46,109,164,0.25);
     }
-    .play-btn.slow { background: #6B4FA0; }
+    .play-btn.slow { background: #5C3F8F; }
 
     /* Hint */
     .hint {
-      border-left: 3px solid #6B4FA0; padding: 4px 0 4px 8px;
-      font-size: 16px; color: #6B4FA0; line-height: 29px;
+      border-left: 3px solid #5C3F8F; padding: 4px 0 4px 8px;
+      font-size: 16px; color: #5C3F8F; line-height: 29px;
     }
 
     /* Outcome buttons */
     .outcome-row { display: flex; gap: 16px; }
     .missed-btn {
-      flex: 1; min-height: 48px; border: 1px solid #D94F3D;
-      border-radius: 8px; background: #FAF3E0; color: #1A1A1A;
+      flex: 1; min-height: 56px; border: 2px solid #B35C00;
+      border-radius: 12px; background: #FDF3E6; color: #1A1A1A;
       font-size: 18px; cursor: pointer;
     }
     .got-btn {
-      flex: 1; min-height: 48px; border: none;
-      border-radius: 8px; background: #3A7D44; color: #FAF3E0;
+      flex: 1; min-height: 56px; border: none;
+      border-radius: 12px; background: #2F7A3B; color: #FFFFFF;
       font-size: 18px; cursor: pointer;
     }
 
     /* Session complete */
     .complete-screen {
-      min-height: 100dvh; background: #FAF3E0;
+      min-height: 100dvh; background: #F7F2E8;
       display: flex; flex-direction: column; align-items: center;
       padding: 60px 40px 40px; gap: 24px;
     }
@@ -145,8 +239,8 @@
       padding: 4px 0; width: 100%;
     }
     .home-btn {
-      margin-top: 24px; background: #2E6DA4; color: #FAF3E0;
-      border: none; border-radius: 8px; min-height: 64px;
+      margin-top: 24px; background: #2E6DA4; color: #FFFFFF;
+      border: none; border-radius: 12px; min-height: 64px;
       width: 100%; font-size: 18px; cursor: pointer;
     }
 
@@ -154,7 +248,7 @@
     .paste-area {
       border: 1px solid #E0D8C8; border-radius: 8px;
       padding: 16px; font-size: 18px; color: #1A1A1A;
-      background: #FAF3E0; resize: vertical; width: 100%;
+      background: #F7F2E8; resize: vertical; width: 100%;
       outline: none; line-height: 29px;
     }
     .word-count { font-size: 16px; color: #6B6B6B; }
@@ -173,32 +267,33 @@
 
     /* Start button */
     .start-btn {
-      background: #2E6DA4; color: #FAF3E0; border: none; border-radius: 8px;
+      background: #2E6DA4; color: #FFFFFF; border: none; border-radius: 12px;
       min-height: 64px; font-size: 18px; cursor: pointer; margin-top: 24px; width: 100%;
+      box-shadow: 0 2px 6px rgba(46,109,164,0.25);
     }
-    .start-btn:disabled { background: #A0A0A0; cursor: not-allowed; }
+    .start-btn:disabled { background: #D4CBBA; color: #9A9A9A; cursor: not-allowed; }
 
     /* Minimal pairs */
     .pair-row { display: flex; gap: 16px; }
     .pair-card {
-      flex: 1; min-height: 96px; border: 2px solid #E0D8C8; border-radius: 12px;
-      background: #FAF3E0; display: flex; flex-direction: column;
+      flex: 1; min-height: 96px; border: 2px solid #E0D8C8; border-radius: 16px;
+      background: #FFFFFF; display: flex; flex-direction: column;
       align-items: center; justify-content: center; padding: 16px; gap: 8px;
       cursor: pointer; transition: border-color 0.15s, background 0.15s;
     }
-    .pair-card.correct { border-color: #3A7D44; background: #F0FBF1; }
-    .pair-card.incorrect { border-color: #D94F3D; background: #FDF0EF; }
-    .pair-word-a { font-size: 26px; color: #E07B39; text-align: center; }
-    .pair-word-b { font-size: 26px; color: #2E6DA4; text-align: center; }
+    .pair-card.correct { border-color: #2F7A3B; background: #EBF5EC; }
+    .pair-card.incorrect { border-color: #B35C00; background: #FDF3E6; }
+    .pair-word-a { font-size: 26px; color: #1A1A1A; text-align: center; }
+    .pair-word-b { font-size: 26px; color: #1A1A1A; text-align: center; }
     .pair-english { font-size: 16px; color: #1A1A1A; text-align: center; }
-    .focus-label { font-size: 16px; color: #6B4FA0; }
+    .focus-label { font-size: 16px; color: #5C3F8F; }
 
     /* Stats */
     .stats-row { display: flex; gap: 16px; }
     .stat-box {
-      flex: 1; border: 1px solid #E0D8C8; border-radius: 8px;
+      flex: 1; border: 1px solid #E0D8C8; border-radius: 12px;
       padding: 16px; display: flex; flex-direction: column;
-      align-items: center; gap: 4px;
+      align-items: center; gap: 4px; background: #FFFFFF;
     }
     .stat-num { font-size: 36px; color: #2E6DA4; line-height: 44px; }
     .stat-label { font-size: 16px; color: #6B6B6B; text-align: center; }
@@ -224,12 +319,12 @@
     }
     .sound-card {
       border: 1px solid #E0D8C8; border-radius: 10px;
-      padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;
-      background: #FAF3E0;
+      padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;
+      background: #FFFFFF;
     }
     .sound-card-top { display: flex; align-items: center; gap: 10px; }
     .sound-spelling { font-size: 24px; font-weight: 600; line-height: 1.2; }
-    .sound-star { font-size: 16px; color: #E07B39; }
+    .sound-star { font-size: 16px; color: #B35C00; }
     .sound-desc {
       font-size: 16px; color: #1A1A1A; line-height: 26px;
     }
@@ -266,13 +361,14 @@
 
     /* Lesson notes — list */
     .lesson-card {
-      background: #FAF3E0; border: 1px solid #E0D8C8; border-radius: 10px;
+      background: #FFFFFF; border: 1px solid #E0D8C8; border-radius: 12px;
       padding: 16px; display: flex; flex-direction: column; gap: 6px;
       text-align: left; width: 100%; cursor: pointer;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
       transition: background 0.1s, border-color 0.1s;
     }
-    .lesson-card:hover { background: #F0E8D0; border-color: #2E6DA4; }
-    .lesson-card-ref { border-left: 4px solid #6B4FA0; }
+    .lesson-card:hover { background: #F0EBF9; border-color: #2E6DA4; }
+    .lesson-card-ref { border-left: 4px solid #5C3F8F; }
     .lesson-card-title { font-size: 20px; font-weight: 600; color: #1A1A1A; }
     .lesson-card-date  { font-size: 15px; color: #6B6B6B; }
     .lesson-card-summary { font-size: 16px; color: #1A1A1A; line-height: 26px; }
@@ -315,252 +411,287 @@ const CATEGORIES = [
   {
     name: 'Greetings & Farewells',
     words: [
-      { dutch: 'Goedemorgen', english: 'Good morning' },
-      { dutch: 'Goedemiddag', english: 'Good afternoon' },
-      { dutch: 'Goedenavond', english: 'Good evening' },
-      { dutch: 'Hallo', english: 'Hello' },
-      { dutch: 'Tot ziens', english: 'Goodbye' },
-      { dutch: 'Hoe gaat het?',     english: 'How are you?' },
-      { dutch: 'Goed, dank je wel', english: 'Fine, thank you' },
+      { dutch: 'Goedemorgen', english: 'Good morning', article: null, respelling: 'KHoo-duh-MOR-khun', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ˌɣudəˈmɔrɣən/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 4, phraseChunks: null },
+      { dutch: 'Goedemiddag', english: 'Good afternoon', article: null, respelling: 'KHoo-duh-MID-dakh', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ˌɣudəˈmɪdɑx/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 4, phraseChunks: null },
+      { dutch: 'Goedenavond', english: 'Good evening', article: null, respelling: 'KHoo-dun-AH-vont', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ˌɣudənˈaːvɔnt/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 4, phraseChunks: null },
+      { dutch: 'Hallo', english: 'Hello', article: null, respelling: 'HAH-lo', audioRequired: false, articulatoryHint: '', ipa: '/ˈɦɑloː/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'Tot ziens', english: 'Goodbye', article: null, respelling: 'tot ZEENS', audioRequired: false, articulatoryHint: '', ipa: '/tɔt ˈzins/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: ['tot', 'ZEENS'] },
+      { dutch: 'Hoe gaat het?', english: 'How are you?', article: null, respelling: 'hoo KHAHT hut', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ˌɦu ˈɣaːt ɦɛt/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 3, phraseChunks: ['hoo', 'KHAHT', 'hut'] },
+      { dutch: 'Goed, dank je wel', english: 'Fine, thank you', article: null, respelling: 'KHoot DANK yuh vel', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ˌɣut ˈdɑŋk jə ˈvɛl/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 4, phraseChunks: ['KHoot', 'DANK', 'yuh', 'vel'] },
     ],
   },
   {
     name: 'Courtesy Phrases',
     words: [
-      { dutch: 'Dank je wel', english: 'Thank you (informal)' },
-      { dutch: 'Dank u wel', english: 'Thank you (formal)' },
-      { dutch: 'Alsjeblieft', english: 'Please / Here you go (informal)' },
-      { dutch: 'Alstublieft', english: 'Please / Here you go (formal)' },
-      { dutch: 'Sorry', english: 'Sorry' },
+      { dutch: 'Dank je wel', english: 'Thank you (informal)', article: null, respelling: 'DANK yuh vel', audioRequired: false, articulatoryHint: '', ipa: '/ˈdɑŋk jə ˌvɛl/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: ['DANK', 'yuh', 'vel'] },
+      { dutch: 'Dank u wel', english: 'Thank you (formal)', article: null, respelling: 'DANK uu vel', audioRequired: false, articulatoryHint: '', ipa: '/ˈdɑŋk y ˌvɛl/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: ['DANK', 'uu', 'vel'] },
+      { dutch: 'Alsjeblieft', english: 'Please / Here you go (informal)', article: null, respelling: 'al-shuh-BLEEFT', audioRequired: false, articulatoryHint: '', ipa: '/ˌɑlsjəˈbliːft/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'Alstublieft', english: 'Please / Here you go (formal)', article: null, respelling: 'al-stuu-BLEEFT', audioRequired: false, articulatoryHint: '', ipa: '/ˌɑlstyˈbliːft/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'Sorry', english: 'Sorry', article: null, respelling: 'SOR-ee', audioRequired: false, articulatoryHint: '', ipa: '/ˈsɔri/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
     ],
   },
   {
     name: 'Numbers 1–20',
     words: [
-      { dutch: 'één', english: 'one' },
-      { dutch: 'twee', english: 'two' },
-      { dutch: 'drie', english: 'three' },
-      { dutch: 'vier', english: 'four' },
-      { dutch: 'vijf', english: 'five' },
-      { dutch: 'zes', english: 'six' },
-      { dutch: 'zeven', english: 'seven' },
-      { dutch: 'acht', english: 'eight' },
-      { dutch: 'negen', english: 'nine' },
-      { dutch: 'tien', english: 'ten' },
-      { dutch: 'elf',        english: 'eleven' },
-      { dutch: 'twaalf',     english: 'twelve' },
-      { dutch: 'dertien',    english: 'thirteen' },
-      { dutch: 'veertien',   english: 'fourteen' },
-      { dutch: 'vijftien',   english: 'fifteen' },
-      { dutch: 'zestien',    english: 'sixteen' },
-      { dutch: 'zeventien',  english: 'seventeen' },
-      { dutch: 'achttien',   english: 'eighteen' },
-      { dutch: 'negentien',  english: 'nineteen' },
-      { dutch: 'twintig',    english: 'twenty' },
+      { dutch: 'één', english: 'one', article: null, respelling: 'AYN (flat — no glide)', audioRequired: false, articulatoryHint: 'Say "ay" and stop — do not let your mouth slide to "ee" at the end; hold the vowel still.', ipa: '/eːn/', trapRank: 4, soundCategory: 'ee-flat', syllableCount: 1, phraseChunks: null },
+      { dutch: 'twee', english: 'two', article: null, respelling: 'TVAY (flat)', audioRequired: false, articulatoryHint: 'Say "ay" and stop — do not let your mouth slide to "ee" at the end; hold the vowel still.', ipa: '/tweː/', trapRank: 4, soundCategory: 'ee-flat', syllableCount: 1, phraseChunks: null },
+      { dutch: 'drie', english: 'three', article: null, respelling: 'DREE', audioRequired: false, articulatoryHint: '', ipa: '/driː/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'vier', english: 'four', article: null, respelling: 'VEER', audioRequired: false, articulatoryHint: '', ipa: '/viːr/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'vijf', english: 'five', article: null, respelling: 'VAYF', audioRequired: true, articulatoryHint: 'Start at "eh" and glide to "ee" — your jaw stays mostly closed; this is not the wide English "eye".', ipa: '/vɛif/', trapRank: 6, soundCategory: 'ij-diphthong', syllableCount: 1, phraseChunks: null },
+      { dutch: 'zes', english: 'six', article: null, respelling: 'ZES', audioRequired: false, articulatoryHint: '', ipa: '/zɛs/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'zeven', english: 'seven', article: null, respelling: 'ZAY-vun', audioRequired: false, articulatoryHint: '', ipa: '/ˈzeːvən/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'acht', english: 'eight', article: null, respelling: 'AKHT (soft throat at end)', audioRequired: false, articulatoryHint: 'Let the word end with a soft breath of friction — do not cut the sound off clean like English.', ipa: '/ɑxt/', trapRank: 10, soundCategory: 'final-x', syllableCount: 1, phraseChunks: null },
+      { dutch: 'negen', english: 'nine', article: null, respelling: 'NAY-khun', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ˈneːɣən/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 2, phraseChunks: null },
+      { dutch: 'tien', english: 'ten', article: null, respelling: 'TEEN', audioRequired: false, articulatoryHint: '', ipa: '/tiːn/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'elf', english: 'eleven', article: null, respelling: 'ELF', audioRequired: false, articulatoryHint: '', ipa: '/ɛlf/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'twaalf', english: 'twelve', article: null, respelling: 'TVAHLF', audioRequired: false, articulatoryHint: '', ipa: '/tvaːlf/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'dertien', english: 'thirteen', article: null, respelling: 'DER-teen', audioRequired: false, articulatoryHint: '', ipa: '/ˈdɛrtiːn/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'veertien', english: 'fourteen', article: null, respelling: 'VAYR-teen', audioRequired: false, articulatoryHint: '', ipa: '/ˈveːrtiːn/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'vijftien', english: 'fifteen', article: null, respelling: 'VAYF-teen', audioRequired: true, articulatoryHint: 'Start at "eh" and glide to "ee" — your jaw stays mostly closed; this is not the wide English "eye".', ipa: '/ˈvɛiftiːn/', trapRank: 6, soundCategory: 'ij-diphthong', syllableCount: 2, phraseChunks: null },
+      { dutch: 'zestien', english: 'sixteen', article: null, respelling: 'ZES-teen', audioRequired: false, articulatoryHint: '', ipa: '/ˈzɛstiːn/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'zeventien', english: 'seventeen', article: null, respelling: 'ZAY-vun-teen', audioRequired: false, articulatoryHint: '', ipa: '/ˈzeːvəntiːn/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'achttien', english: 'eighteen', article: null, respelling: 'AKHT-teen', audioRequired: false, articulatoryHint: '', ipa: '/ˈɑxtiːn/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'negentien', english: 'nineteen', article: null, respelling: 'NAY-khun-teen', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ˈneːɣəntiːn/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 3, phraseChunks: null },
+      { dutch: 'twintig', english: 'twenty', article: null, respelling: 'TVIN-tikh', audioRequired: false, articulatoryHint: '', ipa: '/ˈtvɪntəx/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
     ],
   },
   {
     name: 'Numbers 21+ (Inversion)',
     words: [
-      { dutch: 'eenentwintig',  english: '21 (one-and-twenty)' },
-      { dutch: 'tweeëntwintig', english: '22 (two-and-twenty)' },
-      { dutch: 'vijfendertig',  english: '35 (five-and-thirty)' },
+      { dutch: 'eenentwintig', english: '21 (one-and-twenty)', article: null, respelling: 'ay-nun-TVIN-tikh', audioRequired: false, articulatoryHint: '', ipa: '/ˌeːnənˈtvɪntəx/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: null },
+      { dutch: 'tweeëntwintig', english: '22 (two-and-twenty)', article: null, respelling: 'tvay-un-TVIN-tikh', audioRequired: false, articulatoryHint: '', ipa: '/ˌtveːənˈtvɪntəx/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: null },
+      { dutch: 'vijfendertig', english: '35 (five-and-thirty)', article: null, respelling: 'vayf-un-DER-tikh', audioRequired: true, articulatoryHint: 'Start at "eh" and glide to "ee" — your jaw stays mostly closed; this is not the wide English "eye".', ipa: '/ˌvɛifənˈdɛrtəx/', trapRank: 6, soundCategory: 'ij-diphthong', syllableCount: 4, phraseChunks: null },
     ],
   },
   {
     name: 'Days of the Week',
     words: [
-      { dutch: 'maandag', english: 'Monday' },
-      { dutch: 'dinsdag', english: 'Tuesday' },
-      { dutch: 'woensdag', english: 'Wednesday' },
-      { dutch: 'donderdag', english: 'Thursday' },
-      { dutch: 'vrijdag', english: 'Friday' },
-      { dutch: 'zaterdag', english: 'Saturday' },
-      { dutch: 'zondag', english: 'Sunday' },
-      { dutch: 'vandaag', english: 'today' },
-      { dutch: 'morgen', english: 'tomorrow' },
+      { dutch: 'maandag', english: 'Monday', article: null, respelling: 'MAHN-dakh', audioRequired: false, articulatoryHint: 'Let the word end with a soft breath of friction — do not cut the sound off clean like English.', ipa: '/ˈmaːndɑx/', trapRank: 10, soundCategory: 'final-x', syllableCount: 2, phraseChunks: null },
+      { dutch: 'dinsdag', english: 'Tuesday', article: null, respelling: 'DINS-dakh', audioRequired: false, articulatoryHint: 'Let the word end with a soft breath of friction — do not cut the sound off clean like English.', ipa: '/ˈdɪnsdɑx/', trapRank: 10, soundCategory: 'final-x', syllableCount: 2, phraseChunks: null },
+      { dutch: 'woensdag', english: 'Wednesday', article: null, respelling: 'VOONS-dakh', audioRequired: false, articulatoryHint: 'Let the word end with a soft breath of friction — do not cut the sound off clean like English.', ipa: '/ˈvuːnsdɑx/', trapRank: 10, soundCategory: 'final-x', syllableCount: 2, phraseChunks: null },
+      { dutch: 'donderdag', english: 'Thursday', article: null, respelling: 'DON-dur-dakh', audioRequired: false, articulatoryHint: 'Let the word end with a soft breath of friction — do not cut the sound off clean like English.', ipa: '/ˈdɔndərdɑx/', trapRank: 10, soundCategory: 'final-x', syllableCount: 3, phraseChunks: null },
+      { dutch: 'vrijdag', english: 'Friday', article: null, respelling: 'VRAY-dakh', audioRequired: true, articulatoryHint: 'Start at "eh" and glide to "ee" — your jaw stays mostly closed; this is not the wide English "eye".', ipa: '/ˈvrɛidɑx/', trapRank: 6, soundCategory: 'ij-diphthong', syllableCount: 2, phraseChunks: null },
+      { dutch: 'zaterdag', english: 'Saturday', article: null, respelling: 'ZAH-tur-dakh', audioRequired: false, articulatoryHint: 'Let the word end with a soft breath of friction — do not cut the sound off clean like English.', ipa: '/ˈzaːtərdɑx/', trapRank: 10, soundCategory: 'final-x', syllableCount: 3, phraseChunks: null },
+      { dutch: 'zondag', english: 'Sunday', article: null, respelling: 'ZON-dakh', audioRequired: false, articulatoryHint: 'Let the word end with a soft breath of friction — do not cut the sound off clean like English.', ipa: '/ˈzɔndɑx/', trapRank: 10, soundCategory: 'final-x', syllableCount: 2, phraseChunks: null },
+      { dutch: 'vandaag', english: 'today', article: null, respelling: 'van-DAKH', audioRequired: false, articulatoryHint: 'Let the word end with a soft breath of friction — do not cut the sound off clean like English.', ipa: '/vɑnˈdaːx/', trapRank: 10, soundCategory: 'final-x', syllableCount: 2, phraseChunks: null },
+      { dutch: 'morgen', english: 'tomorrow', article: null, respelling: 'MOR-khun', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound — do not let it stop like an English "g".', ipa: '/ˈmɔrɣən/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 2, phraseChunks: null },
     ],
   },
   {
     name: 'Food & Drink',
     words: [
-      { dutch: 'water',   english: 'water' },
-      { dutch: 'koffie',  english: 'coffee' },
-      { dutch: 'thee',    english: 'tea' },
-      { dutch: 'melk',    english: 'milk' },
-      { dutch: 'bier',    english: 'beer' },
-      { dutch: 'brood',   english: 'bread' },
-      { dutch: 'kaas',    english: 'cheese' },
-      { dutch: 'appel',   english: 'apple' },
-      { dutch: 'vlees',   english: 'meat' },
-      { dutch: 'groente', english: 'vegetables' },
+      { dutch: 'water', english: 'water', article: 'het', respelling: 'VAH-tur', audioRequired: false, articulatoryHint: '', ipa: '/ˈvaːtər/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'koffie', english: 'coffee', article: 'de', respelling: 'KOF-ee', audioRequired: false, articulatoryHint: '', ipa: '/ˈkɔfi/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'thee', english: 'tea', article: 'de', respelling: 'TAY (flat)', audioRequired: false, articulatoryHint: 'Say "ay" and stop — do not let your mouth slide to "ee" at the end; hold the vowel still.', ipa: '/teː/', trapRank: 4, soundCategory: 'ee-flat', syllableCount: 1, phraseChunks: null },
+      { dutch: 'melk', english: 'milk', article: 'de', respelling: 'MELK', audioRequired: false, articulatoryHint: '', ipa: '/mɛlk/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'bier', english: 'beer', article: 'het', respelling: 'BEER', audioRequired: false, articulatoryHint: '', ipa: '/biːr/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'brood', english: 'bread', article: 'het', respelling: 'BROHT (flat oo — no "w" glide)', audioRequired: false, articulatoryHint: 'Say "oh" and stop — do not let your lips push forward into a "w" shape; hold the vowel still.', ipa: '/broːt/', trapRank: 5, soundCategory: 'oo-flat', syllableCount: 1, phraseChunks: null },
+      { dutch: 'kaas', english: 'cheese', article: 'de', respelling: 'KAHS', audioRequired: false, articulatoryHint: '', ipa: '/kaːs/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'appel', english: 'apple', article: 'de', respelling: 'AP-ul', audioRequired: false, articulatoryHint: '', ipa: '/ˈɑpəl/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'vlees', english: 'meat', article: 'het', respelling: 'FLAYS (flat — no "ee" glide)', audioRequired: false, articulatoryHint: 'Say "ay" and stop — do not let your mouth slide to "ee" at the end; hold the vowel still.', ipa: '/fleːs/', trapRank: 4, soundCategory: 'ee-flat', syllableCount: 1, phraseChunks: null },
+      { dutch: 'groente', english: 'vegetables', article: 'de', respelling: 'KHROON-tuh', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ˈɣruntə/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 2, phraseChunks: null },
     ],
   },
   {
     name: 'Ordering & Shopping',
     words: [
-      { dutch: 'Ik wil graag', english: 'I would like' },
-      { dutch: 'Mag ik', english: 'May I have' },
-      { dutch: 'Hoeveel kost dit?', english: 'How much does this cost?' },
-      { dutch: 'De rekening, alsjeblieft', english: 'The bill, please' },
-      { dutch: 'Dat is alles', english: "That's all" },
+      { dutch: 'Ik wil graag', english: 'I would like', article: null, respelling: 'ik vil KHRAHKH', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ɪk vɪl ˈɣraːx/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 3, phraseChunks: ['ik', 'vil', 'KHRAHKH'] },
+      { dutch: 'Mag ik', english: 'May I have', article: null, respelling: 'makh ik', audioRequired: false, articulatoryHint: '', ipa: '/mɑx ɪk/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: ['makh', 'ik'] },
+      { dutch: 'Hoeveel kost dit?', english: 'How much does this cost?', article: null, respelling: 'hoo-VAYL kost dit', audioRequired: false, articulatoryHint: '', ipa: '/ˌɦuˈveːl kɔst dɪt/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: ['hoo-VAYL', 'kost', 'dit'] },
+      { dutch: 'De rekening, alsjeblieft', english: 'The bill, please', article: null, respelling: 'duh RAY-kun-ing al-shuh-BLEEFT', audioRequired: false, articulatoryHint: "The article 'de' is a very short 'duh' — do not say 'day'.", ipa: '/də ˈreːkənɪŋ ˌɑlsjəˈbliːft/', trapRank: 9, soundCategory: 'schwa', syllableCount: 7, phraseChunks: ['duh', 'RAY-kun-ing', 'al-shuh-BLEEFT'] },
+      { dutch: 'Dat is alles', english: "That's all", article: null, respelling: 'dat is AL-us', audioRequired: false, articulatoryHint: '', ipa: '/dɑt ɪs ˈɑləs/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: ['dat', 'is', 'AL-us'] },
     ],
   },
   {
     name: 'Transport & Directions',
     words: [
-      { dutch: 'de trein',         english: 'the train' },
-      { dutch: 'de bus',           english: 'the bus' },
-      { dutch: 'de fiets',         english: 'the bicycle' },
-      { dutch: 'het station',      english: 'the station' },
-      { dutch: 'het vliegveld',    english: 'the airport' },
-      { dutch: 'links',            english: 'left' },
-      { dutch: 'rechts',           english: 'right' },
-      { dutch: 'rechtdoor',        english: 'straight ahead' },
-      { dutch: 'Hoe kom ik bij?',  english: 'How do I get to?' },
+      { dutch: 'de trein', english: 'the train', article: 'de', respelling: 'duh TRAYN', audioRequired: true, articulatoryHint: 'Start at "eh" and glide to "ee" — your jaw stays mostly closed; this is not the wide English "eye".', ipa: '/də trɛin/', trapRank: 6, soundCategory: 'ij-diphthong', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de bus', english: 'the bus', article: 'de', respelling: 'duh BUS', audioRequired: false, articulatoryHint: '', ipa: '/də bʏs/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de fiets', english: 'the bicycle', article: 'de', respelling: 'duh FEETS', audioRequired: false, articulatoryHint: '', ipa: '/də fiːts/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'het station', english: 'the station', article: 'het', respelling: 'hut stah-SHON', audioRequired: false, articulatoryHint: '', ipa: '/ɦɛt staˈʃɔn/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'het vliegveld', english: 'the airport', article: 'het', respelling: 'hut FLEEKH-felt', audioRequired: false, articulatoryHint: '', ipa: '/ɦɛt ˈfliːxfɛlt/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'links', english: 'left', article: null, respelling: 'LINKS', audioRequired: false, articulatoryHint: '', ipa: '/lɪŋks/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'rechts', english: 'right', article: null, respelling: 'REKHTS', audioRequired: false, articulatoryHint: '', ipa: '/rɛxts/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'rechtdoor', english: 'straight ahead', article: null, respelling: 'REKHT-dohr', audioRequired: false, articulatoryHint: '', ipa: '/ˈrɛxtdoːr/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'Hoe kom ik bij?', english: 'How do I get to?', article: null, respelling: 'hoo kom ik BAY', audioRequired: true, articulatoryHint: 'Start at "eh" and glide to "ee" — your jaw stays mostly closed; this is not the wide English "eye".', ipa: '/ˌɦu kɔm ɪk bɛi/', trapRank: 6, soundCategory: 'ij-diphthong', syllableCount: 4, phraseChunks: ['hoo', 'kom', 'ik', 'BAY'] },
     ],
   },
   {
     name: 'Places',
     words: [
-      { dutch: 'de supermarkt',  english: 'the supermarket' },
-      { dutch: 'het ziekenhuis', english: 'the hospital' },
-      { dutch: 'de apotheek',    english: 'the pharmacy' },
-      { dutch: 'de bibliotheek', english: 'the library' },
-      { dutch: 'de school',      english: 'the school' },
-      { dutch: 'het centrum',    english: 'the city centre' },
-      { dutch: 'de straat',      english: 'the street' },
+      { dutch: 'de supermarkt', english: 'the supermarket', article: 'de', respelling: 'duh SUU-pur-markt', audioRequired: true, articulatoryHint: 'Make an "oo" lip shape, then say "ee" without changing your lips — the tension feels odd at first.', ipa: '/də ˈsyːpərˌmɑrkt/', trapRank: 7, soundCategory: 'uu-vowel', syllableCount: 4, phraseChunks: null },
+      { dutch: 'het ziekenhuis', english: 'the hospital', article: 'het', respelling: 'hut ZEE-kun-hows', audioRequired: true, articulatoryHint: 'Round your lips tight as if to whistle, then let your tongue start open and glide forward — audio is essential for this sound.', ipa: '/ɦɛt ˈziːkənˌɦœy̑s/', trapRank: 1, soundCategory: 'ui-diphthong', syllableCount: 4, phraseChunks: null },
+      { dutch: 'de apotheek', english: 'the pharmacy', article: 'de', respelling: 'duh ah-po-TAYK', audioRequired: false, articulatoryHint: '', ipa: '/də ˌaːpoˈteːk/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: null },
+      { dutch: 'de bibliotheek', english: 'the library', article: 'de', respelling: 'duh BEE-blee-yo-TAYK', audioRequired: false, articulatoryHint: '', ipa: '/də ˌbiːblijoˈteːk/', trapRank: null, soundCategory: 'default', syllableCount: 5, phraseChunks: null },
+      { dutch: 'de school', english: 'the school', article: 'de', respelling: 'duh SKHOAL', audioRequired: true, articulatoryHint: 'Say "s" then immediately add a soft throat scrape — it is two sounds blended fast, not "sh".', ipa: '/də sxoːl/', trapRank: 8, soundCategory: 'sch-cluster', syllableCount: 2, phraseChunks: null },
+      { dutch: 'het centrum', english: 'the city centre', article: 'het', respelling: 'hut SEN-trum', audioRequired: false, articulatoryHint: '', ipa: '/ɦɛt ˈsɛntrʏm/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de straat', english: 'the street', article: 'de', respelling: 'duh STRAHT', audioRequired: false, articulatoryHint: '', ipa: '/də straːt/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
     ],
   },
   {
     name: 'Introducing Yourself',
     words: [
-      { dutch: 'Ik heet', english: 'My name is' },
-      { dutch: 'Ik kom uit', english: 'I come from' },
-      { dutch: 'Ik spreek een beetje Nederlands', english: 'I speak a little Dutch' },
-      { dutch: 'Hoe heet jij?', english: "What's your name?" },
-      { dutch: 'Aangenaam', english: 'Pleased to meet you' },
+      { dutch: 'Ik heet', english: 'My name is', article: null, respelling: 'ik HAYT', audioRequired: false, articulatoryHint: '', ipa: '/ɪk heːt/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: ['ik', 'HAYT'] },
+      { dutch: 'Ik kom uit', english: 'I come from', article: null, respelling: 'ik kom OWT', audioRequired: true, articulatoryHint: 'Round your lips tight as if to whistle, then let your tongue start open and glide forward — audio is essential for this sound.', ipa: '/ɪk kɔm œy̑t/', trapRank: 1, soundCategory: 'ui-diphthong', syllableCount: 3, phraseChunks: ['ik', 'kom', 'OWT'] },
+      { dutch: 'Ik spreek een beetje Nederlands', english: 'I speak a little Dutch', article: null, respelling: 'ik sprayk un BAY-chuh NAY-dur-lants', audioRequired: false, articulatoryHint: '', ipa: '/ɪk spreːk ən ˈbeːtjə ˈneːdərˌlɑnts/', trapRank: null, soundCategory: 'default', syllableCount: 8, phraseChunks: ['ik', 'sprayk', 'un', 'BAY-chuh', 'NAY-dur-lants'] },
+      { dutch: 'Hoe heet jij?', english: "What's your name?", article: null, respelling: 'hoo HAYT yay', audioRequired: true, articulatoryHint: 'Start at "eh" and glide to "ee" — your jaw stays mostly closed; this is not the wide English "eye".', ipa: '/ˌɦu ˈheːt jɛi/', trapRank: 6, soundCategory: 'ij-diphthong', syllableCount: 3, phraseChunks: ['hoo', 'HAYT', 'yay'] },
+      { dutch: 'Aangenaam', english: 'Pleased to meet you', article: null, respelling: 'ahn-khuh-NAHM', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound — do not let it stop like an English "g".', ipa: '/ˌaːnɣəˈnaːm/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 3, phraseChunks: null },
     ],
   },
   {
     name: 'Describing Things',
     words: [
-      { dutch: 'groot', english: 'big' },
-      { dutch: 'klein', english: 'small' },
-      { dutch: 'lekker', english: 'tasty / nice' },
-      { dutch: 'mooi', english: 'beautiful' },
-      { dutch: 'duur', english: 'expensive' },
+      { dutch: 'groot', english: 'big', article: null, respelling: 'KHROHT', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ɣroːt/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 1, phraseChunks: null },
+      { dutch: 'klein', english: 'small', article: null, respelling: 'KLAYN', audioRequired: true, articulatoryHint: 'Start at "eh" and glide to "ee" — your jaw stays mostly closed; this is not the wide English "eye".', ipa: '/klɛin/', trapRank: 6, soundCategory: 'ij-diphthong', syllableCount: 1, phraseChunks: null },
+      { dutch: 'lekker', english: 'tasty / nice', article: null, respelling: 'LEK-ur', audioRequired: false, articulatoryHint: '', ipa: '/ˈlɛkər/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'mooi', english: 'beautiful', article: null, respelling: 'MOH-ee', audioRequired: false, articulatoryHint: '', ipa: '/moːi/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'duur', english: 'expensive', article: null, respelling: 'DUUR', audioRequired: true, articulatoryHint: 'Make an "oo" lip shape, then say "ee" without changing your lips — the tension feels odd at first.', ipa: '/dyːr/', trapRank: 7, soundCategory: 'uu-vowel', syllableCount: 1, phraseChunks: null },
     ],
   },
   {
     name: 'Feelings & States',
     words: [
-      { dutch: 'Ik ben moe', english: 'I am tired' },
-      { dutch: 'Ik ben ziek', english: 'I am ill' },
-      { dutch: 'Ik ben blij', english: 'I am happy' },
-      { dutch: 'Ik heb honger', english: 'I am hungry' },
-      { dutch: 'Het gaat goed', english: "It's going well" },
-      { dutch: 'Ik heb dorst', english: 'I am thirsty' },
+      { dutch: 'Ik ben moe', english: 'I am tired', article: null, respelling: 'ik ben MOO', audioRequired: false, articulatoryHint: '', ipa: '/ɪk bɛn muː/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: ['ik', 'ben', 'MOO'] },
+      { dutch: 'Ik ben ziek', english: 'I am ill', article: null, respelling: 'ik ben ZEEK', audioRequired: false, articulatoryHint: '', ipa: '/ɪk bɛn ziːk/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: ['ik', 'ben', 'ZEEK'] },
+      { dutch: 'Ik ben blij', english: 'I am happy', article: null, respelling: 'ik ben BLAY', audioRequired: true, articulatoryHint: 'Start at "eh" and glide to "ee" — your jaw stays mostly closed; this is not the wide English "eye".', ipa: '/ɪk bɛn blɛi/', trapRank: 6, soundCategory: 'ij-diphthong', syllableCount: 3, phraseChunks: ['ik', 'ben', 'BLAY'] },
+      { dutch: 'Ik heb honger', english: 'I am hungry', article: null, respelling: 'ik hep HON-ur', audioRequired: false, articulatoryHint: '', ipa: '/ɪk ɦɛb ˈɦɔŋər/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: ['ik', 'hep', 'HON-ur'] },
+      { dutch: 'Het gaat goed', english: "It's going well", article: null, respelling: 'hut KHAHT KHOOT', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ɦɛt ɣaːt ɣut/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 3, phraseChunks: ['hut', 'KHAHT', 'KHOOT'] },
+      { dutch: 'Ik heb dorst', english: 'I am thirsty', article: null, respelling: 'ik hep DORST', audioRequired: false, articulatoryHint: '', ipa: '/ɪk ɦɛb dɔrst/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: ['ik', 'hep', 'DORST'] },
     ],
   },
   {
     name: 'Question Words',
     words: [
-      { dutch: 'Wat?', english: 'What?' },
-      { dutch: 'Waar?', english: 'Where?' },
-      { dutch: 'Wanneer?', english: 'When?' },
-      { dutch: 'Wie?', english: 'Who?' },
-      { dutch: 'Hoeveel?', english: 'How many / much?' },
+      { dutch: 'Wat?', english: 'What?', article: null, respelling: 'VAT', audioRequired: false, articulatoryHint: '', ipa: '/vɑt/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'Waar?', english: 'Where?', article: null, respelling: 'VAHR', audioRequired: false, articulatoryHint: '', ipa: '/vaːr/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'Wanneer?', english: 'When?', article: null, respelling: 'van-AYR', audioRequired: false, articulatoryHint: '', ipa: '/vɑˈneːr/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'Wie?', english: 'Who?', article: null, respelling: 'VEE', audioRequired: false, articulatoryHint: '', ipa: '/viː/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'Hoeveel?', english: 'How many / much?', article: null, respelling: 'hoo-VAYL', audioRequired: false, articulatoryHint: '', ipa: '/ɦuˈveːl/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
     ],
   },
   // ── LESSON 1 ─────────────────────────────────────────────
   {
     name: 'Les 1: Thuis (Home)',
     words: [
-      { dutch: 'het huis', english: 'the house' },
-      { dutch: 'de kamer', english: 'the room' },
-      { dutch: 'de tafel', english: 'the table' },
-      { dutch: 'de stoel', english: 'the chair' },
-      { dutch: 'het bed', english: 'the bed' },
-      { dutch: 'de deur', english: 'the door' },
-      { dutch: 'het raam', english: 'the window' },
-      { dutch: 'de keuken', english: 'the kitchen' },
-      { dutch: 'de badkamer', english: 'the bathroom' },
-      { dutch: 'de lamp', english: 'the lamp' },
+      { dutch: 'het huis', english: 'the house', article: 'het', respelling: 'hut HOWS', audioRequired: true, articulatoryHint: 'Round your lips tight as if to whistle, then let your tongue start open and glide forward — audio is essential for this sound.', ipa: '/ɦɛt ɦœy̑s/', trapRank: 1, soundCategory: 'ui-diphthong', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de kamer', english: 'the room', article: 'de', respelling: 'duh KAH-mur', audioRequired: false, articulatoryHint: "Say 'uh' — very quickly and softly; 'de' sounds like the 'a' in 'about', not like 'day'.", ipa: '/də ˈkaːmər/', trapRank: 9, soundCategory: 'schwa', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de tafel', english: 'the table', article: 'de', respelling: 'duh TAH-ful', audioRequired: false, articulatoryHint: "Say 'uh' — very quickly and softly; 'de' sounds like the 'a' in 'about', not like 'day'.", ipa: '/də ˈtaːfəl/', trapRank: 9, soundCategory: 'schwa', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de stoel', english: 'the chair', article: 'de', respelling: 'duh STOOL', audioRequired: false, articulatoryHint: '', ipa: '/də stuːl/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'het bed', english: 'the bed', article: 'het', respelling: 'hut BET', audioRequired: false, articulatoryHint: '', ipa: '/ɦɛt bɛt/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de deur', english: 'the door', article: 'de', respelling: 'duh DUR', audioRequired: true, articulatoryHint: "Shape your lips into an 'oo' circle, then say 'ay' without moving your lips — keep both at once.", ipa: '/də døːr/', trapRank: 3, soundCategory: 'eu-vowel', syllableCount: 2, phraseChunks: null },
+      { dutch: 'het raam', english: 'the window', article: 'het', respelling: 'hut RAHM', audioRequired: false, articulatoryHint: '', ipa: '/ɦɛt raːm/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de keuken', english: 'the kitchen', article: 'de', respelling: 'duh KUR-kun', audioRequired: true, articulatoryHint: "Shape your lips into an 'oo' circle, then say 'ay' without moving your lips — keep both at once.", ipa: '/də ˈkøːkən/', trapRank: 3, soundCategory: 'eu-vowel', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de badkamer', english: 'the bathroom', article: 'de', respelling: 'duh BAT-kah-mur', audioRequired: false, articulatoryHint: '', ipa: '/də ˈbɑtˌkaːmər/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: null },
+      { dutch: 'de lamp', english: 'the lamp', article: 'de', respelling: 'duh LAMP', audioRequired: false, articulatoryHint: '', ipa: '/də lɑmp/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
     ],
   },
   {
     name: 'Les 1: Familie (Family)',
     words: [
-      { dutch: 'de moeder', english: 'the mother' },
-      { dutch: 'de vader', english: 'the father' },
-      { dutch: 'de broer', english: 'the brother' },
-      { dutch: 'de zus', english: 'the sister' },
-      { dutch: 'de oma', english: 'the grandmother' },
-      { dutch: 'de opa', english: 'the grandfather' },
-      { dutch: 'het kind', english: 'the child' },
-      { dutch: 'de baby', english: 'the baby' },
-      { dutch: 'de vriend', english: 'the friend / boyfriend' },
-      { dutch: 'de vriendin', english: 'the female friend / girlfriend' },
+      { dutch: 'de moeder', english: 'the mother', article: 'de', respelling: 'duh MOO-dur', audioRequired: false, articulatoryHint: '', ipa: '/də ˈmudər/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de vader', english: 'the father', article: 'de', respelling: 'duh VAH-dur', audioRequired: false, articulatoryHint: '', ipa: '/də ˈvaːdər/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de broer', english: 'the brother', article: 'de', respelling: 'duh BROOR', audioRequired: false, articulatoryHint: '', ipa: '/də bruːr/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de zus', english: 'the sister', article: 'de', respelling: 'duh ZUS', audioRequired: false, articulatoryHint: '', ipa: '/də zʏs/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de oma', english: 'the grandmother', article: 'de', respelling: 'duh OH-mah', audioRequired: false, articulatoryHint: '', ipa: '/də ˈoːmaː/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de opa', english: 'the grandfather', article: 'de', respelling: 'duh OH-pah', audioRequired: false, articulatoryHint: '', ipa: '/də ˈoːpaː/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'het kind', english: 'the child', article: 'het', respelling: 'hut KINT', audioRequired: false, articulatoryHint: '', ipa: '/ɦɛt kɪnt/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de baby', english: 'the baby', article: 'de', respelling: 'duh BAY-bee', audioRequired: false, articulatoryHint: '', ipa: '/də ˈbeːbi/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de vriend', english: 'the friend / boyfriend', article: 'de', respelling: 'duh VREENT', audioRequired: false, articulatoryHint: '', ipa: '/də vriːnt/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de vriendin', english: 'the female friend / girlfriend', article: 'de', respelling: 'duh vreent-DIN', audioRequired: false, articulatoryHint: '', ipa: '/də vriːnˈdɪn/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
     ],
   },
   {
     name: 'Les 1: Klanken (Sound Examples)',
     words: [
-      { dutch: 'de maan', english: 'the moon' },
-      { dutch: 'de fiets', english: 'the bicycle' },
-      { dutch: 'de boom', english: 'the tree' },
-      { dutch: 'de kat', english: 'the cat' },
-      { dutch: 'de beer', english: 'the bear' },
-      { dutch: 'de zon', english: 'the sun' },
-      { dutch: 'de muur', english: 'the wall' },
-      { dutch: 'de vis', english: 'the fish' },
-      { dutch: 'de steen', english: 'the stone' },
-      { dutch: 'de jas', english: 'the coat' },
-      { dutch: 'de auto', english: 'the car' },
-      { dutch: 'oud', english: 'old' },
-      { dutch: 'lach', english: 'laugh / smile' },
-      { dutch: 'lang', english: 'long / tall' },
-      { dutch: 'de bank', english: 'the bank / sofa' },
-      { dutch: 'de school', english: 'the school' },
-      { dutch: 'de sjaal', english: 'the scarf' },
-      { dutch: 'nieuw', english: 'new' },
+      { dutch: 'de maan', english: 'the moon', article: 'de', respelling: 'duh MAHN', audioRequired: false, articulatoryHint: '', ipa: '/də maːn/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de fiets', english: 'the bicycle', article: 'de', respelling: 'duh FEETS', audioRequired: false, articulatoryHint: '', ipa: '/də fiːts/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de boom', english: 'the tree', article: 'de', respelling: 'duh BOHM (flat oo)', audioRequired: false, articulatoryHint: 'Say "oh" and stop — do not let your lips push forward into a "w" shape; hold the vowel still.', ipa: '/də boːm/', trapRank: 5, soundCategory: 'oo-flat', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de kat', english: 'the cat', article: 'de', respelling: 'duh KAT', audioRequired: false, articulatoryHint: '', ipa: '/də kɑt/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de beer', english: 'the bear', article: 'de', respelling: 'duh BAYR (flat ee)', audioRequired: false, articulatoryHint: 'Say "ay" and stop — do not let your mouth slide to "ee" at the end; hold the vowel still.', ipa: '/də beːr/', trapRank: 4, soundCategory: 'ee-flat', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de zon', english: 'the sun', article: 'de', respelling: 'duh ZON', audioRequired: false, articulatoryHint: '', ipa: '/də zɔn/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de muur', english: 'the wall', article: 'de', respelling: 'duh MUUR', audioRequired: true, articulatoryHint: 'Make an "oo" lip shape, then say "ee" without changing your lips — the tension feels odd at first.', ipa: '/də myːr/', trapRank: 7, soundCategory: 'uu-vowel', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de vis', english: 'the fish', article: 'de', respelling: 'duh VIS', audioRequired: false, articulatoryHint: '', ipa: '/də vɪs/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de steen', english: 'the stone', article: 'de', respelling: 'duh STAYN (flat)', audioRequired: false, articulatoryHint: 'Say "ay" and stop — do not let your mouth slide to "ee" at the end; hold the vowel still.', ipa: '/də steːn/', trapRank: 4, soundCategory: 'ee-flat', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de jas', english: 'the coat', article: 'de', respelling: 'duh YAS', audioRequired: false, articulatoryHint: '', ipa: '/də jɑs/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de auto', english: 'the car', article: 'de', respelling: 'duh OW-toh', audioRequired: false, articulatoryHint: '', ipa: '/də ˈɑutoː/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'oud', english: 'old', article: null, respelling: 'OWT', audioRequired: false, articulatoryHint: '', ipa: '/ɑut/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'lach', english: 'laugh / smile', article: null, respelling: 'LAKH (throat scrape at end)', audioRequired: false, articulatoryHint: 'Let the word end with a soft breath of friction — do not cut the sound off clean like English.', ipa: '/lɑx/', trapRank: 10, soundCategory: 'final-x', syllableCount: 1, phraseChunks: null },
+      { dutch: 'lang', english: 'long / tall', article: null, respelling: 'LANG', audioRequired: false, articulatoryHint: '', ipa: '/lɑŋ/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'de bank', english: 'the bank / sofa', article: 'de', respelling: 'duh BANK', audioRequired: false, articulatoryHint: '', ipa: '/də bɑŋk/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de school', english: 'the school', article: 'de', respelling: 'duh SKHOAL', audioRequired: true, articulatoryHint: 'Say "s" then immediately add a soft throat scrape — it is two sounds blended fast, not "sh".', ipa: '/də sxoːl/', trapRank: 8, soundCategory: 'sch-cluster', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de sjaal', english: 'the scarf', article: 'de', respelling: 'duh SHAHL', audioRequired: false, articulatoryHint: '', ipa: '/də ʃaːl/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'nieuw', english: 'new', article: null, respelling: 'NEE-oo', audioRequired: false, articulatoryHint: '', ipa: '/niːu/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
     ],
   },
   {
     name: 'Les 1: Zinnen (Phrases)',
     words: [
-      { dutch: 'Ja', english: 'Yes' },
-      { dutch: 'Nee', english: 'No' },
-      { dutch: 'Soms', english: 'Sometimes' },
-      { dutch: 'Mag ik pinnen?', english: 'Can I pay by card?' },
-      { dutch: 'Misschien',            english: 'Maybe' },
-      { dutch: 'Ik weet het niet',     english: "I don't know" },
-      { dutch: 'Kunt u dat herhalen?', english: 'Can you repeat that?' },
+      { dutch: 'Ja', english: 'Yes', article: null, respelling: 'YAH', audioRequired: false, articulatoryHint: '', ipa: '/jaː/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'Nee', english: 'No', article: null, respelling: 'NAY (flat)', audioRequired: false, articulatoryHint: 'Say "ay" and stop — do not let your mouth slide to "ee" at the end; hold the vowel still.', ipa: '/neː/', trapRank: 4, soundCategory: 'ee-flat', syllableCount: 1, phraseChunks: null },
+      { dutch: 'Soms', english: 'Sometimes', article: null, respelling: 'SOMS', audioRequired: false, articulatoryHint: '', ipa: '/sɔms/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'Mag ik pinnen?', english: 'Can I pay by card?', article: null, respelling: 'makh ik PIN-nun', audioRequired: false, articulatoryHint: '', ipa: '/mɑx ɪk ˈpɪnən/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: ['makh', 'ik', 'PIN-nun'] },
+      { dutch: 'Misschien', english: 'Maybe', article: null, respelling: 'mis-SKHEEN', audioRequired: true, articulatoryHint: 'Say "s" then immediately add a soft throat scrape — it is two sounds blended fast, not "sh".', ipa: '/mɪˈsxiːn/', trapRank: 8, soundCategory: 'sch-cluster', syllableCount: 2, phraseChunks: null },
+      { dutch: 'Ik weet het niet', english: "I don't know", article: null, respelling: 'ik vayt hut NEET', audioRequired: false, articulatoryHint: '', ipa: '/ɪk veːt ɦɛt niːt/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: ['ik', 'vayt', 'hut', 'NEET'] },
+      { dutch: 'Kunt u dat herhalen?', english: 'Can you repeat that?', article: null, respelling: 'kunt uu dat her-HAH-lun', audioRequired: false, articulatoryHint: '', ipa: '/kʏnt y dɑt ɦɛrˈhaːlən/', trapRank: null, soundCategory: 'default', syllableCount: 6, phraseChunks: ['kunt', 'uu', 'dat', 'her-HAH-lun'] },
     ],
   },
   {
     name: 'Kleuren (Colours)',
     words: [
-      { dutch: 'rood',   english: 'red' },
-      { dutch: 'blauw',  english: 'blue' },
-      { dutch: 'groen',  english: 'green' },
-      { dutch: 'geel',   english: 'yellow' },
-      { dutch: 'wit',    english: 'white' },
-      { dutch: 'zwart',  english: 'black' },
-      { dutch: 'oranje', english: 'orange' },
-      { dutch: 'grijs',  english: 'grey' },
+      { dutch: 'rood', english: 'red', article: null, respelling: 'ROHT (flat oo)', audioRequired: false, articulatoryHint: 'Say "oh" and stop — do not let your lips push forward into a "w" shape; hold the vowel still.', ipa: '/roːt/', trapRank: 5, soundCategory: 'oo-flat', syllableCount: 1, phraseChunks: null },
+      { dutch: 'blauw', english: 'blue', article: null, respelling: 'BLOW (rhymes with "how")', audioRequired: false, articulatoryHint: '', ipa: '/blɑu/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'groen', english: 'green', article: null, respelling: 'KHROON', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ɣrun/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 1, phraseChunks: null },
+      { dutch: 'geel', english: 'yellow', article: null, respelling: 'KHAYL (flat ee)', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ɣeːl/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 1, phraseChunks: null },
+      { dutch: 'wit', english: 'white', article: null, respelling: 'VIT', audioRequired: false, articulatoryHint: '', ipa: '/vɪt/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'zwart', english: 'black', article: null, respelling: 'ZVART', audioRequired: false, articulatoryHint: '', ipa: '/zvɑrt/', trapRank: null, soundCategory: 'default', syllableCount: 1, phraseChunks: null },
+      { dutch: 'oranje', english: 'orange', article: null, respelling: 'oh-RAN-yuh', audioRequired: false, articulatoryHint: '', ipa: '/oːˈrɑnjə/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'grijs', english: 'grey', article: null, respelling: 'KHRAYS', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ɣrɛis/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 1, phraseChunks: null },
+    ],
+  },
+  // ── LESSON 2 ─────────────────────────────────────────────
+  {
+    name: 'Les 2: Café',
+    words: [
+      // Drankjes
+      { dutch: 'de koffie', english: 'coffee', article: 'de', respelling: 'duh KOF-ee', audioRequired: false, articulatoryHint: '', ipa: '/də ˈkɔfi/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de cappuccino', english: 'cappuccino', article: 'de', respelling: 'duh kap-oo-CHEE-noh', audioRequired: false, articulatoryHint: '', ipa: '/də ˌkɑpuˈtʃiːnoː/', trapRank: null, soundCategory: 'default', syllableCount: 5, phraseChunks: null },
+      { dutch: 'de thee', english: 'tea', article: 'de', respelling: 'duh TAY (flat)', audioRequired: false, articulatoryHint: 'Say "ay" and stop — do not let your mouth slide to "ee" at the end; hold the vowel still.', ipa: '/də teː/', trapRank: 4, soundCategory: 'ee-flat', syllableCount: 2, phraseChunks: null },
+      { dutch: 'de latte', english: 'latte', article: 'de', respelling: 'duh LAT-uh', audioRequired: false, articulatoryHint: '', ipa: '/də ˈlɑtə/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de frisdrank', english: 'soft drink', article: 'de', respelling: 'duh FRIZ-drank', audioRequired: false, articulatoryHint: '', ipa: '/də ˈfrɪzdrɑŋk/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'het water', english: 'water', article: 'het', respelling: 'hut VAH-tur', audioRequired: false, articulatoryHint: '', ipa: '/ɦɛt ˈvaːtər/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      // Eten
+      { dutch: 'het gebak', english: 'pastry / cake', article: 'het', respelling: 'hut khuh-BAK', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ɦɛt ɣəˈbɑk/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de appeltaart', english: 'apple pie', article: 'de', respelling: 'duh AP-ul-tahrt', audioRequired: false, articulatoryHint: '', ipa: '/də ˈɑpəlˌtaːrt/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: null },
+      { dutch: 'het broodje', english: 'sandwich', article: 'het', respelling: 'hut BROH-chuh', audioRequired: false, articulatoryHint: 'The -tje ending is a soft "ch" — lighter and further forward than English "ch" in "church"; the oo is flat, do not glide.', ipa: '/ɦɛt ˈbroːtjə/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de croissant', english: 'croissant', article: 'de', respelling: 'duh kwas-SAHN', audioRequired: false, articulatoryHint: '', ipa: '/də krwɑˈsɑ̃/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      // In het café
+      { dutch: 'het café', english: 'café', article: 'het', respelling: 'hut kah-FAY', audioRequired: false, articulatoryHint: '', ipa: '/ɦɛt kaːˈfeː/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de menukaart', english: 'menu', article: 'de', respelling: 'duh MAY-nuu-kahrt', audioRequired: true, articulatoryHint: 'Make an "oo" lip shape, then say "ee" without changing your lips — the tension feels odd at first.', ipa: '/də ˈmɛnyˌkaːrt/', trapRank: 7, soundCategory: 'uu-vowel', syllableCount: 4, phraseChunks: null },
+      { dutch: 'de ober', english: 'waiter', article: 'de', respelling: 'duh OH-bur', audioRequired: false, articulatoryHint: '', ipa: '/də ˈoːbər/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'de serveerster', english: 'waitress', article: 'de', respelling: 'duh ser-VAYR-stur', audioRequired: false, articulatoryHint: '', ipa: '/də sɛrˈveːrstər/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: null },
+      { dutch: 'de bestelling', english: 'order', article: 'de', respelling: 'duh buh-STEL-ing', audioRequired: false, articulatoryHint: '', ipa: '/də bəˈstɛlɪŋ/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: null },
+      { dutch: 'de rekening', english: 'bill', article: 'de', respelling: 'duh RAY-kun-ing', audioRequired: false, articulatoryHint: '', ipa: '/də ˈreːkənɪŋ/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: null },
+      // Werkwoorden
+      { dutch: 'bestellen', english: 'to order', article: null, respelling: 'buh-STEL-un', audioRequired: false, articulatoryHint: '', ipa: '/bəˈstɛlən/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'drinken', english: 'to drink', article: null, respelling: 'DRINK-un', audioRequired: false, articulatoryHint: '', ipa: '/ˈdrɪŋkən/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'eten', english: 'to eat', article: null, respelling: 'AY-tun', audioRequired: false, articulatoryHint: '', ipa: '/ˈeːtən/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'betalen', english: 'to pay', article: null, respelling: 'buh-TAH-lun', audioRequired: false, articulatoryHint: '', ipa: '/bəˈtaːlən/', trapRank: null, soundCategory: 'default', syllableCount: 3, phraseChunks: null },
+      { dutch: 'kiezen', english: 'to choose', article: null, respelling: 'KEE-zun', audioRequired: false, articulatoryHint: '', ipa: '/ˈkiːzən/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      // Handige woorden
+      { dutch: 'graag', english: 'gladly / please (after verb)', article: null, respelling: 'KHRAHKH', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ɣraːx/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 1, phraseChunks: null },
+      { dutch: 'lekker', english: 'tasty / nice', article: null, respelling: 'LEK-ur', audioRequired: false, articulatoryHint: '', ipa: '/ˈlɛkər/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      { dutch: 'nog', english: 'another / more', article: null, respelling: 'NOKH (soft throat at end)', audioRequired: false, articulatoryHint: 'Let the word end with a soft breath of friction — do not cut the sound off clean like English.', ipa: '/nɔx/', trapRank: 10, soundCategory: 'final-x', syllableCount: 1, phraseChunks: null },
+      { dutch: 'contant', english: 'cash', article: null, respelling: 'kon-TANT', audioRequired: false, articulatoryHint: '', ipa: '/kɔnˈtɑnt/', trapRank: null, soundCategory: 'default', syllableCount: 2, phraseChunks: null },
+      // Zinnen
+      { dutch: 'Mag ik de menukaart?', english: 'May I have the menu?', article: null, respelling: 'makh ik duh MAY-nuu-kahrt', audioRequired: true, articulatoryHint: 'Make an "oo" lip shape, then say "ee" without changing your lips — the tension feels odd at first.', ipa: '/mɑx ɪk də ˈmɛnyˌkaːrt/', trapRank: 7, soundCategory: 'uu-vowel', syllableCount: 6, phraseChunks: ['makh', 'ik', 'duh', 'MAY-nuu-kahrt'] },
+      { dutch: 'Ik wil graag een koffie.', english: 'I would like a coffee.', article: null, respelling: 'ik vil KHRAHKH un KOF-ee', audioRequired: true, articulatoryHint: 'Make a gentle throat-clearing sound before speaking — do not let it stop like an English "g".', ipa: '/ɪk vɪl ˈɣraːx ən ˈkɔfi/', trapRank: 2, soundCategory: 'g-initial', syllableCount: 6, phraseChunks: ['ik', 'vil', 'KHRAHKH', 'un', 'KOF-ee'] },
+      { dutch: 'Wat raadt u aan?', english: 'What do you recommend?', article: null, respelling: 'vat raht uu AHN', audioRequired: false, articulatoryHint: '', ipa: '/vɑt raːt y aːn/', trapRank: null, soundCategory: 'default', syllableCount: 4, phraseChunks: ['vat', 'raht', 'uu', 'AHN'] },
+      { dutch: 'Dat lijkt me lekker.', english: 'That sounds tasty to me.', article: null, respelling: 'dat LAYKT muh LEK-ur', audioRequired: true, articulatoryHint: 'Start at "eh" and glide to "ee" — your jaw stays mostly closed; this is not the wide English "eye".', ipa: '/dɑt lɛikt mə ˈlɛkər/', trapRank: 6, soundCategory: 'ij-diphthong', syllableCount: 5, phraseChunks: ['dat', 'LAYKT', 'muh', 'LEK-ur'] },
+      { dutch: 'Mag ik de rekening, alstublieft?', english: 'May I have the bill, please?', article: null, respelling: 'makh ik duh RAY-kun-ing al-stuu-BLEEFT', audioRequired: false, articulatoryHint: "The article 'de' is a very short 'duh' — do not say 'day'.", ipa: '/mɑx ɪk də ˈreːkənɪŋ ˌɑlstyˈbliːft/', trapRank: 9, soundCategory: 'schwa', syllableCount: 9, phraseChunks: ['makh', 'ik', 'duh', 'RAY-kun-ing', 'al-stuu-BLEEFT'] },
+      { dutch: 'Kan ik contant betalen?', english: 'Can I pay with cash?', article: null, respelling: 'kan ik kon-TANT buh-TAH-lun', audioRequired: false, articulatoryHint: '', ipa: '/kɑn ɪk kɔnˈtɑnt bəˈtaːlən/', trapRank: null, soundCategory: 'default', syllableCount: 7, phraseChunks: ['kan', 'ik', 'kon-TANT', 'buh-TAH-lun'] },
     ],
   },
 ];
-
-// ── ADD LESSON 2 BELOW WHEN READY (copy the block above) ──
-// {
-//   name: 'Les 2: ...',
-//   words: [
-//     { dutch: '...', english: '...' },
-//   ],
-// },
 
 const MINIMAL_PAIRS = [
   { word_a: 'man',   word_b: 'maan',  english_a: 'man',        english_b: 'moon',              contrast: 'short a vs long aa',  tricky_sound: 'a vs aa' },
@@ -658,16 +789,87 @@ const LESSONS = [
       },
     ],
   },
-  // ── ADD LESSON 2 BELOW WHEN READY (copy the block above) ──
-  // {
-  //   id: 2,
-  //   date: 'YYYY-MM-DD',
-  //   title: '...',
-  //   summary: '...',
-  //   sections: [
-  //     { heading: '...', body: '...' },
-  //   ],
-  // },
+  // ── LESSON 2 ─────────────────────────────────────────────
+  {
+    id: 2,
+    date: '2026-05-22',
+    title: 'Zitten in een café',
+    summary: 'Café vocabulary and ordering drinks and food in Dutch. Covered drinks, food, café items, key verbs (bestellen, betalen, kiezen), and a full dialogue from arriving to paying the bill.',
+    sections: [
+      {
+        heading: 'Words — Drankjes (Drinks)',
+        items: [
+          'de koffie — coffee',
+          'de cappuccino — cappuccino',
+          'de thee — tea',
+          'de latte — latte',
+          'de frisdrank — soft drink',
+          'het water — water',
+        ],
+      },
+      {
+        heading: 'Words — Eten (Food)',
+        items: [
+          'het gebak — pastry / cake',
+          'de appeltaart — apple pie',
+          'het broodje — sandwich',
+          'de croissant — croissant',
+          'de lunch — lunch',
+          'de snack — snack',
+        ],
+      },
+      {
+        heading: 'Words — In het café',
+        items: [
+          'het café — café',
+          'de tafel — table',
+          'de stoel — chair',
+          'de menukaart — menu',
+          'de ober — waiter',
+          'de serveerster — waitress',
+          'de bestelling — order',
+          'de rekening — bill',
+        ],
+      },
+      {
+        heading: 'Werkwoorden (Verbs)',
+        items: [
+          'bestellen — to order',
+          'drinken — to drink',
+          'eten — to eat',
+          'betalen — to pay',
+          'kiezen — to choose',
+        ],
+      },
+      {
+        heading: 'Handige woorden',
+        items: [
+          'alsjeblieft / alstublieft — please / here you go (informal / formal)',
+          'graag — gladly / please (goes after the verb: Ik wil graag)',
+          'lekker — tasty / nice',
+          'nog — another / more (Nog een koffie? — Another coffee?)',
+          'contant — cash',
+        ],
+      },
+      {
+        heading: 'Phrases',
+        items: [
+          'Mag ik de menukaart? — May I have the menu?',
+          'Ik wil graag een koffie. — I would like a coffee.',
+          'Wat raadt u aan? — What do you recommend?',
+          'Heeft u ook appeltaart? — Do you also have apple pie?',
+          'Dat lijkt me lekker. — That sounds tasty to me.',
+          'Mag ik de rekening, alstublieft? — May I have the bill, please?',
+          'Kan ik contant betalen? — Can I pay with cash?',
+          'Bedankt voor de service. — Thank you for the service.',
+        ],
+      },
+      {
+        heading: 'Notes',
+        body: 'Key grammar: "graag" goes after the verb — "Ik wil graag" not "Ik graag wil". Use "alsjeblieft" (informal) with people you know and "alstublieft" (formal) with strangers and in shops.\n\nUseful server phrases to recognise: "Eet smakelijk" = enjoy your meal. "Komt eraan" = coming right up. "Was alles naar wens?" = Was everything to your liking? "Een fijne dag verder" = have a nice rest of your day.',
+      },
+    ],
+  },
 
   // ── REFERENCE GUIDE ─────────────────────────────────────
   {
@@ -811,16 +1013,16 @@ const SOUNDS = [
 // ============================================================
 const COLOR_PATTERNS = [
   // 3-char first
-  { p: 'sch', c: '#D94F3D' }, { p: 'tje', c: '#D94F3D' },
-  // 2-char diphthongs (orange)
-  { p: 'ui', c: '#E07B39' }, { p: 'ij', c: '#E07B39' }, { p: 'ei', c: '#E07B39' },
-  { p: 'ou', c: '#E07B39' }, { p: 'au', c: '#E07B39' }, { p: 'eu', c: '#E07B39' },
+  { p: 'sch', c: '#C0392B' }, { p: 'tje', c: '#C0392B' },
+  // 2-char diphthongs (amber)
+  { p: 'ui', c: '#B35C00' }, { p: 'ij', c: '#B35C00' }, { p: 'ei', c: '#B35C00' },
+  { p: 'ou', c: '#B35C00' }, { p: 'au', c: '#B35C00' }, { p: 'eu', c: '#B35C00' },
   // 2-char long vowels (blue)
   { p: 'aa', c: '#2E6DA4' }, { p: 'ee', c: '#2E6DA4' }, { p: 'oo', c: '#2E6DA4' },
   { p: 'uu', c: '#2E6DA4' }, { p: 'ie', c: '#2E6DA4' }, { p: 'oe', c: '#2E6DA4' },
   // 2-char consonant clusters (red)
-  { p: 'sj', c: '#D94F3D' }, { p: 'ng', c: '#D94F3D' }, { p: 'nk', c: '#D94F3D' },
-  { p: 'ch', c: '#D94F3D' },
+  { p: 'sj', c: '#C0392B' }, { p: 'ng', c: '#C0392B' }, { p: 'nk', c: '#C0392B' },
+  { p: 'ch', c: '#C0392B' },
 ];
 
 function colorHtml(text) {
@@ -842,29 +1044,6 @@ function colorHtml(text) {
   return html;
 }
 
-// ============================================================
-// PRONUNCIATION HINTS
-// ============================================================
-const HINTS = {
-  ui: 'ui — start with "ah", round lips tightly toward "oo"',
-  eu: 'eu — say "e" in "bed", then round lips without moving tongue',
-  ij: 'ij / ei — like "ay" in "say" — hold flat, no glide',
-  ei: 'ij / ei — like "ay" in "say" — hold flat, no glide',
-  oe: 'oe — like "oo" in "food" — pure sound, no glide',
-  ch: 'ch / g — raspy throat sound, like clearing your throat',
-  uu: 'uu ★ — say "ee" then round your lips tightly',
-  aa: 'aa — like "a" in "father" held longer',
-  oo: 'oo — like "o" in "so" — hold flat, do not glide',
-  ee: 'ee — like "ay" in "say" — hold flat, do not glide',
-};
-
-function getHint(dutch) {
-  const lower = dutch.toLowerCase();
-  for (const [sound, hint] of Object.entries(HINTS)) {
-    if (lower.includes(sound)) return hint;
-  }
-  return null;
-}
 
 // ============================================================
 // SPEECH
@@ -896,7 +1075,7 @@ function nextId(items) { return items.length === 0 ? 1 : Math.max(...items.map(i
 function initStorage() {
   // Clear and re-seed if the data version changed
   const stored = localStorage.getItem(K.init);
-  const VERSION = '4'; // bump this when you add new lesson data above
+  const VERSION = '6'; // bump this when you add new lesson data above
   if (stored === VERSION) return;
 
   save(K.categories, CATEGORIES.map((c, i) => ({ id: i + 1, name: c.name })));
@@ -904,7 +1083,23 @@ function initStorage() {
   let wid = 1;
   CATEGORIES.forEach((cat, ci) => {
     cat.words.forEach(w => {
-      words.push({ id: wid++, dutch: w.dutch, english: w.english, categoryId: ci + 1, sessionId: null, createdAt: Date.now() });
+      words.push({
+        id: wid++,
+        dutch: w.dutch,
+        english: w.english,
+        categoryId: ci + 1,
+        sessionId: null,
+        createdAt: Date.now(),
+        article: w.article || null,
+        respelling: w.respelling || '',
+        audioRequired: w.audioRequired || false,
+        articulatoryHint: w.articulatoryHint || '',
+        ipa: w.ipa || '',
+        trapRank: w.trapRank !== undefined ? w.trapRank : null,
+        soundCategory: w.soundCategory || 'default',
+        syllableCount: w.syllableCount || 1,
+        phraseChunks: w.phraseChunks || null,
+      });
     });
   });
   save(K.words, words);
@@ -998,6 +1193,8 @@ let S = {
   soundExpanded: {},
   // lesson notes
   selectedLessonId: null,
+  // articulatory hint expansion per word id
+  hintExpanded: {},
 };
 
 function currentScreen() { return S.stack[S.stack.length - 1].screen; }
@@ -1097,12 +1294,37 @@ function sessionHtml() {
   if (!words.length) return '<div class="screen"><p>No words.</p></div>';
   const word = words[S.sessionIndex];
   const revealed = S.sessionRevealed;
-  const hint = revealed ? getHint(word.dutch) : null;
-  const hintHtml = hint ? `<div class="hint">${hint}</div>` : '';
-  const revealedContent = revealed ? `
-    <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
-      <span class="card-english">${word.english || '—'}</span>
-    </div>` : `<span class="card-tap">Tap to reveal</span>`;
+
+  // Phonetic chip
+  let phoneticHtml = '';
+  if (word.respelling) {
+    const starHtml = word.audioRequired
+      ? `<span class="phonetic-star" data-action="toggle-hint" data-word-id="${word.id}">★</span>`
+      : '';
+    phoneticHtml = `<div><span class="card-phonetic">${word.respelling}${starHtml}</span></div>`;
+  }
+
+  // Articulatory hint
+  let artHtml = '';
+  if (word.articulatoryHint && word.audioRequired) {
+    const visible = S.hintExpanded[word.id] ? ' visible' : '';
+    artHtml = `<p class="articulatory-hint${visible}">${word.articulatoryHint}</p>`;
+  }
+
+  // Revealed content
+  let revealedContent = '';
+  if (revealed) {
+    const articleChip = word.article
+      ? `<span class="article-chip ${word.article}">${word.article}</span>`
+      : '';
+    revealedContent = `
+      <hr style="width:100%;border:none;border-top:1px solid #D4CBBA;margin:0">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <div style="text-align:center">${articleChip}<span class="card-english">${word.english || '—'}</span></div>
+      </div>`;
+  } else {
+    revealedContent = `<span class="card-tap">Tap to reveal</span>`;
+  }
 
   const outcomeHtml = revealed ? `
     <div class="outcome-row">
@@ -1124,13 +1346,14 @@ function sessionHtml() {
       </div>
       <div class="card ${revealed ? 'revealed' : ''}" data-action="${revealed ? '' : 'reveal'}">
         <div class="card-word">${colorHtml(word.dutch)}</div>
+        ${phoneticHtml}
+        ${artHtml}
         <div class="play-row">
           <button class="play-btn" data-action="speak" data-text="${word.dutch}">▶ Play</button>
-          ${revealed ? `<button class="play-btn slow" data-action="speak" data-text="${word.dutch}" data-slow="true">▶ Slow</button>` : ''}
+          <button class="play-btn slow" data-action="speak" data-text="${word.dutch}" data-slow="true">▶ Slow</button>
         </div>
         ${revealedContent}
       </div>
-      ${hintHtml}
       ${outcomeHtml}
     </div>`;
 }
@@ -1156,14 +1379,14 @@ function sessionCompleteHtml() {
       <p style="font-size:18px;color:#1A1A1A">${categoryLine}</p>
       <div style="width:100%;display:flex;flex-direction:column;gap:8px;margin-top:24px">
         <div class="outcome-row-item">
-          <span style="color:#3A7D44;font-size:18px;width:24px;text-align:center">✓</span>
+          <span style="color:#2F7A3B;font-size:18px;width:24px;text-align:center">✓</span>
           <span style="flex:1;font-size:18px">Got it</span>
-          <strong style="color:#3A7D44;font-size:18px">${out.correct}</strong>
+          <strong style="color:#2F7A3B;font-size:18px">${out.correct}</strong>
         </div>
         <div class="outcome-row-item">
-          <span style="color:#D94F3D;font-size:18px;width:24px;text-align:center">✗</span>
+          <span style="color:#C0392B;font-size:18px;width:24px;text-align:center">✗</span>
           <span style="flex:1;font-size:18px">Missed</span>
-          <strong style="color:#D94F3D;font-size:18px">${out.incorrect}</strong>
+          <strong style="color:#C0392B;font-size:18px">${out.incorrect}</strong>
         </div>
         ${skippedRow}
       </div>
@@ -1369,6 +1592,11 @@ function render() {
 
   document.getElementById('app').innerHTML = header + `<main style="flex:1">${body}</main>`;
 
+  // Auto-play first card of a session
+  if (screen === 'Session' && S.sessionIndex === 0 && !S.sessionRevealed && S.sessionWords.length) {
+    speak(S.sessionWords[0].dutch, false);
+  }
+
   // Restore textarea value without losing cursor
   const ta = document.getElementById('paste-input');
   if (ta) ta.value = S.pasteText;
@@ -1458,6 +1686,14 @@ document.addEventListener('click', function(e) {
     return;
   }
 
+  if (action === 'toggle-hint') {
+    e.stopPropagation();
+    const wordId = parseInt(btn.dataset.wordId);
+    S.hintExpanded[wordId] = !S.hintExpanded[wordId];
+    render();
+    return;
+  }
+
   if (action === 'reveal') {
     S.sessionRevealed = true;
     render();
@@ -1466,7 +1702,12 @@ document.addEventListener('click', function(e) {
 
   if (action === 'advance') {
     const outcome = btn.dataset.outcome;
-    recordAttempt(S.sessionId, S.sessionWords[S.sessionIndex].id, S.sessionExerciseType, outcome);
+    const currentWord = S.sessionWords[S.sessionIndex];
+    recordAttempt(S.sessionId, currentWord.id, S.sessionExerciseType, outcome);
+    if (outcome === 'incorrect') {
+      const insertAt = Math.min(S.sessionIndex + 2, S.sessionWords.length);
+      S.sessionWords.splice(insertAt, 0, currentWord);
+    }
     const next = S.sessionIndex + 1;
     if (next >= S.sessionWords.length) {
       replace('SessionComplete');
